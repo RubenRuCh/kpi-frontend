@@ -1,24 +1,22 @@
 <template>
   <el-container>
-    <el-col :span="2">
-      <the-sidebar></the-sidebar>
-    </el-col>
+    <el-header class="hidden-sm-and-down">
+      <the-header></the-header>
+    </el-header>
 
-    <el-col :span="20">
-      <el-container>
-        <el-header>
-          <the-header></the-header>
-        </el-header>
+    <el-container>
+      <el-aside width="initial">
+        <the-sidebar></the-sidebar>
+      </el-aside>
 
-        <el-main>
-          <router-view v-slot="slotProps">
-            <transition name="route" mode="out-in">
-              <component :is="slotProps.Component"></component>
-            </transition>
-          </router-view>
-        </el-main>
-      </el-container>
-    </el-col>
+      <el-main>
+        <router-view v-slot="slotProps">
+          <transition name="route" mode="out-in">
+            <component :is="slotProps.Component"></component>
+          </transition>
+        </router-view>
+      </el-main>
+    </el-container>
   </el-container>
 </template>
 
@@ -81,9 +79,4 @@ body {
   color: #2c3e50;
 }
 
-.el-card {
-  padding: 1rem;
-  margin: 2rem auto;
-  max-width: 100rem;
-}
 </style>
