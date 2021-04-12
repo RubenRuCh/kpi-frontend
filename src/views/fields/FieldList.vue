@@ -9,23 +9,68 @@
       >
     </div>
 
-    <ul v-if="isLoading || hasFields" v-loading="isLoading">
-      <field-item
-        v-for="field in requiredFields"
-        :key="field.id"
-        :id="field.id"
-        :title="field.title"
-        :description="field.description"
-        :required="field.required"
-      ></field-item>
-    </ul>
+    <el-table
+      v-if="isLoading || hasFields"
+      v-loading="isLoading"
+      stripe
+      fit
+      :data="
+        fields.filter(
+          (field) =>
+            !search || field.title.toLowerCase().includes(search.toLowerCase())
+        )
+      "
+      style="width: 100%; overflow: auto"
+      max-height="500"
+      :row-class-name="tableRowClassName"
+    >
+      <el-table-column label="Código" prop="id" sortable></el-table-column>
+      <el-table-column label="Nombre" prop="title" sortable></el-table-column>
+      <el-table-column label="Descripción" prop="description"></el-table-column>
+      <el-table-column label="Requerido" prop="requiredText" sortable></el-table-column>
 
-    <h3 v-else>No se ha encontrado ningún atributo</h3>
+      <el-table-column align="right" min-width="150">
+        <template #header>
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Buscar por nombre"
+          />
+        </template>
+        <template #default="scope">
+          <el-button
+            type="info"
+            plain
+            @click="$router.push('/fields/' + scope.row.id)"
+            >Ver detalles</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            plain
+            @click="$router.push('/fields/' + scope.row.id + '/edit')"
+            >Modificar</el-button
+          >
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            plain
+            disabled
+            @click="$router.push('/fields/' + scope.row.id + '/delete')"
+            >Eliminar</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-empty
+      v-else
+      description="No se ha encontrado ningún atributo"
+    ></el-empty>
   </el-card>
 </template>
 
 <script>
-import FieldItem from '@/components/fields/FieldItem.vue';
 import useNotify from '@/hooks/notify.js';
 
 export default {
@@ -38,18 +83,16 @@ export default {
     return {
       isLoading: false,
       error: null,
+      search: '',
     };
   },
   computed: {
-    requiredFields() {
+    fields() {
       return this.$store.getters['fields/fields'];
     },
     hasFields() {
       return !this.isLoading && this.$store.getters['fields/hasFields'];
     },
-  },
-  components: {
-    FieldItem,
   },
   methods: {
     async loadFields(refresh = false) {
@@ -78,7 +121,13 @@ export default {
     handleError() {
       this.error = null;
     },
-  },
+    tableRowClassName({row}) {
+        if (row.required) {
+          return 'required-field';
+        } 
+        return '';
+      }
+  }, // methods
 
   created() {
     this.loadFields();
@@ -86,7 +135,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 ul {
   list-style: none;
   margin: 0;
@@ -96,5 +145,9 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+.el-table .required-field {
+  background-color: rgba(0, 252, 0, 0.2);
+  font-weight: bolder;
 }
 </style>

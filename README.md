@@ -1,4 +1,4 @@
-# frontend
+# Gestion de Indicadores (KPIs)
 
 ## Project setup
 ```

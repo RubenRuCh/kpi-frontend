@@ -9,27 +9,72 @@
       >
     </div>
 
-    <ul v-if="isLoading || hasKpis" v-loading="isLoading">
-      <kpi-item
-        v-for="kpi in enabledKpis"
-        :key="kpi.id"
-        :id="kpi.id"
-        :title="kpi.title"
-        :description="kpi.description"
-        :enabled="kpi.enabled"
-      ></kpi-item>
-    </ul>
+    <el-table
+      v-if="isLoading || hasKpis"
+      v-loading="isLoading"
+      stripe
+      fit
+      :data="
+        enabledKpis.filter(
+          (kpi) =>
+            !search || kpi.title.toLowerCase().includes(search.toLowerCase())
+        )
+      "
+      style="width: 100%; overflow: auto"
+      max-height="500"
+    >
+      <el-table-column label="Código" prop="id" sortable></el-table-column>
+      <el-table-column label="Nombre" prop="title" sortable></el-table-column>
+      <el-table-column label="Descripción" prop="description"></el-table-column>
 
-    <h3 v-else>No se ha encontrado ningún KPI</h3>
+      <el-table-column align="right" min-width="250">
+        <template #header>
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Buscar por nombre"
+          />
+        </template>
+        <template #default="scope">
+          <el-button
+            type="success"
+            plain
+            @click="$router.push('/kpis/' + scope.row.id + '/registers')"
+            >Ver registros</el-button
+          >
+          <el-button
+            type="info"
+            plain
+            @click="$router.push('/kpis/' + scope.row.id)"
+            >Ver detalles</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            plain
+            @click="$router.push('/kpis/' + scope.row.id + '/edit')"
+            >Modificar</el-button
+          >
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            plain
+            @click="$router.push('/kpis/' + scope.row.id + '/delete')"
+            >Eliminar</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-empty v-else description="No se ha encontrado ningún KPI"></el-empty>
   </el-card>
 </template>
 
 <script>
-import KpiItem from '@/components/kpis/KpiItem.vue';
 import useNotify from '@/hooks/notify.js';
 
 export default {
-    setup() {
+  setup() {
     const { notify } = useNotify();
 
     return { notify };
@@ -38,6 +83,7 @@ export default {
     return {
       isLoading: false,
       error: null,
+      search: '',
     };
   },
   computed: {
@@ -48,9 +94,6 @@ export default {
       return !this.isLoading && this.$store.getters['kpis/hasKpis'];
     },
   },
-  components: {
-    KpiItem,
-  },
   methods: {
     async loadKpis(refresh = false) {
       this.isLoading = true;
@@ -60,13 +103,17 @@ export default {
           forceRefresh: refresh,
         });
         if (refresh) {
-          this.notify('KPIs actualizados', 'Se ha actualizado correctamente la lista de indicadores', 'success');
+          this.notify(
+            'KPIs actualizados',
+            'Se ha actualizado correctamente la lista de indicadores',
+            'success'
+          );
         }
       } catch (error) {
         this.error =
           error.message || 'Algo ha salido mal durante la carga de los datos';
 
-          this.notify('Ups...', `Error: ${this.error}`, 'error');
+        this.notify('Ups...', `Error: ${this.error}`, 'error');
       }
 
       this.isLoading = false;

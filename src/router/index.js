@@ -13,6 +13,11 @@ const KpiDetail = () => import('../views/kpis/KpiDetail.vue');
 const KpiRegistration = () => import('../views/kpis/KpiRegistration.vue');
 const KpiModification = () => import('../views/kpis/KpiModification.vue');
 
+// Field
+const FieldDetail = () => import('../views/fields/FieldDetail.vue');
+const FieldRegistration = () => import('../views/fields/FieldRegistration.vue');
+const FieldModification = () => import('../views/fields/FieldModification.vue');
+
 // Auth
 // const UserAuth = () => import('./views/auth/UserAuth.vue');
 
@@ -36,7 +41,11 @@ const routes = [
     path: '/kpis/:id',
     component: KpiDetail,
     props: true,
-    children: [{ path: 'edit', component: KpiModification }],
+  },
+  {
+    path: '/kpis/:id/edit',
+    component: KpiModification,
+    props: true,
   },
   {
     path: '/fields',
@@ -46,6 +55,17 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/fields/FieldList.vue'),
+    children: [{ path: 'create', component: FieldRegistration }],
+  },
+  {
+    path: '/fields/:id',
+    component: FieldDetail,
+    props: true,
+  },
+  {
+    path: '/fields/:id/edit',
+    component: FieldModification,
+    props: true,
   },
   // { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
   { path: '/:notFound(.*)', component: NotFound },

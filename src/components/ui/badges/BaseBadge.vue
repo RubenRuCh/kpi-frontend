@@ -1,5 +1,5 @@
 <template>
-  <span class="badge" :class="type" :title="help">
+  <span class="badge" :class="type">
     {{ text }}
   </span>
 </template>
@@ -10,9 +10,6 @@ export default {
   computed: {
     text() {
       return this.title.toUpperCase();
-    },
-    help(){
-      return this.type == 'warning' ? 'Los atributos obligatorios deberán aparecer en todos los nuevos KPI' : '';
     },
   },
 };
@@ -27,7 +24,7 @@ export default {
   padding: 0.5rem 1.5rem;
   display: inline-block;
   margin-right: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   cursor: help;
 }
 

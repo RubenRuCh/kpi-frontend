@@ -4,12 +4,20 @@
       <h3>{{ title }}</h3>
       <h4>{{ description }}</h4>
       <div class="actions">
-        <base-badge
-          style="margin-right: auto"
+        <el-tooltip
           v-if="required"
-          title="Atributo obligatorio"
-          type="warning"
-        ></base-badge>
+          class="item"
+          effect="dark"
+          content="Los atributos obligatorios deberán aparecer en todos los KPI de nueva creación"
+          placement="top-start"
+        >
+          <base-badge
+            style="margin-right: auto"
+            v-if="required"
+            title="Atributo obligatorio"
+            type="warning"
+          ></base-badge>
+        </el-tooltip>
 
         <el-button type="info" plain @click="$router.push(detailUrl)"
           >Ver detalles</el-button

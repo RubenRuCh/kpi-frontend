@@ -25,6 +25,7 @@ export default {
     context.commit('addField', {
       ...fieldData,
       id: responseData.id,
+      requiredText: responseData.required ? 'Sí' : 'No',
       // ... more data if needed
     });
   },
@@ -52,6 +53,7 @@ export default {
         title: responseData[key].title,
         description: responseData[key].description,
         required: responseData[key].required,
+        requiredText: responseData[key].required ? 'Sí' : 'No',
         type: responseData[key].type,
         values: responseData[key].values,
         maxlength: responseData[key].maxlength,
