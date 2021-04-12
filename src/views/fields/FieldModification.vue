@@ -1,5 +1,5 @@
 <template>
-  <div>hola</div>
+  <div>Componente para modificar los campos</div>
 </template>
 
 <script>
