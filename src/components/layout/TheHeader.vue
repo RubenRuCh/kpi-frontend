@@ -1,77 +1,41 @@
 <template>
   <section class="header">
-    <nav>
-      <h1><router-link to="/">KPI's</router-link></h1>
-      <ul>
-        <li><router-link to="/kpis">Listado KPI's</router-link></li>
-        <li><router-link to="/kpis/create">Nuevo KPI</router-link></li>
-        <li><router-link to="/fields">Administrar atributos</router-link></li>
-      </ul>
-    </nav>
+    <el-menu
+      :default-active="$route.path"
+      class="el-menu-demo"
+      mode="horizontal"
+      router
+    >
+      <el-menu-item index="/">Gestión de KPIs</el-menu-item>
+      <el-submenu index="/kpis">
+        <template #title>
+          <i class="el-icon-s-marketing"></i>
+          <span>Indicadores</span>
+        </template>
+        <el-menu-item index="/kpis/create">Nuevo KPI</el-menu-item>
+
+        <el-submenu index="/kpis">
+          <template #title>Listado KPIs</template>
+          <el-menu-item index="/kpis">KPIs activos</el-menu-item>
+          <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+
+      <el-menu-item index="/register">
+        <i class="el-icon-s-data"></i>
+        <template #title>Registros (Raúl)</template>
+      </el-menu-item>
+
+      <el-menu-item index="/auth" disabled>
+        <i class="el-icon-user-solid"></i>
+        <template #title>Autentificación</template>
+      </el-menu-item>
+
+      <el-menu-item index="/fields">
+        <i class="el-icon-setting"></i>
+        <template #title>Administrar atributos</template>
+      </el-menu-item>
+    </el-menu>
   </section>
 </template>
 
-<script>
-export default {};
-</script>
-
-<style scoped>
-.header {
-  width: 100%;
-  height: 5rem;
-  background-color: #3d008d;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header a {
-  text-decoration: none;
-  color: #f391e3;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid transparent;
-}
-
-a:active,
-a:hover,
-a.router-link-active {
-  border: 1px solid #f391e3;
-}
-
-h1 {
-  margin: 0;
-}
-
-h1 a {
-  color: white;
-  margin: 0;
-}
-
-h1 a:hover,
-h1 a:active,
-h1 a.router-link-active {
-  border-color: transparent;
-}
-
-.header nav {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  margin: 0 0.5rem;
-}
-</style>
