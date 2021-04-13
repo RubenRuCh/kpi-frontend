@@ -7,14 +7,15 @@
       <el-button type="primary" v-else :loading="isLoading"
         >Cargando...</el-button
       >
-     <el-button type="primary" @click="$router.push('/fields/create')"
+      <el-button type="primary" @click="$router.push('/fields/create')"
         >Nuevo atributo</el-button
       >
     </div>
-
+    <h1>Atributos disponibles</h1>
     <el-table
       v-if="isLoading || hasFields"
       v-loading="isLoading"
+      :default-sort="{ prop: 'id', order: 'ascending' }"
       stripe
       fit
       :data="
@@ -23,14 +24,22 @@
             !search || field.title.toLowerCase().includes(search.toLowerCase())
         )
       "
-      style="width: 100%;"
+      style="width: 100%"
       max-height="600"
       :row-class-name="tableRowClassName"
     >
       <el-table-column label="Código" prop="id" sortable></el-table-column>
       <el-table-column label="Nombre" prop="title" sortable></el-table-column>
-      <el-table-column label="Descripción" prop="description"></el-table-column>
-      <el-table-column label="Requerido" prop="requiredText" sortable></el-table-column>
+      <el-table-column
+        label="Descripción"
+        prop="description"
+        min-width="200"
+      ></el-table-column>
+      <el-table-column
+        label="Requerido"
+        prop="requiredText"
+        sortable
+      ></el-table-column>
 
       <el-table-column align="right" min-width="150">
         <template #header>
@@ -124,12 +133,12 @@ export default {
     handleError() {
       this.error = null;
     },
-    tableRowClassName({row}) {
-        if (row.required) {
-          return 'required-field';
-        } 
-        return '';
+    tableRowClassName({ row }) {
+      if (row.required) {
+        return 'required-field';
       }
+      return '';
+    },
   }, // methods
 
   created() {
@@ -150,7 +159,6 @@ ul {
   justify-content: space-between;
 }
 .el-table .required-field {
-  background-color: rgba(0, 252, 0, 0.2);
   font-weight: bolder;
 }
 </style>

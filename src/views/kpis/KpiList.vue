@@ -8,10 +8,11 @@
         >Cargando...</el-button
       >
     </div>
-
+    <h1>Indicadores activos</h1>
     <el-table
       v-if="isLoading || hasKpis"
       v-loading="isLoading"
+      :default-sort="{prop: 'id', order: 'ascending'}"
       stripe
       fit
       :data="
@@ -25,9 +26,9 @@
     >
       <el-table-column label="Código" prop="id" sortable></el-table-column>
       <el-table-column label="Nombre" prop="title" sortable></el-table-column>
-      <el-table-column label="Descripción" prop="description"></el-table-column>
+      <el-table-column label="Descripción" prop="description" min-width="200"></el-table-column>
 
-      <el-table-column align="right" min-width="250">
+      <el-table-column align="right" min-width="200">
         <template #header>
           <el-input
             v-model="search"
@@ -48,18 +49,20 @@
             @click="$router.push('/kpis/' + scope.row.id)"
             >Ver detalles</el-button
           >
+          
           <el-button
             type="primary"
             icon="el-icon-edit"
             plain
-            @click="$router.push('/kpis/' + scope.row.id + '/edit')"
+            @click="$router.push('/kpis/' + scope.row.id + '/edit')" 
             >Modificar</el-button
           >
+          <!-- TODO Click para mostrar modal y confirmar eliminacion -->
           <el-button
             type="danger"
             icon="el-icon-delete"
             plain
-            @click="$router.push('/kpis/' + scope.row.id + '/delete')"
+            @click="$router.push('/kpis/' + scope.row.id)"
             >Eliminar</el-button
           >
         </template>

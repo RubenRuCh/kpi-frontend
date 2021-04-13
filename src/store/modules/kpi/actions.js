@@ -46,12 +46,32 @@ export default {
     const kpis = [];
 
     for (const key in responseData) {
+      const fields = [];
+
+      // First format data from field and kpi_field tables
+      for (const fieldData of responseData[key].fields) {
+        const field = {
+          id: fieldData.id,
+          title: fieldData.title,
+          description: fieldData.description,
+          required: fieldData.required,
+          requiredText: fieldData.required ? 'Sí' : 'No',
+          type: fieldData.type,
+          value: fieldData.kpi_field.value,
+          maxlength: fieldData.maxlength,
+          createdAt: fieldData.createdAt,
+          updatedAt: fieldData.updatedAt,
+        };
+
+        fields.push(field);
+      }
+
       const kpi = {
         id: responseData[key].id,
         title: responseData[key].title,
         description: responseData[key].description,
         enabled: responseData[key].enabled,
-        fields: responseData[key].fields,
+        fields: fields,
         createdAt: responseData[key].createdAt,
         updatedAt: responseData[key].updatedAt,
       };
