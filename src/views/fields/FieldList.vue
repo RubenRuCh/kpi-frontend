@@ -7,6 +7,9 @@
       <el-button type="primary" v-else :loading="isLoading"
         >Cargando...</el-button
       >
+     <el-button type="primary" @click="$router.push('/fields/create')"
+        >Nuevo atributo</el-button
+      >
     </div>
 
     <el-table

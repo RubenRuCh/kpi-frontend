@@ -13,6 +13,7 @@ export default {
 
     const response = await fetch(`${backendUrl}`, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),
     });
 
@@ -36,8 +37,6 @@ export default {
 
     const response = await fetch(`${backendUrl}/kpis`);
     const responseData = await response.json();
-
-    console.log(responseData);
 
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch!');

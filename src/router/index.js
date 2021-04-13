@@ -30,12 +30,11 @@ const routes = [
   {
     path: '/kpis',
     name: 'KPIs',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: KpiList,
-    props: true,
-    children: [{ path: 'create', component: KpiRegistration }],
+  },
+  {
+    path: '/kpis/create',
+    component: KpiRegistration,
   },
   {
     path: '/kpis/:id',
@@ -55,7 +54,10 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/fields/FieldList.vue'),
-    children: [{ path: 'create', component: FieldRegistration }],
+  },
+  {
+    path: '/fields/create',
+    component: FieldRegistration,
   },
   {
     path: '/fields/:id',
