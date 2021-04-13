@@ -25,7 +25,6 @@ export default {
   display: inline-block;
   margin-right: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  cursor: help;
 }
 
 .dark {
@@ -47,5 +46,18 @@ export default {
   color: #fff;
   background-color: #f56c6c;
   border-color: #f56c6c;
+  cursor: help;
+}
+
+.success {
+  color: #fff;
+  background-color: #67c23a;
+  border-color: #67c23a;
+}
+
+.info {
+  color: #fff;
+  background-color: #909399;
+  border-color: #909399;
 }
 </style>

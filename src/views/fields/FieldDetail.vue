@@ -5,7 +5,7 @@
         <h2>Características del atributo</h2>
 
         <section class="properties">
-          <h3><el-tag>Título</el-tag> {{ selectedField.title }}</h3>
+          <h3><el-tag>Nombre</el-tag> {{ selectedField.title }}</h3>
           <h3><el-tag>Descripción</el-tag> {{ selectedField.description }}</h3>
 
           <h4 v-if="selectedField.type">
@@ -58,7 +58,7 @@
             icon="el-icon-delete"
             plain
             disabled
-            @click="$router.push($route.path + '/deleted')"
+            @click="$router.push($route.path)"
             >Eliminar</el-button
           >
         </div>
@@ -74,11 +74,6 @@ export default {
     return {
       selectedField: null,
     };
-  },
-  computed: {
-    contactLink() {
-      return this.$route.path;
-    },
   },
   created() {
     this.selectedField = this.$store.getters['fields/fields'].find(
