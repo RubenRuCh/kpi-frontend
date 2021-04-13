@@ -7,8 +7,6 @@ export default {
       description: data.description,
       enabled: data.enabled,
       fields: data.fields,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
     };
 
     const response = await fetch(`${backendUrl}`, {
@@ -26,12 +24,14 @@ export default {
     context.commit('addKpi', {
       ...kpiData,
       id: responseData.id,
+      createdAt: responseData.createdAt,
+      updatedAt: responseData.updatedAt,
       // ... more data if needed
     });
   },
 
-  async loadKpis(context, payload) {
-    if (!payload.forceRefresh && !context.getters.shouldUpdate) return;
+  async loadKpis(context, data) {
+    if (!data.forceRefresh && !context.getters.shouldUpdate) return;
 
     const backendUrl = context.rootGetters.backendUrl;
 
@@ -47,7 +47,7 @@ export default {
 
     for (const key in responseData) {
       const kpi = {
-        id: key,
+        id: responseData[key].id,
         title: responseData[key].title,
         description: responseData[key].description,
         enabled: responseData[key].enabled,

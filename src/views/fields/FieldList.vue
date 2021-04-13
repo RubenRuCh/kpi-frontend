@@ -23,8 +23,8 @@
             !search || field.title.toLowerCase().includes(search.toLowerCase())
         )
       "
-      style="width: 100%; overflow: auto"
-      max-height="500"
+      style="width: 100%;"
+      max-height="600"
       :row-class-name="tableRowClassName"
     >
       <el-table-column label="Código" prop="id" sortable></el-table-column>

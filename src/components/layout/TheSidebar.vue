@@ -106,6 +106,12 @@ export default {
   height: 100vh;
 }
 
+@media (min-width: 993px) {
+  .el-menu-vertical-demo {
+    height: calc(100vh - 62px);
+  }
+}
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }

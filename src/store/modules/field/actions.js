@@ -26,13 +26,48 @@ export default {
     context.commit('addField', {
       ...fieldData,
       id: responseData.id,
+      createdAt: responseData.createdAt,
+      updatedAt: responseData.updatedAt,
       requiredText: responseData.required ? 'Sí' : 'No',
       // ... more data if needed
     });
   },
 
-  async loadFields(context, payload) {
-    if (!payload.forceRefresh && !context.getters.shouldUpdate) return;
+  async updateField(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const fieldData = {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      required: data.required,
+      type: data.type,
+      values: data.values,
+      maxlength: data.maxlength,
+    };
+
+    const response = await fetch(`${backendUrl}/fields/${data.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fieldData),
+    });
+
+    const responseData = await response.json();
+
+    if (!responseData.ok) {
+      // error...
+    }
+
+    context.commit('updateField', {
+      ...fieldData,
+      updatedAt: new Date(),
+      requiredText: responseData.required ? 'Sí' : 'No',
+      // ... more data if needed
+    });
+  },
+
+  async loadFields(context, data) {
+    if (!data.forceRefresh && !context.getters.shouldUpdate) return;
 
     const backendUrl = context.rootGetters.backendUrl;
 
@@ -48,7 +83,7 @@ export default {
 
     for (const key in responseData) {
       const field = {
-        id: key,
+        id: responseData[key].id,
         title: responseData[key].title,
         description: responseData[key].description,
         required: responseData[key].required,
