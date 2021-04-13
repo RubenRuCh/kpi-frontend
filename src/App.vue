@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header class="hidden-sm-and-down">
+    <el-header class="hidden-sm-and-down" height="initial">
       <the-header></the-header>
     </el-header>
 
