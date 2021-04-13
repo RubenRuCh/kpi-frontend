@@ -15,6 +15,7 @@
     <el-table
       v-if="isLoading || hasFields"
       v-loading="isLoading"
+      :default-sort="{prop: 'id', order: 'ascending'}"
       stripe
       fit
       :data="
