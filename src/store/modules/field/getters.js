@@ -5,6 +5,9 @@ export default {
   requiredFields(state) {
     return state.fields.filter((field) => field.required);
   },
+  unrequiredFields(state) {
+    return state.fields.filter((field) => !field.required);
+  },
   hasFields(state) {
     return state.fields && state.fields.length > 0;
   },

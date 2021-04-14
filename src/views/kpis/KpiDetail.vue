@@ -25,7 +25,7 @@
               )
             "
             style="width: 100%;"
-            max-height="600"
+            max-height="250"
           >
             <el-table-column
               label="Código"

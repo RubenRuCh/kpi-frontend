@@ -2,7 +2,7 @@
   <el-form
     ref="fieldForm"
     :model="form"
-    label-width="120px"
+    label-width="auto"
     class="demo-dynamic"
   >
     <el-form-item
