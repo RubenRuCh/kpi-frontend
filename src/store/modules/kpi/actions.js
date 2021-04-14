@@ -5,11 +5,11 @@ export default {
     const kpiData = {
       title: data.title,
       description: data.description,
-      enabled: data.enabled,
+      enabled: true,
       fields: data.fields,
     };
 
-    const response = await fetch(`${backendUrl}`, {
+    const response = await fetch(`${backendUrl}/kpis`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),

@@ -7,12 +7,15 @@
       <el-button type="primary" v-else :loading="isLoading"
         >Cargando...</el-button
       >
+      <el-button type="primary" @click="$router.push('/kpis/create')"
+        >Nuevo indicador</el-button
+      >
     </div>
     <h1>Indicadores activos</h1>
     <el-table
       v-if="isLoading || hasKpis"
       v-loading="isLoading"
-      :default-sort="{prop: 'id', order: 'ascending'}"
+      :default-sort="{ prop: 'id', order: 'ascending' }"
       stripe
       fit
       :data="
@@ -21,12 +24,16 @@
             !search || kpi.title.toLowerCase().includes(search.toLowerCase())
         )
       "
-      style="width: 100%; overflow: auto"
-      max-height="500"
+      style="width: 100%;"
+      max-height="600"
     >
       <el-table-column label="Código" prop="id" sortable></el-table-column>
       <el-table-column label="Nombre" prop="title" sortable></el-table-column>
-      <el-table-column label="Descripción" prop="description" min-width="200"></el-table-column>
+      <el-table-column
+        label="Descripción"
+        prop="description"
+        min-width="200"
+      ></el-table-column>
 
       <el-table-column align="right" min-width="200">
         <template #header>
@@ -49,12 +56,12 @@
             @click="$router.push('/kpis/' + scope.row.id)"
             >Ver detalles</el-button
           >
-          
+
           <el-button
             type="primary"
             icon="el-icon-edit"
             plain
-            @click="$router.push('/kpis/' + scope.row.id + '/edit')" 
+            @click="$router.push('/kpis/' + scope.row.id + '/edit')"
             >Modificar</el-button
           >
           <!-- TODO Click para mostrar modal y confirmar eliminacion -->

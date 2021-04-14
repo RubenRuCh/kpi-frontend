@@ -89,6 +89,7 @@ export default {
         required: responseData[key].required,
         requiredText: responseData[key].required ? 'Sí' : 'No',
         type: responseData[key].type,
+        value: '',
         values: responseData[key].values,
         maxlength: responseData[key].maxlength,
         createdAt: responseData[key].createdAt,
