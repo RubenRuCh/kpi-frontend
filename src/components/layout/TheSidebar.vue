@@ -3,8 +3,6 @@
     <el-menu
       :default-active="$route.path"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       :collapse="isCollapse"
       @click.self.prevent="toggleMenu"
       @mouseenter="cancelCloseMenu"
@@ -64,12 +62,6 @@ export default {
     };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     toggleMenu() {
       if (!this.isCollapse) {
         this.isClosing = false;

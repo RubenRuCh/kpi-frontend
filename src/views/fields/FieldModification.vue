@@ -12,12 +12,17 @@ import FieldForm from '@/components/fields/FieldForm.vue';
 
 export default {
   components: {
-    FieldForm
+    FieldForm,
   },
   methods: {
-    saveData(data){
-      this.$store.dispatch('fields/updateField', data);
-      this.$router.replace('/fields');
+    async saveData(data) {
+      await this.$store.dispatch('fields/updateField', data);
+
+      // Load Kpis again to make sure changes in fields propagate through app
+      await this.$store.dispatch('kpis/loadKpis', {
+        forceRefresh: true,
+      });
+      this.$router.replace(`/fields/${this.$route.params.id}`);
     },
   },
 };

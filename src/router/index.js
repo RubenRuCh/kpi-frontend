@@ -9,6 +9,8 @@ import NotFound from '../views/NotFound.vue';
 
 /* Lazy / async imports */
 // KPI
+
+const KpiDeletedList = () => import('../views/kpis/KpiDeletedList.vue');
 const KpiDetail = () => import('../views/kpis/KpiDetail.vue');
 const KpiRegistration = () => import('../views/kpis/KpiRegistration.vue');
 const KpiModification = () => import('../views/kpis/KpiModification.vue');
@@ -31,6 +33,10 @@ const routes = [
     path: '/kpis',
     name: 'KPIs',
     component: KpiList,
+  },
+  {
+    path: '/kpis/deleted',
+    component: KpiDeletedList,
   },
   {
     path: '/kpis/create',
