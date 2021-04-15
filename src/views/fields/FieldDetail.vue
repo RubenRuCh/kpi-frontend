@@ -53,6 +53,7 @@
             @click="$router.push($route.path + '/edit')"
             >Modificar</el-button
           >
+          
           <el-button
             type="danger"
             icon="el-icon-delete"

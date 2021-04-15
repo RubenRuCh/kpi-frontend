@@ -29,6 +29,16 @@ export default {
     TheSidebar,
     TheHeader,
   },
+
+  created() {
+    // Load some data on created
+    this.$store.dispatch('kpis/loadKpis', {
+      forceRefresh: true,
+    });
+    this.$store.dispatch('fields/loadFields', {
+      forceRefresh: true,
+    });
+  },
 };
 </script>
 
@@ -78,5 +88,4 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-
 </style>

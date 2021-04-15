@@ -24,7 +24,7 @@
                   field.title.toLowerCase().includes(search.toLowerCase())
               )
             "
-            style="width: 100%;"
+            style="width: 100%"
             max-height="250"
           >
             <el-table-column
@@ -102,22 +102,9 @@
             @click="$router.push($route.path + '/edit')"
             >Modificar</el-button
           >
-          <!-- TODO Click para mostrar modal y confirmar eliminacion / restauracion -->
-          <el-button
-            v-if="selectedKpi.enabled"
-            type="danger"
-            icon="el-icon-delete"
-            plain
-            @click="$router.push($route.path)"
-            >Eliminar</el-button
-          >
-          <el-button
-            v-else
-            type="success"
-            icon="el-icon-refresh"
-            @click="$router.push($route.path)"
-            >Restaurar</el-button
-          >
+
+          <!-- Isolate delete logic in separate component -->
+          <kpi-delete-button :id="selectedKpi.id"></kpi-delete-button>
         </div>
       </el-card>
     </section>
@@ -125,8 +112,12 @@
 </template>
 
 <script>
+import KpiDeleteButton from '@/components/kpis/KpiDeleteButton.vue';
 export default {
   props: ['id'],
+  components: {
+    KpiDeleteButton,
+  },
   data() {
     return {
       selectedKpi: null,
@@ -154,7 +145,8 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-.properties, .fields {
+.properties,
+.fields {
   text-align: justify;
   margin: auto;
   width: 50%;
@@ -165,7 +157,8 @@ export default {
   width: 100%;
 }
 
-.el-table__row .required-field, .el-table .required-field {
+.el-table__row .required-field,
+.el-table .required-field {
   font-weight: bolder;
 }
 </style>

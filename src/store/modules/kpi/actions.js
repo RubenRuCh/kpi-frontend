@@ -30,6 +30,86 @@ export default {
     });
   },
 
+  async updateKpi(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const kpiData = {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      enabled: true,
+      fields: data.fields,
+    };
+
+    const response = await fetch(`${backendUrl}/kpis/${data.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kpiData),
+    });
+
+    const responseData = await response.json();
+
+    if (!responseData.ok) {
+      // error...
+    }
+
+    context.commit('updateKpi', {
+      ...kpiData,
+      updatedAt: new Date(),
+      // ... more data if needed
+    });
+  },
+
+  async enableKpi(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const kpiData = {
+      ...data,
+    };
+
+    const response = await fetch(`${backendUrl}/kpis/${data.id}/enable`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kpiData),
+    });
+
+    const responseData = await response.json();
+
+    if (!responseData.ok) {
+      // error...
+    }
+
+    context.commit('enableKpi', {
+      ...kpiData,
+      // ... more data if needed
+    });
+  },
+
+  async disableKpi(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const kpiData = {
+      ...data,
+    };
+
+    const response = await fetch(`${backendUrl}/kpis/${data.id}/disable`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kpiData),
+    });
+
+    const responseData = await response.json();
+
+    if (!responseData.ok) {
+      // error...
+    }
+
+    context.commit('disableKpi', {
+      ...kpiData,
+      // ... more data if needed
+    });
+  },
+
   async loadKpis(context, data) {
     if (!data.forceRefresh && !context.getters.shouldUpdate) return;
 
@@ -57,11 +137,17 @@ export default {
           required: fieldData.required,
           requiredText: fieldData.required ? 'Sí' : 'No',
           type: fieldData.type,
+          values: fieldData.values,
           value: fieldData.kpi_field.value,
           maxlength: fieldData.maxlength,
           createdAt: fieldData.createdAt,
           updatedAt: fieldData.updatedAt,
         };
+
+        // Make sure we save number value
+        if (fieldData.type == 'number') {
+          field.value = parseInt(field.value);
+        }
 
         fields.push(field);
       }

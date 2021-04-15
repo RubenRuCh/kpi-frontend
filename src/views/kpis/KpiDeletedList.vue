@@ -7,11 +7,8 @@
       <el-button type="primary" v-else :loading="isLoading"
         >Cargando...</el-button
       >
-      <el-button type="primary" @click="$router.push('/kpis/create')"
-        >Nuevo indicador</el-button
-      >
     </div>
-    <h1>Indicadores activos</h1>
+    <h1>Indicadores eliminados</h1>
 
     <el-table
       v-if="isLoading || hasKpis"
@@ -20,7 +17,7 @@
       stripe
       fit
       :data="
-        enabledKpis.filter(
+        disabledKpis.filter(
           (kpi) =>
             !search || kpi.title.toLowerCase().includes(search.toLowerCase())
         )
@@ -90,11 +87,11 @@ export default {
     };
   },
   computed: {
-    enabledKpis() {
-      return this.$store.getters['kpis/enabledKpis'];
+    disabledKpis() {
+      return this.$store.getters['kpis/disabledKpis'];
     },
     hasKpis() {
-      return !this.isLoading && this.enabledKpis.length > 0;
+      return !this.isLoading && this.disabledKpis.length > 0;
     },
   },
   methods: {
@@ -134,13 +131,14 @@ export default {
 </script>
 
 <style scoped>
-.controls {
-  display: flex;
-  justify-content: space-between;
-}
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

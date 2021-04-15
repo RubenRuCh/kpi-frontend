@@ -63,14 +63,6 @@
             @click="$router.push('/fields/' + scope.row.id + '/edit')"
             >Modificar</el-button
           >
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            plain
-            disabled
-            @click="$router.push('/fields/' + scope.row.id + '/delete')"
-            >Eliminar</el-button
-          >
         </template>
       </el-table-column>
     </el-table>

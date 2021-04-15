@@ -80,50 +80,52 @@
       </el-form-item>
 
       <!-- Choosen fields  -->
-      <el-form-item
-        v-for="(field, index) in form.fields"
-        :key="field.id"
-        :label="field.title"
-        :prop="'fields.' + index + '.value'"
-        :rules="getFieldRules(field)"
-        :class="field.required ? 'required' : ''"
-      >
-        <template #label>
-          {{ field.title }}
+      <transition-group name="field" mode="out-in">
+        <el-form-item
+          v-for="(field, index) in form.fields"
+          :key="field.id"
+          :label="field.title"
+          :prop="'fields.' + index + '.value'"
+          :rules="getFieldRules(field)"
+          :class="field.required ? 'required' : ''"
+        >
+          <template #label>
+            {{ field.title }}
 
-          <el-button
-            v-if="!field.required"
-            @click="resetUnrequiredField(field)"
-            type="danger"
-            icon="el-icon-delete"
-            circle
-            style="margin-left: 1rem"
-          ></el-button>
-        </template>
+            <el-button
+              v-if="!field.required"
+              @click="resetUnrequiredField(field)"
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              style="margin-left: 1rem"
+            ></el-button>
+          </template>
 
-        <!-- Text and textarea -->
-        <el-input
-          v-if="field.type != 'radio' && field.type != 'number'"
-          :type="field.type"
-          v-model="field.value"
-        ></el-input>
+          <!-- Text and textarea -->
+          <el-input
+            v-if="field.type != 'radio' && field.type != 'number'"
+            :type="field.type"
+            v-model="field.value"
+          ></el-input>
 
-        <!-- Number -->
-        <el-input-number
-          v-else-if="field.type == 'number'"
-          v-model.number="field.value"
-        ></el-input-number>
+          <!-- Number -->
+          <el-input-number
+            v-else-if="field.type == 'number'"
+            v-model.number="field.value"
+          ></el-input-number>
 
-        <!-- Array / radio -->
-        <el-radio-group v-else v-model="field.value">
-          <el-radio
-            v-for="possibleValue in field.values"
-            :key="possibleValue"
-            :label="possibleValue"
-            >{{ possibleValue }}</el-radio
-          >
-        </el-radio-group>
-      </el-form-item>
+          <!-- Array / radio -->
+          <el-radio-group v-else v-model="field.value">
+            <el-radio
+              v-for="possibleValue in field.values"
+              :key="possibleValue"
+              :label="possibleValue"
+              >{{ possibleValue }}</el-radio
+            >
+          </el-radio-group>
+        </el-form-item>
+      </transition-group>
 
       <!-- Form submit / cancel -->
       <el-form-item>
@@ -140,7 +142,7 @@
 import useNotify from '@/hooks/notify.js';
 
 export default {
-  props: ['id'],
+  props: ['id', 'clone'],
   emits: ['save-data'],
   setup() {
     const { notify } = useNotify();
@@ -161,6 +163,7 @@ export default {
   },
   computed: {
     submitText() {
+      if (this.isClone) return 'Clonar indicador';
       return this.id ? 'Actualizar indicador' : 'Crear indicador';
     },
     notifyMessage() {
@@ -259,11 +262,14 @@ export default {
   },
 
   async created() {
+    if(!this.isClone) this.isClone = false;
+
     // First, make sure we have updated fields available and loaded in Vuex
     await this.$store.dispatch('fields/loadFields', { forceRefresh: true });
 
     // Now, load all fields (required and unrequired separately)
-    this.form.fields = this.$store.getters['fields/requiredFields'];
+    const requiredFields = this.$store.getters['fields/requiredFields'];
+    this.form.fields = requiredFields;
 
     this.availableUnrequiredFields = this.$store.getters[
       'fields/unrequiredFields'
@@ -276,6 +282,32 @@ export default {
           this.$store.getters['kpis/kpis'].find((kpi) => kpi.id == this.id)
         )
       ); // Clone Kpi instead of editing it directly
+
+
+      // Make sure unrequired fields are added in form and eliminated from select
+      for (const field of this.form.fields) {
+        if (!field.required) {
+          // Get the index in availableUnrequiredFields
+          const fieldIndex = this.availableUnrequiredFields.findIndex(
+            (avalableField) => avalableField.id === field.id
+          );
+
+          // Remove choosen field from availableUnrequiredFields
+          this.availableUnrequiredFields.splice(fieldIndex, 1);
+        }
+      }
+
+
+      // Make sure we include all required fields in modification form, in case we are modifying an old KPI
+      for (const requiredField of requiredFields) {
+        if(!this.form.fields.find((field) => field.id === requiredField.id)) this.form.fields.push(requiredField);
+      }
+
+      // Finally, sort fields array by required, id and name
+      this.form.fields.sort(function (a, b) {
+        return a.required && b.required || a.id - b.id || a.name.localeCompare(b.name);
+      });
+
     }
   },
 };
@@ -299,5 +331,29 @@ export default {
 }
 .required {
   font-weight: bolder;
+}
+
+.field-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.field-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.field-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.field-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.field-enter-to,
+.field-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>

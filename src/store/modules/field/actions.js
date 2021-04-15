@@ -29,6 +29,7 @@ export default {
       createdAt: responseData.createdAt,
       updatedAt: responseData.updatedAt,
       requiredText: responseData.required ? 'Sí' : 'No',
+      value: data.type == 'number' ? 0 : '',
       // ... more data if needed
     });
   },
@@ -61,7 +62,7 @@ export default {
     context.commit('updateField', {
       ...fieldData,
       updatedAt: new Date(),
-      requiredText: responseData.required ? 'Sí' : 'No',
+      requiredText: fieldData.required ? 'Sí' : 'No',
       // ... more data if needed
     });
   },
@@ -89,7 +90,7 @@ export default {
         required: responseData[key].required,
         requiredText: responseData[key].required ? 'Sí' : 'No',
         type: responseData[key].type,
-        value: '',
+        value: responseData[key].type == 'number' ? 0 : '',
         values: responseData[key].values,
         maxlength: responseData[key].maxlength,
         createdAt: responseData[key].createdAt,
