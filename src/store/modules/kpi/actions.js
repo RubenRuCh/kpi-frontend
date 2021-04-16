@@ -10,8 +10,8 @@ export default {
     };
 
     const response = await fetch(`${backendUrl}/kpis`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),
     });
 
@@ -21,7 +21,7 @@ export default {
       // error...
     }
 
-    context.commit("addKpi", {
+    context.commit('addKpi', {
       ...kpiData,
       id: responseData.id,
       createdAt: responseData.createdAt,
@@ -42,8 +42,8 @@ export default {
     };
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),
     });
 
@@ -53,7 +53,7 @@ export default {
       // error...
     }
 
-    context.commit("updateKpi", {
+    context.commit('updateKpi', {
       ...kpiData,
       updatedAt: new Date(),
       // ... more data if needed
@@ -68,8 +68,8 @@ export default {
     };
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}/enable`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),
     });
 
@@ -79,7 +79,7 @@ export default {
       // error...
     }
 
-    context.commit("enableKpi", {
+    context.commit('enableKpi', {
       ...kpiData,
       // ... more data if needed
     });
@@ -93,8 +93,8 @@ export default {
     };
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}/disable`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(kpiData),
     });
 
@@ -104,7 +104,7 @@ export default {
       // error...
     }
 
-    context.commit("disableKpi", {
+    context.commit('disableKpi', {
       ...kpiData,
       // ... more data if needed
     });
@@ -119,7 +119,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || "Failed to fetch!");
+      const error = new Error(responseData.message || 'Failed to fetch!');
       throw error;
     }
 
@@ -135,7 +135,7 @@ export default {
           title: fieldData.title,
           description: fieldData.description,
           required: fieldData.required,
-          requiredText: fieldData.required ? "Sí" : "No",
+          requiredText: fieldData.required ? 'Sí' : 'No',
           type: fieldData.type,
           values: fieldData.values,
           value: fieldData.kpi_field.value,
@@ -145,7 +145,7 @@ export default {
         };
 
         // Make sure we save number value
-        if (fieldData.type == "number") {
+        if (fieldData.type == 'number') {
           field.value = parseInt(field.value);
         }
 
@@ -165,7 +165,7 @@ export default {
       kpis.push(kpi);
     }
 
-    context.commit("setKpis", kpis);
-    context.commit("setFetchTimestamp");
+    context.commit('setKpis', kpis);
+    context.commit('setFetchTimestamp');
   },
 };

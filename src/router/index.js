@@ -1,82 +1,91 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
 
 // import store from './store/index.js';
 
 // Normal imports
-import Home from "../views/Home.vue";
-import KpiList from "../views/kpis/KpiList.vue";
-import NotFound from "../views/NotFound.vue";
+import Home from '../views/Home.vue';
+import KpiList from '../views/kpis/KpiList.vue';
+import NotFound from '../views/NotFound.vue';
 
 /* Lazy / async imports */
 // KPI
 
-const KpiDeletedList = () => import("../views/kpis/KpiDeletedList.vue");
-const KpiDetail = () => import("../views/kpis/KpiDetail.vue");
-const KpiRegistration = () => import("../views/kpis/KpiRegistration.vue");
-const KpiModification = () => import("../views/kpis/KpiModification.vue");
+const KpiDeletedList = () => import('../views/kpis/KpiDeletedList.vue');
+const KpiDetail = () => import('../views/kpis/KpiDetail.vue');
+const KpiRegistration = () => import('../views/kpis/KpiRegistration.vue');
+const KpiModification = () => import('../views/kpis/KpiModification.vue');
 
 // Field
-const FieldDetail = () => import("../views/fields/FieldDetail.vue");
-const FieldRegistration = () => import("../views/fields/FieldRegistration.vue");
-const FieldModification = () => import("../views/fields/FieldModification.vue");
+const FieldDetail = () => import('../views/fields/FieldDetail.vue');
+const FieldRegistration = () => import('../views/fields/FieldRegistration.vue');
+const FieldModification = () => import('../views/fields/FieldModification.vue');
 
 // Auth
 // const UserAuth = () => import('./views/auth/UserAuth.vue');
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
   },
   {
-    path: "/kpis",
-    name: "KPIs",
+    path: '/kpis',
+    name: 'KPIs',
     component: KpiList,
   },
   {
-    path: "/kpis/deleted",
+    path: '/kpis/deleted',
     component: KpiDeletedList,
   },
   {
-    path: "/kpis/create",
+    name: 'Create',
+    path: '/kpis/create',
     component: KpiRegistration,
   },
   {
-    path: "/kpis/:id",
+    path: '/kpis/:id',
     component: KpiDetail,
     props: true,
   },
   {
-    path: "/kpis/:id/edit",
+    path: '/kpis/:id/edit',
     component: KpiModification,
     props: true,
   },
   {
-    path: "/fields",
-    name: "Fields",
+    path: '/kpis/:id/clone',
+    redirect: (to) => ({
+      name: 'Create',
+      query: { clone: to.params.id },
+    }),
+    props: true,
+  },
+  {
+    path: '/fields',
+    name: 'Fields',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/fields/FieldList.vue"),
+      import(/* webpackChunkName: "about" */ '../views/fields/FieldList.vue'),
   },
   {
-    path: "/fields/create",
+    path: '/fields/create',
     component: FieldRegistration,
   },
   {
-    path: "/fields/:id",
+    path: '/fields/:id',
     component: FieldDetail,
     props: true,
   },
   {
-    path: "/fields/:id/edit",
+    path: '/fields/:id/edit',
     component: FieldModification,
     props: true,
   },
   // { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
-  { path: "/:notFound(.*)", component: NotFound },
+  { path: '/:notFound(.*)', component: NotFound },
 ];
 
 const router = createRouter({
