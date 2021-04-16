@@ -131,13 +131,14 @@ export default {
   components: {
     KpiDeleteButton,
   },
+  
   data() {
     return {
-      selectedKpiId: null,
       selectedKpi: null,
       search: '',
     };
   },
+  
   computed: {
     nextKpi() {
       const allKpis = this.$store.getters['kpis/kpis'];
@@ -154,6 +155,7 @@ export default {
       return allKpis[--selectedKpiIndex];
     },
   },
+
   methods: {
     goingPrev() {
       this.$emit('prev');
@@ -172,18 +174,12 @@ export default {
     },
     fetchKpi() {
       this.selectedKpi = this.$store.getters['kpis/kpis'].find(
-        (kpi) => kpi.id == this.selectedKpiId
+        (kpi) => kpi.id == this.id
       );
     },
   },
   created() {
     // Take id from props
-    this.selectedKpiId = this.id;
-    this.fetchKpi();
-  },
-  updated() {
-    // Take id from route params
-    this.selectedKpiId = this.$route.params.id;
     this.fetchKpi();
   },
 };
