@@ -8,16 +8,16 @@
 </template>
 
 <script>
-import FieldForm from '@/components/fields/FieldForm.vue';
+import FieldForm from "@/components/fields/FieldForm.vue";
 
 export default {
   components: {
-    FieldForm
+    FieldForm,
   },
   methods: {
-    saveData(data){
-      this.$store.dispatch('fields/registerField', data);
-      this.$router.replace('/fields');
+    saveData(data) {
+      this.$store.dispatch("fields/registerField", data);
+      this.$router.replace("/fields");
     },
   },
 };

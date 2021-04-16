@@ -53,7 +53,7 @@
             @click="$router.push($route.path + '/edit')"
             >Modificar</el-button
           >
-          
+
           <el-button
             type="danger"
             icon="el-icon-delete"
@@ -70,14 +70,14 @@
 
 <script>
 export default {
-  props: ['id'],
+  props: ["id"],
   data() {
     return {
       selectedField: null,
     };
   },
   created() {
-    this.selectedField = this.$store.getters['fields/fields'].find(
+    this.selectedField = this.$store.getters["fields/fields"].find(
       (field) => field.id == this.id
     );
   },

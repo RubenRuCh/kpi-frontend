@@ -38,4 +38,3 @@
     </el-menu>
   </section>
 </template>
-

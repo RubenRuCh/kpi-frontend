@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import useNotify from '@/hooks/notify.js';
+import useNotify from "@/hooks/notify.js";
 
 export default {
   setup() {
@@ -87,15 +87,15 @@ export default {
     return {
       isLoading: false,
       error: null,
-      search: '',
+      search: "",
     };
   },
   computed: {
     fields() {
-      return this.$store.getters['fields/fields'];
+      return this.$store.getters["fields/fields"];
     },
     hasFields() {
-      return !this.isLoading && this.$store.getters['fields/hasFields'];
+      return !this.isLoading && this.$store.getters["fields/hasFields"];
     },
   },
   methods: {
@@ -103,21 +103,21 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.$store.dispatch('fields/loadFields', {
+        await this.$store.dispatch("fields/loadFields", {
           forceRefresh: refresh,
         });
         if (refresh) {
           this.notify(
-            'Atributos actualizados',
-            'Se ha actualizado correctamente la lista de atributos',
-            'success'
+            "Atributos actualizados",
+            "Se ha actualizado correctamente la lista de atributos",
+            "success"
           );
         }
       } catch (error) {
         this.error =
-          error.message || 'Algo ha salido mal durante la carga de los datos';
+          error.message || "Algo ha salido mal durante la carga de los datos";
 
-        this.notify('Ups...', `Error: ${this.error}`, 'error');
+        this.notify("Ups...", `Error: ${this.error}`, "error");
       }
 
       this.isLoading = false;
@@ -127,9 +127,9 @@ export default {
     },
     tableRowClassName({ row }) {
       if (row.required) {
-        return 'required-field';
+        return "required-field";
       }
-      return '';
+      return "";
     },
   }, // methods
 
