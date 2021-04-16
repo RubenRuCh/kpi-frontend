@@ -14,13 +14,13 @@
 <script>
 import KpiItem from '@/components/kpis/KpiItem.vue';
 export default {
+  components: {
+    KpiItem,
+  },
   data() {
     return {
       transitionName: '',
     };
-  },
-  components: {
-    KpiItem,
   },
   methods: {
     goingPrev() {
