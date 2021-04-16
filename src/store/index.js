@@ -1,11 +1,11 @@
-import { createStore } from 'vuex';
-import rootGetters from './getters.js';
-import rootMutations from './mutations.js';
-import rootActions from './actions.js';
+import { createStore } from "vuex";
+import rootGetters from "./getters.js";
+import rootMutations from "./mutations.js";
+import rootActions from "./actions.js";
 
 // Vuex modules
-import kpiModule from './modules/kpi/index.js';
-import fieldModule from './modules/field/index.js';
+import kpiModule from "./modules/kpi/index.js";
+import fieldModule from "./modules/field/index.js";
 
 const store = createStore({
   modules: {
@@ -18,7 +18,7 @@ const store = createStore({
 
   state() {
     return {
-      backendUrl: 'http://localhost:8080/api',
+      backendUrl: "http://localhost:8080/api",
     };
   },
 });

@@ -8,15 +8,15 @@
 </template>
 
 <script>
-import KpiForm from '@/components/kpis/KpiForm.vue';
+import KpiForm from "@/components/kpis/KpiForm.vue";
 
 export default {
   components: {
-    KpiForm
+    KpiForm,
   },
   methods: {
-    saveData(data){
-      this.$store.dispatch('kpis/updateKpi', data);
+    saveData(data) {
+      this.$store.dispatch("kpis/updateKpi", data);
       this.$router.replace(`/kpis/${this.$route.params.id}`);
     },
   },

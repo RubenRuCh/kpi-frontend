@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import useNotify from '@/hooks/notify.js';
+import useNotify from "@/hooks/notify.js";
 
 export default {
   setup() {
@@ -83,12 +83,12 @@ export default {
     return {
       isLoading: false,
       error: null,
-      search: '',
+      search: "",
     };
   },
   computed: {
     disabledKpis() {
-      return this.$store.getters['kpis/disabledKpis'];
+      return this.$store.getters["kpis/disabledKpis"];
     },
     hasKpis() {
       return !this.isLoading && this.disabledKpis.length > 0;
@@ -99,21 +99,21 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.$store.dispatch('kpis/loadKpis', {
+        await this.$store.dispatch("kpis/loadKpis", {
           forceRefresh: refresh,
         });
         if (refresh) {
           this.notify(
-            'KPIs actualizados',
-            'Se ha actualizado correctamente la lista de indicadores',
-            'success'
+            "KPIs actualizados",
+            "Se ha actualizado correctamente la lista de indicadores",
+            "success"
           );
         }
       } catch (error) {
         this.error =
-          error.message || 'Algo ha salido mal durante la carga de los datos';
+          error.message || "Algo ha salido mal durante la carga de los datos";
 
-        this.notify('Ups...', `Error: ${this.error}`, 'error');
+        this.notify("Ups...", `Error: ${this.error}`, "error");
       } finally {
         this.isLoading = false;
       }

@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  props: ['id', 'title', 'description', 'required'],
+  props: ["id", "title", "description", "required"],
   computed: {
     deleteUrl() {
       return `/fields/${this.id}/delete`;

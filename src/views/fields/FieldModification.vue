@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import FieldForm from '@/components/fields/FieldForm.vue';
+import FieldForm from "@/components/fields/FieldForm.vue";
 
 export default {
   components: {
@@ -16,10 +16,10 @@ export default {
   },
   methods: {
     async saveData(data) {
-      await this.$store.dispatch('fields/updateField', data);
+      await this.$store.dispatch("fields/updateField", data);
 
       // Load Kpis again to make sure changes in fields propagate through app
-      await this.$store.dispatch('kpis/loadKpis', {
+      await this.$store.dispatch("kpis/loadKpis", {
         forceRefresh: true,
       });
       this.$router.replace(`/fields/${this.$route.params.id}`);

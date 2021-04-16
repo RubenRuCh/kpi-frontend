@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  props: ['id'],
+  props: ["id"],
   data() {
     return {
       selectedKpi: null,
@@ -32,14 +32,14 @@ export default {
   },
   methods: {
     deleteKpi(id) {
-      this.$store.dispatch('kpis/disableKpi', {id});
+      this.$store.dispatch("kpis/disableKpi", { id });
     },
     restoreKpi(id) {
-      this.$store.dispatch('kpis/enableKpi', {id});
+      this.$store.dispatch("kpis/enableKpi", { id });
     },
   },
   created() {
-    this.selectedKpi = this.$store.getters['kpis/kpis'].find(
+    this.selectedKpi = this.$store.getters["kpis/kpis"].find(
       (kpi) => kpi.id == this.id
     );
   },

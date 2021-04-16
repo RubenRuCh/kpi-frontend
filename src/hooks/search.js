@@ -1,8 +1,8 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch } from "vue";
 
 export default function useSearch(items, searchProp) {
-  const enteredSearchTerm = ref('');
-  const activeSearchTerm = ref('');
+  const enteredSearchTerm = ref("");
+  const activeSearchTerm = ref("");
 
   const availableItems = computed(function () {
     let filteredItems = [];
