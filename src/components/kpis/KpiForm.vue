@@ -139,11 +139,11 @@
 </template>
 
 <script>
-import useNotify from "@/hooks/notify.js";
+import useNotify from '@/hooks/notify.js';
 
 export default {
-  props: ["id", "clone"],
-  emits: ["save-data"],
+  props: ['id', 'clone'],
+  emits: ['save-data'],
   setup() {
     const { notify } = useNotify();
 
@@ -155,40 +155,43 @@ export default {
       availableUnrequiredFields: [],
       choosenUnrequiredFields: [],
       form: {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         fields: [],
       },
     };
   },
   computed: {
     submitText() {
-      if (this.isClone) return "Clonar indicador";
-      return this.id ? "Actualizar indicador" : "Crear indicador";
+      if (this.isClone) return `Clonar indicador nº ${this.form.id}`;
+      return this.id ? 'Actualizar indicador' : 'Crear indicador';
     },
     notifyMessage() {
       return this.id
-        ? "El indicador ha sido modificado correctamente"
-        : "Se ha creado el nuevo indicador correctamente";
+        ? 'El indicador ha sido modificado correctamente'
+        : 'Se ha creado el nuevo indicador correctamente';
     },
     notifyTitle() {
       return this.id
         ? `Indicador actualizado: ${this.form.title}`
         : `Nuevo indicador: ${this.form.title}`;
     },
+    isClone() {
+      return this.$route.query.clone != undefined;
+    },
   },
   methods: {
     submitForm() {
-      this.$refs["kpiForm"].validate((valid) => {
+      this.$refs['kpiForm'].validate((valid) => {
         if (valid) {
-          this.$emit("save-data", this.form);
+          this.$emit('save-data', this.form);
 
-          this.notify(this.notifyTitle, this.notifyMessage, "success");
+          this.notify(this.notifyTitle, this.notifyMessage, 'success');
         } else {
           this.notify(
             `Error`,
-            "El formulario no es válido. Revisa que todos los campos han sido correctamente completados",
-            "error"
+            'El formulario no es válido. Revisa que todos los campos han sido correctamente completados',
+            'error'
           );
 
           return false;
@@ -203,7 +206,7 @@ export default {
         rules.push({
           required: true,
           message: `Actualmente el atributo ${field.title} es obligatorio a la hora de crear un KPI`,
-          trigger: ["blur", "change"],
+          trigger: ['blur', 'change'],
         });
       }
 
@@ -212,17 +215,17 @@ export default {
         rules.push({
           max: field.maxlength,
           message: `La longitud máxima de este atributo es de ${field.maxlength}`,
-          trigger: ["blur", "change"],
+          trigger: ['blur', 'change'],
         });
       }
 
       // Fields type number
-      if (field.type == "number") {
+      if (field.type == 'number') {
         rules.push({
-          type: "number",
+          type: 'number',
           max: 20,
           message: `Deber ser un número`,
-          trigger: "change",
+          trigger: 'change',
         });
       }
 
@@ -262,26 +265,35 @@ export default {
   },
 
   async created() {
-    if (!this.isClone) this.isClone = false;
+    var kpiId = null;
+    if (this.isClone) kpiId = this.$route.query.clone;
+    else if (this.id) kpiId = this.id;
 
     // First, make sure we have updated fields available and loaded in Vuex
-    await this.$store.dispatch("fields/loadFields", { forceRefresh: true });
+    await this.$store.dispatch('fields/loadFields', { forceRefresh: true });
 
     // Now, load all fields (required and unrequired separately)
-    const requiredFields = this.$store.getters["fields/requiredFields"];
+    const requiredFields = this.$store.getters['fields/requiredFields'];
     this.form.fields = requiredFields;
 
     this.availableUnrequiredFields = this.$store.getters[
-      "fields/unrequiredFields"
+      'fields/unrequiredFields'
     ];
 
-    // If id exist, mean this is an update form
-    if (this.id) {
-      this.form = JSON.parse(
-        JSON.stringify(
-          this.$store.getters["kpis/kpis"].find((kpi) => kpi.id == this.id)
-        )
-      ); // Clone Kpi instead of editing it directly
+    // If id exist, mean this is an update or clone form
+    if (kpiId) {
+      // Make sure id passed by url actually exist
+      try {
+        // Clone Kpi instead of editing it directly
+        this.form = JSON.parse(
+          JSON.stringify(
+            this.$store.getters['kpis/kpis'].find((kpi) => kpi.id == kpiId)
+          )
+        );
+      } catch (e) {
+        this.notify('Error', 'El indicador buscado no existe', 'error');
+        this.$router.replace('/kpis');
+      }
 
       // Make sure unrequired fields are added in form and eliminated from select
       for (const field of this.form.fields) {

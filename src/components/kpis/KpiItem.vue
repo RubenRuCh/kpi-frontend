@@ -115,6 +115,14 @@
             >Modificar</el-button
           >
 
+           <el-button
+            type="warning"
+            icon="el-icon-copy-document"
+            plain
+            @click="$router.push($route.path + '/clone')"
+            >Clonar</el-button
+          >
+
           <!-- Isolate delete logic in separate component -->
           <kpi-delete-button :id="selectedKpi.id"></kpi-delete-button>
         </div>
@@ -131,7 +139,7 @@ export default {
   components: {
     KpiDeleteButton,
   },
-  
+
   data() {
     return {
       selectedKpi: null,
@@ -185,7 +193,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .actions {
   display: flex;
   justify-content: space-between;
