@@ -12,22 +12,22 @@
 </template>
 
 <script>
-import KpiItem from '@/components/kpis/KpiItem.vue';
+import KpiItem from "@/components/kpis/KpiItem.vue";
 export default {
   components: {
     KpiItem,
   },
   data() {
     return {
-      transitionName: '',
+      transitionName: "",
     };
   },
   methods: {
     goingPrev() {
-      this.transitionName = 'prevkpi';
+      this.transitionName = "prevkpi";
     },
     goingNext() {
-      this.transitionName = 'nextkpi';
+      this.transitionName = "nextkpi";
     },
   },
 };

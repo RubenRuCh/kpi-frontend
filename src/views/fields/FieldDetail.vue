@@ -12,22 +12,22 @@
 </template>
 
 <script>
-import FieldItem from '@/components/fields/FieldItem.vue';
+import FieldItem from "@/components/fields/FieldItem.vue";
 export default {
   components: {
     FieldItem,
   },
   data() {
     return {
-      transitionName: '',
+      transitionName: "",
     };
   },
   methods: {
     goingPrev() {
-      this.transitionName = 'prevfield';
+      this.transitionName = "prevfield";
     },
     goingNext() {
-      this.transitionName = 'nextfield';
+      this.transitionName = "nextfield";
     },
   },
 };
