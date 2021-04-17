@@ -115,7 +115,7 @@
             >Modificar</el-button
           >
 
-           <el-button
+          <el-button
             type="warning"
             icon="el-icon-copy-document"
             plain
@@ -132,10 +132,10 @@
 </template>
 
 <script>
-import KpiDeleteButton from '@/components/kpis/KpiDeleteButton.vue';
+import KpiDeleteButton from "@/components/kpis/KpiDeleteButton.vue";
 export default {
-  props: ['id'],
-  emits: ['prev', 'next'],
+  props: ["id"],
+  emits: ["prev", "next"],
   components: {
     KpiDeleteButton,
   },
@@ -143,20 +143,20 @@ export default {
   data() {
     return {
       selectedKpi: null,
-      search: '',
+      search: "",
     };
   },
-  
+
   computed: {
     nextKpi() {
-      const allKpis = this.$store.getters['kpis/kpis'];
+      const allKpis = this.$store.getters["kpis/kpis"];
       let selectedKpiIndex = allKpis.findIndex(
         (kpi) => kpi.id == this.selectedKpi.id
       );
       return allKpis[++selectedKpiIndex];
     },
     prevKpi() {
-      const allKpis = this.$store.getters['kpis/kpis'];
+      const allKpis = this.$store.getters["kpis/kpis"];
       let selectedKpiIndex = allKpis.findIndex(
         (kpi) => kpi.id == this.selectedKpi.id
       );
@@ -166,22 +166,22 @@ export default {
 
   methods: {
     goingPrev() {
-      this.$emit('prev');
-      this.$router.push('/kpis/' + this.prevKpi.id);
+      this.$emit("prev");
+      this.$router.push("/kpis/" + this.prevKpi.id);
     },
     goingNext() {
-      this.$emit('next');
-      this.$router.push('/kpis/' + this.nextKpi.id);
+      this.$emit("next");
+      this.$router.push("/kpis/" + this.nextKpi.id);
     },
 
     tableRowClassName({ row }) {
       if (row.required) {
-        return 'required-field';
+        return "required-field";
       }
-      return '';
+      return "";
     },
     fetchKpi() {
-      this.selectedKpi = this.$store.getters['kpis/kpis'].find(
+      this.selectedKpi = this.$store.getters["kpis/kpis"].find(
         (kpi) => kpi.id == this.id
       );
     },
@@ -215,7 +215,6 @@ export default {
   font-weight: bolder;
 }
 
-
 .prevkpi-enter-from {
   opacity: 0;
   transform: translateX(-300px);
@@ -226,16 +225,18 @@ export default {
   transform: translateX(300px);
 }
 
-.prevkpi-enter-active, .nextkpi-enter-active {
+.prevkpi-enter-active,
+.nextkpi-enter-active {
   transition: all 0.4s ease-out;
 }
 
-.prevkpi-leave-active, .nextkpi-leave-active {
+.prevkpi-leave-active,
+.nextkpi-leave-active {
   transition: all 0.4s ease-in;
 }
 
 .prevkpi-enter-to,
-.prevkpi-leave-from, 
+.prevkpi-leave-from,
 .nextkpi-enter-to,
 .nextkpi-leave-from {
   opacity: 1;
@@ -251,5 +252,4 @@ export default {
   opacity: 0;
   transform: translateX(-300px);
 }
-
 </style>

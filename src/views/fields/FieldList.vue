@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="always">
+  <el-card shadow="always" class="main-card">
     <div class="controls">
       <el-button type="primary" v-if="!isLoading" @click="loadFields(true)"
         >Actualizar datos</el-button

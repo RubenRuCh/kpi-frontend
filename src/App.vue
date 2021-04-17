@@ -88,4 +88,9 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
+.main-card {
+  width: 100%;
+  height: 100%;
+}
 </style>
