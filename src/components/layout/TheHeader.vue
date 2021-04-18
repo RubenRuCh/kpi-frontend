@@ -6,8 +6,13 @@
       mode="horizontal"
       router
     >
-      <el-menu-item index="/">Gestión de KPIs</el-menu-item>
+      <el-menu-item index="/">
+        <i class="el-icon-s-home"></i>
+        <template #title>Home</template>
+      </el-menu-item>
+
       <el-submenu index="/kpis">
+
         <template #title>
           <i class="el-icon-s-marketing"></i>
           <span>Indicadores</span>
@@ -19,6 +24,7 @@
           <el-menu-item index="/kpis">KPIs activos</el-menu-item>
           <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
         </el-submenu>
+
       </el-submenu>
 
       <el-menu-item index="/register">

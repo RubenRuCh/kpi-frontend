@@ -12,6 +12,11 @@
       element-loading-spinner="el-icon-loading"
       router
     >
+      <el-menu-item index="/">
+        <i class="el-icon-s-home"></i>
+        <template #title>Home</template>
+      </el-menu-item>
+
       <el-submenu index="/kpis">
         <template #title>
           <i class="el-icon-s-marketing"></i>
@@ -26,12 +31,6 @@
           <el-menu-item index="/kpis">KPIs activos</el-menu-item>
           <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
         </el-menu-item-group>
-
-        <!-- 
-          <el-submenu index="1-4">
-            <template #title><span>item four</span></template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-submenu> -->
       </el-submenu>
 
       <el-menu-item index="/register">
