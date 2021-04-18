@@ -17,7 +17,7 @@ export default {
 
     const responseData = await response.json();
 
-    if (!responseData.ok) {
+    if (!response.ok || !responseData) {
       const error = new Error(
         response.message || `Failed to create kpi: ${data.title}`
       );
@@ -52,7 +52,7 @@ export default {
 
     const responseData = await response.json();
 
-    if (!responseData.ok) {
+    if (!response.ok || !responseData) {
       const error = new Error(
         response.message || `Failed to update kpi nº ${data.id}`
       );
@@ -81,7 +81,7 @@ export default {
 
     const responseData = await response.json();
 
-    if (!responseData.ok) {
+    if (!response.ok || !responseData) {
       const error = new Error(
         response.message || `Failed to enable kpi nº ${data.id}`
       );
@@ -109,7 +109,7 @@ export default {
 
     const responseData = await response.json();
 
-    if (!responseData.ok) {
+    if (!response.ok || !responseData) {
       const error = new Error(
         response.message || `Failed to disable kpi nº ${data.id}`
       );
@@ -130,7 +130,7 @@ export default {
     const response = await fetch(`${backendUrl}/kpis`);
     const responseData = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !responseData) {
       const error = new Error(responseData.message || 'Failed to fetch kpis!');
       throw error;
     }
