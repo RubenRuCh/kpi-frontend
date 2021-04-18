@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import useNotify from '@/hooks/notify.js';
+import useNotify from "@/hooks/notify.js";
 
 export default {
   setup() {
@@ -64,17 +64,17 @@ export default {
   },
   data() {
     var checkUser = (rule, value, callback) => {
-      if (value === '') {
+      if (value === "") {
         return callback(
           new Error(
-            'Por favor, introduce el usuario con el que desea iniciar sesión'
+            "Por favor, introduce el usuario con el que desea iniciar sesión"
           )
         );
       }
       setTimeout(() => {
         if (!this.userExists) {
           callback(
-            new Error('El usuario debe estar dado de alta en el Ayuntamiento')
+            new Error("El usuario debe estar dado de alta en el Ayuntamiento")
           );
         } else {
           callback();
@@ -83,21 +83,21 @@ export default {
     };
 
     var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Por favor, introduce la contraseña'));
+      if (value === "") {
+        callback(new Error("Por favor, introduce la contraseña"));
       } else {
-        if (this.authForm.checkPass !== '') {
-          this.$refs.authForm.validateField('checkPass');
+        if (this.authForm.checkPass !== "") {
+          this.$refs.authForm.validateField("checkPass");
         }
         callback();
       }
     };
 
     var validateConfirmPass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Por favor, introduce la contraseña otra vez'));
+      if (value === "") {
+        callback(new Error("Por favor, introduce la contraseña otra vez"));
       } else if (value !== this.authForm.pass) {
-        callback(new Error('Las contraseñas introducidas no coinciden'));
+        callback(new Error("Las contraseñas introducidas no coinciden"));
       } else {
         callback();
       }
@@ -109,15 +109,15 @@ export default {
       isLoading: false,
       userExists: true,
       authForm: {
-        user: '',
-        pass: '',
-        checkPass: '',
+        user: "",
+        pass: "",
+        checkPass: "",
       },
       rules: {
-        user: [{ validator: checkUser, trigger: ['blur', 'change'] }],
-        pass: [{ validator: validatePass, trigger: ['blur', 'change'] }],
+        user: [{ validator: checkUser, trigger: ["blur", "change"] }],
+        pass: [{ validator: validatePass, trigger: ["blur", "change"] }],
         checkPass: [
-          { validator: validateConfirmPass, trigger: ['blur', 'change'] },
+          { validator: validateConfirmPass, trigger: ["blur", "change"] },
         ],
       },
     };
@@ -143,13 +143,13 @@ export default {
         if (valid) {
           try {
             // Check if we are here because an autologout
-            const didAutoLogout = this.$store.getters['auth/didAutoLogout'];
-            await this.$store.dispatch('auth/login', actionPayload);
+            const didAutoLogout = this.$store.getters["auth/didAutoLogout"];
+            await this.$store.dispatch("auth/login", actionPayload);
 
             this.notify(
-              'Inicio de sesión',
+              "Inicio de sesión",
               `Se ha iniciado sesión correctamente. Usuario: ${this.authForm.user}`,
-              'success'
+              "success"
             );
 
             // If we are here because an autologout, just go back after login
@@ -158,18 +158,18 @@ export default {
               // Go to prev path if redirect, or Home by default
               const redirectUrl = this.$route.redirectedFrom
                 ? this.$route.redirectedFrom.path
-                : '/';
+                : "/";
 
               this.$router.replace(redirectUrl);
             }
           } catch (error) {
-            this.error = error || 'Error durante la autentificación';
+            this.error = error || "Error durante la autentificación";
           }
         } else {
           this.notify(
             `Error`,
-            'El formulario no es válido. Revisa que todos los campos han sido correctamente completados',
-            'error'
+            "El formulario no es válido. Revisa que todos los campos han sido correctamente completados",
+            "error"
           );
 
           return false;
