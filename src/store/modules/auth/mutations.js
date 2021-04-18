@@ -10,5 +10,5 @@ export default {
   },
   setAutoLogout(state) {
     state.didAutoLogout = true;
-  }
+  },
 };

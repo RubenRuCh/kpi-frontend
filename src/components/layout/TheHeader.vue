@@ -12,7 +12,6 @@
       </el-menu-item>
 
       <el-submenu index="/kpis">
-
         <template #title>
           <i class="el-icon-s-marketing"></i>
           <span>Indicadores</span>
@@ -24,7 +23,6 @@
           <el-menu-item index="/kpis">KPIs activos</el-menu-item>
           <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
         </el-submenu>
-
       </el-submenu>
 
       <el-menu-item index="/register">
