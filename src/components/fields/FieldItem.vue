@@ -44,6 +44,7 @@
     <section>
       <el-card shadow="hover">
         <div class="actions">
+
           <el-tooltip
             v-if="selectedField.required"
             class="item"
@@ -53,28 +54,44 @@
           >
             <base-badge
               style="margin-right: auto"
-              v-if="selectedField.required"
               title="Atributo obligatorio"
               type="warning"
             ></base-badge>
           </el-tooltip>
 
-          <el-button
-            type="primary"
-            icon="el-icon-edit"
-            plain
-            @click="$router.push($route.path + '/edit')"
-            >Modificar</el-button
+          <el-tooltip
+           v-else
+            class="item"
+            effect="dark"
+            content="Los atributos opcionales pueden o no aparecer en los KPI de nueva creación para aportar más información sobre los mismos"
+            placement="top-start"
           >
+            <base-badge
+              style="margin-right: auto"
+              title="Atributo opcional"
+              type="info"
+            ></base-badge>
+          </el-tooltip>
 
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            plain
-            disabled
-            @click="$router.push($route.path)"
-            >Eliminar</el-button
-          >
+
+          <section class="buttons">
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              plain
+              @click="$router.push($route.path + '/edit')"
+              >Modificar</el-button
+            >
+
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              plain
+              disabled
+              @click="$router.push($route.path)"
+              >Eliminar</el-button
+            >
+          </section>
         </div>
       </el-card>
     </section>
@@ -83,8 +100,8 @@
 
 <script>
 export default {
-  props: ["id"],
-  emits: ["prev", "next"],
+  props: ['id'],
+  emits: ['prev', 'next'],
   data() {
     return {
       selectedField: null,
@@ -93,14 +110,14 @@ export default {
 
   computed: {
     nextField() {
-      const allFields = this.$store.getters["fields/fields"];
+      const allFields = this.$store.getters['fields/fields'];
       let selectedFieldIndex = allFields.findIndex(
         (field) => field.id == this.selectedField.id
       );
       return allFields[++selectedFieldIndex];
     },
     prevField() {
-      const allFields = this.$store.getters["fields/fields"];
+      const allFields = this.$store.getters['fields/fields'];
       let selectedFieldIndex = allFields.findIndex(
         (field) => field.id == this.selectedField.id
       );
@@ -110,15 +127,15 @@ export default {
 
   methods: {
     goingPrev() {
-      this.$emit("prev");
-      this.$router.push("/fields/" + this.prevField.id);
+      this.$emit('prev');
+      this.$router.push('/fields/' + this.prevField.id);
     },
     goingNext() {
-      this.$emit("next");
-      this.$router.push("/fields/" + this.nextField.id);
+      this.$emit('next');
+      this.$router.push('/fields/' + this.nextField.id);
     },
     fetchField() {
-      this.selectedField = this.$store.getters["fields/fields"].find(
+      this.selectedField = this.$store.getters['fields/fields'].find(
         (field) => field.id == this.id
       );
     },
