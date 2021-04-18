@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import TheSidebar from "./components/layout/TheSidebar.vue";
-import TheHeader from "./components/layout/TheHeader.vue";
+import TheSidebar from './components/layout/TheSidebar.vue';
+import TheHeader from './components/layout/TheHeader.vue';
 
 export default {
   components: {
@@ -31,26 +31,41 @@ export default {
   },
 
   created() {
+    // Try login
+    this.$store.dispatch('auth/tryLogin');
+
     // Load some data on created
-    this.$store.dispatch("kpis/loadKpis", {
+    this.$store.dispatch('kpis/loadKpis', {
       forceRefresh: true,
     });
-    this.$store.dispatch("fields/loadFields", {
+    this.$store.dispatch('fields/loadFields', {
       forceRefresh: true,
     });
+  },
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters['auth/didAutoLogout'];
+    },
+  },
+  watch: {
+    didAutoLogout(currentValue, oldValue) {
+      if (currentValue && currentValue !== oldValue) {
+        this.$router.push('/auth');
+      }
+    },
   },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
