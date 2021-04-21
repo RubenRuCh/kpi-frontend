@@ -1,6 +1,6 @@
-import getters from "./getters.js";
-import mutations from "./mutations.js";
-import actions from "./actions.js";
+import getters from './getters.js';
+import mutations from './mutations.js';
+import actions from './actions.js';
 
 export default {
   namespaced: true,
@@ -12,8 +12,7 @@ export default {
     return {
       userId: null,
       token: null,
-      didAutoLogout: false,
-      API_KEY: "",
+      API_KEY: '',
     };
   },
 };

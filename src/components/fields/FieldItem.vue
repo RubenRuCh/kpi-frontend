@@ -44,6 +44,22 @@
     <section>
       <el-card shadow="hover">
         <div class="actions">
+
+          <el-tooltip
+            v-if="selectedField.fillable"
+            class="item"
+            effect="dark"
+            content="Los atributos rellenables aparecerán en los formularios y listados de registros de valores"
+            placement="top-start"
+          >
+            <base-badge
+              style="margin-right: auto"
+              title="Atributo rellenable"
+              type="success"
+            ></base-badge>
+          </el-tooltip>
+
+
           <el-tooltip
             v-if="selectedField.required"
             class="item"
