@@ -48,6 +48,10 @@
       <el-switch v-model="form.required"></el-switch>
     </el-form-item>
 
+    <el-form-item label="Rellenable">
+      <el-switch v-model="form.fillable"></el-switch>
+    </el-form-item>
+
     <el-form-item
       label="Tipo de atributo"
       prop="type"
@@ -119,11 +123,11 @@
 </template>
 
 <script>
-import useNotify from "@/hooks/notify.js";
+import useNotify from '@/hooks/notify.js';
 
 export default {
-  props: ["id"],
-  emits: ["save-data"],
+  props: ['id'],
+  emits: ['save-data'],
   setup() {
     const { notify } = useNotify();
 
@@ -134,12 +138,13 @@ export default {
       min: 4,
       max: 255,
       inputVisible: false,
-      inputValue: "",
+      inputValue: '',
       form: {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         required: false,
-        type: "",
+        fillable: false,
+        type: '',
         values: [],
         maxlength: 4,
       },
@@ -147,12 +152,12 @@ export default {
   },
   computed: {
     submitText() {
-      return this.id ? "Actualizar atributo" : "Crear atributo";
+      return this.id ? 'Actualizar atributo' : 'Crear atributo';
     },
     notifyMessage() {
       return this.id
-        ? "El atributo ha sido modificado correctamente"
-        : "Se ha creado el nuevo atributo correctamente";
+        ? 'El atributo ha sido modificado correctamente'
+        : 'Se ha creado el nuevo atributo correctamente';
     },
     notifyTitle() {
       return this.id
@@ -177,22 +182,22 @@ export default {
         this.form.values.push(inputValue);
       }
       this.inputVisible = false;
-      this.inputValue = "";
+      this.inputValue = '';
     },
     submitForm() {
-      this.$refs["fieldForm"].validate((valid) => {
+      this.$refs['fieldForm'].validate((valid) => {
         if (valid) {
-          if (this.form.type != "radio") this.form.values = null; // Clear values created when type is different that radio
-          if (this.form.type != "text") this.form.maxlength = null; // Clear maxlength when type is different that text
+          if (this.form.type != 'radio') this.form.values = null; // Clear values created when type is different that radio
+          if (this.form.type != 'text') this.form.maxlength = null; // Clear maxlength when type is different that text
 
-          this.$emit("save-data", this.form);
+          this.$emit('save-data', this.form);
 
-          this.notify(this.notifyTitle, this.notifyMessage, "success");
+          this.notify(this.notifyTitle, this.notifyMessage, 'success');
         } else {
           this.notify(
             `Error`,
-            "El formulario no es válido. Revisa que todos los campos han sido correctamente completados",
-            "error"
+            'El formulario no es válido. Revisa que todos los campos han sido correctamente completados',
+            'error'
           );
 
           return false;
@@ -206,7 +211,7 @@ export default {
     if (this.id) {
       this.form = JSON.parse(
         JSON.stringify(
-          this.$store.getters["fields/fields"].find(
+          this.$store.getters['fields/fields'].find(
             (field) => field.id == this.id
           )
         )

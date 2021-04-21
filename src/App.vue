@@ -1,11 +1,11 @@
 <template>
   <el-container>
-    <el-header class="hidden-sm-and-down" height="initial">
+    <el-header class="hidden-md-and-up" height="initial">
       <the-header></the-header>
     </el-header>
 
     <el-container>
-      <el-aside width="initial">
+      <el-aside width="initial" class="hidden-sm-and-down">
         <the-sidebar></the-sidebar>
       </el-aside>
 
@@ -31,28 +31,14 @@ export default {
   },
 
   created() {
-    // Try login
-    this.$store.dispatch("auth/tryLogin");
-
     // Load some data on created
     this.$store.dispatch("kpis/loadKpis", {
       forceRefresh: true,
     });
+
     this.$store.dispatch("fields/loadFields", {
       forceRefresh: true,
     });
-  },
-  computed: {
-    didAutoLogout() {
-      return this.$store.getters["auth/didAutoLogout"];
-    },
-  },
-  watch: {
-    didAutoLogout(currentValue, oldValue) {
-      if (currentValue && currentValue !== oldValue) {
-        this.$router.push("/auth");
-      }
-    },
   },
 };
 </script>

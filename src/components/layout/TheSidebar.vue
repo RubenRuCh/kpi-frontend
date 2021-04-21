@@ -5,11 +5,6 @@
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       @click.self.prevent="toggleMenu"
-      @mouseenter="cancelCloseMenu"
-      @mouseleave="closeMenu"
-      v-loading="isClosing"
-      element-loading-text="Cerrando..."
-      element-loading-spinner="el-icon-loading"
       router
     >
       <el-menu-item index="/">
@@ -55,38 +50,12 @@
 export default {
   data() {
     return {
-      isCollapse: true,
-      isClosing: false,
-      timeout: null,
+      isCollapse: false,
     };
   },
   methods: {
     toggleMenu() {
-      if (!this.isCollapse) {
-        this.isClosing = false;
-      }
       this.isCollapse = !this.isCollapse;
-    },
-    openMenu() {
-      this.isCollapse = false;
-    },
-    closeMenu() {
-      if (!this.isCollapse) {
-        this.isClosing = true;
-
-        this.timeout = setTimeout(() => {
-          if (this.isClosing) {
-            this.isCollapse = true;
-            this.isClosing = false;
-          }
-        }, 2000);
-      }
-    },
-    cancelCloseMenu() {
-      this.isClosing = false;
-
-      clearTimeout(this.timeout);
-      this.timeout = null;
     },
   },
 };
@@ -95,12 +64,7 @@ export default {
 <style scoped>
 .el-menu-vertical-demo {
   height: 100vh;
-}
-
-@media (min-width: 993px) {
-  .el-menu-vertical-demo {
-    height: calc(100vh - 62px);
-  }
+  cursor: pointer;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {

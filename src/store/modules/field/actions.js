@@ -6,14 +6,15 @@ export default {
       title: data.title,
       description: data.description,
       required: data.required,
+      fillable: data.fillable,
       type: data.type,
       values: data.values,
       maxlength: data.maxlength,
     };
 
     const response = await fetch(`${backendUrl}/fields`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(fieldData),
     });
 
@@ -26,13 +27,14 @@ export default {
       throw error;
     }
 
-    context.commit("addField", {
+    context.commit('addField', {
       ...fieldData,
       id: responseData.id,
       createdAt: responseData.createdAt,
       updatedAt: responseData.updatedAt,
-      requiredText: responseData.required ? "Sí" : "No",
-      value: data.type == "number" ? 0 : "",
+      requiredText: fieldData.required ? 'Sí' : 'No',
+      fillableText: fieldData.fillable ? 'Sí' : 'No',
+      value: data.type == 'number' ? 0 : '',
       // ... more data if needed
     });
   },
@@ -45,14 +47,15 @@ export default {
       title: data.title,
       description: data.description,
       required: data.required,
+      fillable: data.fillable,
       type: data.type,
       values: data.values,
       maxlength: data.maxlength,
     };
 
     const response = await fetch(`${backendUrl}/fields/${data.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(fieldData),
     });
 
@@ -65,10 +68,11 @@ export default {
       throw error;
     }
 
-    context.commit("updateField", {
+    context.commit('updateField', {
       ...fieldData,
       updatedAt: new Date(),
-      requiredText: fieldData.required ? "Sí" : "No",
+      requiredText: fieldData.required ? 'Sí' : 'No',
+      fillableText: fieldData.fillable ? 'Sí' : 'No',
       // ... more data if needed
     });
   },
@@ -82,7 +86,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok || !responseData) {
-      const error = new Error(responseData.message || "Failed to fetch fields");
+      const error = new Error(responseData.message || 'Failed to fetch fields');
       throw error;
     }
 
@@ -94,9 +98,11 @@ export default {
         title: responseData[key].title,
         description: responseData[key].description,
         required: responseData[key].required,
-        requiredText: responseData[key].required ? "Sí" : "No",
+        fillable: responseData[key].fillable,
+        requiredText: responseData[key].required ? 'Sí' : 'No',
+        fillableText: responseData[key].fillable ? 'Sí' : 'No',
         type: responseData[key].type,
-        value: responseData[key].type == "number" ? 0 : "",
+        value: responseData[key].type == 'number' ? 0 : '',
         values: responseData[key].values,
         maxlength: responseData[key].maxlength,
         createdAt: responseData[key].createdAt,
@@ -106,7 +112,7 @@ export default {
       fields.push(field);
     }
 
-    context.commit("setFields", fields);
-    context.commit("setFetchTimestamp");
+    context.commit('setFields', fields);
+    context.commit('setFetchTimestamp');
   },
 };
