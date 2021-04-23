@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import store from "@/store/index.js";
+// import store from "@/store/index.js";
 
 // Normal imports (most used routes)
 import Home from "@/views/Home.vue";
@@ -19,6 +19,10 @@ const FieldList = () => import("@/views/fields/FieldList.vue");
 const FieldDetail = () => import("@/views/fields/FieldDetail.vue");
 const FieldRegistration = () => import("@/views/fields/FieldRegistration.vue");
 const FieldModification = () => import("@/views/fields/FieldModification.vue");
+
+
+// Register
+const RegisterList = () => import("@/views/registers/RegisterList.vue");
 
 // Auth
 const UserAuth = () => import("@/views/auth/UserAuth.vue");
@@ -68,6 +72,12 @@ const routes = [
     props: true,
   },
   {
+    path: "/kpis/:id/registers",
+    component: RegisterList,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/fields",
     name: "Fields",
     component: FieldList,
@@ -100,14 +110,14 @@ const router = createRouter({
 });
 
 // We can apply rules to each route. It will be interesting to apply a redirect when a user acces a view that only registered users have rights to see!
-router.beforeEach(function (to, _from, next) {
-  if (to.meta.requiresAuth && !store.getters["auth/isAuthenticated"]) {
-    next("/auth");
-  } else if (to.meta.requiresUnauth && store.getters["auth/isAuthenticated"]) {
-    next("/");
-  } else {
-    next();
-  }
-});
+// router.beforeEach(function (to, _from, next) {
+//   if (to.meta.requiresAuth && !store.getters["auth/isAuthenticated"]) {
+//     next("/auth");
+//   } else if (to.meta.requiresUnauth && store.getters["auth/isAuthenticated"]) {
+//     next("/");
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
