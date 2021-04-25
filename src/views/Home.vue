@@ -3,23 +3,24 @@
     <h1>Gestión de indicadores</h1>
 
     <section class="cards">
+      
       <transition name="register" appear>
         <el-card
           key="register"
           shadow="hover"
-          @click="$router.push('/register')"
+          @click="$router.push('/kpis/create')"
         >
-          <i class="el-icon-s-data"></i>
+          <i class="el-icon-circle-plus"></i>
           <br /><br />
-          <span>Registros de valores</span>
+          <span>Nuevo indicador</span>
         </el-card>
       </transition>
 
       <transition name="kpis" appear>
         <el-card key="kpis" shadow="hover" @click="$router.push('/kpis')">
-          <i class="el-icon-s-marketing"></i>
+          <i class="el-icon-s-data"></i>
           <br /><br />
-          <span>Indicadores</span>
+          <span>Indicadores activos</span>
         </el-card>
       </transition>
 

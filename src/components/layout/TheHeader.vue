@@ -1,5 +1,5 @@
 <template>
-  <section class="header">
+  <nav>
     <el-menu
       :default-active="$route.path"
       class="el-menu-demo"
@@ -11,23 +11,19 @@
         <template #title>Home</template>
       </el-menu-item>
 
-      <el-submenu index="/kpis">
-        <template #title>
-          <i class="el-icon-s-marketing"></i>
-          <span>Indicadores</span>
-        </template>
-        <el-menu-item index="/kpis/create">Nuevo KPI</el-menu-item>
+      <el-menu-item index="/kpis/create">
+        <i class="el-icon-circle-plus"></i>
+        <template #title>Nuevo indicador</template>
+      </el-menu-item>
 
-        <el-submenu index="/kpis">
-          <template #title>Listado KPIs</template>
-          <el-menu-item index="/kpis">KPIs activos</el-menu-item>
-          <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-
-      <el-menu-item index="/register">
+      <el-menu-item index="/kpis">
         <i class="el-icon-s-data"></i>
-        <template #title>Registros (Raúl)</template>
+        <template #title>Indicadores activos</template>
+      </el-menu-item>
+
+      <el-menu-item index="/kpis/deleted">
+        <i class="el-icon-delete"></i>
+        <template #title>Papelera de KPIs</template>
       </el-menu-item>
 
       <el-menu-item index="/auth" disabled>
@@ -40,5 +36,17 @@
         <template #title>Administrar atributos</template>
       </el-menu-item>
     </el-menu>
-  </section>
+  </nav>
 </template>
+
+
+<style lang="scss" scoped>
+nav {
+  overflow: hidden;
+  overflow-x: auto;
+
+  ul {
+    display: flex;
+  }
+}
+</style>

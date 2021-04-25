@@ -2,7 +2,8 @@
   <div>
     <section>
       <el-card shadow="hover">
-        <section class="actions nav">
+
+        <section class="actions nav" v-if="!showingRegisters">
           <el-button
             :disabled="!!!prevKpi"
             icon="el-icon-back"
@@ -94,7 +95,8 @@
       </el-card>
     </section>
 
-    <section>
+    <!-- Only show actions buttons if we are not in a registers view -->
+    <section v-if="!showingRegisters">
       <el-card shadow="hover">
         <div class="actions">
           <base-badge
@@ -172,6 +174,9 @@ export default {
       );
       return allKpis[--selectedKpiIndex];
     },
+    showingRegisters(){
+      return this.$route.path.includes('registers')
+    },
   },
 
   methods: {
@@ -195,6 +200,7 @@ export default {
         (kpi) => kpi.id == this.id
       );
     },
+
   },
   created() {
     // Take id from props
