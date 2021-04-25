@@ -1,19 +1,29 @@
-import { shallowMount } from "@vue/test-utils";
-import Home from "@/views/Home.vue";
+import { shallowMount } from '@vue/test-utils';
+import i18n from '@/plugins/i18n/index.js';
+import Home from '@/views/Home.vue';
 
-describe("Home.vue", () => {
-  it("Renders Home page", () => {
+describe('Home.vue', () => {
+  it('Renders Home page', () => {
     // Arrange
-    const wrapper = shallowMount(Home);
+    const wrapper = shallowMount(Home, {
+      global: {
+        plugins: [i18n],
+      },
+    });
 
     // Assert
-    expect(wrapper.text()).toMatch("Gestión de indicadores");
+    expect(wrapper.text()).toMatch('KPI');
   });
 
-  it("Contains cards to travel through app views", () => {
+  it('Contains cards to travel through app views', () => {
     // Arrange
-    const wrapper = shallowMount(Home);
-    const card = wrapper.findComponent("el-card");
+    const wrapper = shallowMount(Home, {
+      global: {
+        plugins: [i18n],
+      },
+    });
+
+    const card = wrapper.findComponent('el-card');
 
     // Assert
     expect(card.exists()).toBe(true);
