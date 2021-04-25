@@ -6,18 +6,18 @@
     class="demo-dynamic"
   >
     <el-form-item
-      label="Nombre"
+      :label="$t('title')"
       prop="title"
       :rules="[
         {
           required: true,
-          message: 'Por favor, introduce un nombre para el atributo',
+          message: $t('field-title-needed'),
           trigger: 'blur',
         },
         {
           min: 4,
           max: 255,
-          message: 'Por favor, introduce un nombre entre 4 y 255 caracteres',
+          message: $t('field-title-length'),
           trigger: ['blur', 'change'],
         },
       ]"
@@ -26,17 +26,17 @@
     </el-form-item>
 
     <el-form-item
-      label="Descripción"
+      :label="$t('description')"
       prop="description"
       :rules="[
         {
           required: true,
-          message: 'Por favor, introduce una descripción para el atributo',
+          message: $t('field-description-needed'),
           trigger: 'blur',
         },
         {
           min: 1,
-          message: 'Por favor, introduce una descripción con algo de contenido',
+          message: $t('field-description-length'),
           trigger: ['blur', 'change'],
         },
       ]"
@@ -44,49 +44,49 @@
       <el-input type="textarea" v-model="form.description"></el-input>
     </el-form-item>
 
-    <el-form-item label="Obligatorio">
+    <el-form-item :label="$t('required')">
       <el-switch v-model="form.required"></el-switch>
     </el-form-item>
 
-    <el-form-item label="Rellenable">
+    <el-form-item :label="$t('fillable')">
       <el-switch v-model="form.fillable"></el-switch>
     </el-form-item>
 
     <el-form-item
-      label="Tipo de atributo"
+      :label="$t('field-type')"
       prop="type"
       :rules="[
         {
           required: true,
-          message: 'Por favor, introduce un tipo de atributo',
+          message: $t('field-type-needed'),
           trigger: 'blur',
         },
       ]"
     >
       <el-select
         v-model="form.type"
-        placeholder="Selecciona el tipo del nuevo atributo"
+        :placeholder="$t('field-type-placeholder')"
       >
-        <el-option label="Texto con límite" value="text"></el-option>
-        <el-option label="Texto sin límite" value="textarea"></el-option>
-        <el-option label="Valor numérico" value="number"></el-option>
-        <el-option label="Opciones predefinidas" value="radio"></el-option>
+        <el-option :label="$t('field-type-limit')" value="text"></el-option>
+        <el-option :label="$t('field-type-nolimit')" value="textarea"></el-option>
+        <el-option :label="$t('field-type-number')" value="number"></el-option>
+        <el-option :label="$t('field-type-radio')" value="radio"></el-option>
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="form.type == 'text'" label="Límite del texto">
+    <el-form-item v-if="form.type == 'text'" :label="$t('field-limit')">
       <el-slider :min="min" :max="max" v-model="form.maxlength" show-input>
       </el-slider>
     </el-form-item>
 
     <el-form-item
       v-if="form.type == 'radio'"
-      label="Posibles valores"
+      :label="$t('available-values')"
       prop="values"
       :rules="[
         {
           required: true,
-          message: 'Por favor, introduce al menos una opción a elegir',
+          message: $t('field-values-needed'),
           trigger: 'blur',
         },
       ]"
@@ -111,13 +111,13 @@
       >
       </el-input>
       <el-button v-else class="button-new-tag" size="small" @click="showInput"
-        >+ Nuevo valor</el-button
+        >+ {{$t('new-value')}}</el-button
       >
     </el-form-item>
 
     <el-form-item>
       <el-button type="primary" @click="submitForm">{{ submitText }}</el-button>
-      <el-button @click="$router.replace('/fields')">Cancelar</el-button>
+      <el-button @click="$router.replace('/fields')">{{$t('cancel')}}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -152,17 +152,17 @@ export default {
   },
   computed: {
     submitText() {
-      return this.id ? 'Actualizar atributo' : 'Crear atributo';
+      return this.id ? this.$t('update-field') : this.$t('create-field');
     },
     notifyMessage() {
       return this.id
-        ? 'El atributo ha sido modificado correctamente'
-        : 'Se ha creado el nuevo atributo correctamente';
+        ? this.$t('update-field-success')
+        : this.$t('create-field-success');
     },
     notifyTitle() {
       return this.id
-        ? `Atributo actualizado: ${this.form.title}`
-        : `Nuevo atributo: ${this.form.title}`;
+        ? `${this.$t('updated-field')}: ${this.form.title}`
+        : `${this.$t('new-field')}: ${this.form.title}`;
     },
   },
   methods: {
@@ -195,8 +195,8 @@ export default {
           this.notify(this.notifyTitle, this.notifyMessage, 'success');
         } else {
           this.notify(
-            `Error`,
-            'El formulario no es válido. Revisa que todos los campos han sido correctamente completados',
+            this.$t('error'),
+            this.$t('form-not-valid'),
             'error'
           );
 

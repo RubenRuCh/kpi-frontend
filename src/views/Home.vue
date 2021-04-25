@@ -1,6 +1,6 @@
 <template>
   <el-card shadow="always" class="main-card">
-    <h1>Gestión de indicadores</h1>
+    <h1>{{ $t('h1') }}</h1>
 
     <section class="cards">
       
@@ -12,7 +12,7 @@
         >
           <i class="el-icon-circle-plus"></i>
           <br /><br />
-          <span>Nuevo indicador</span>
+          <span>{{ $t('new-kpi') }}</span>
         </el-card>
       </transition>
 
@@ -20,7 +20,7 @@
         <el-card key="kpis" shadow="hover" @click="$router.push('/kpis')">
           <i class="el-icon-s-data"></i>
           <br /><br />
-          <span>Indicadores activos</span>
+          <span>{{ $t('active-kpis') }}</span>
         </el-card>
       </transition>
 
@@ -32,7 +32,7 @@
         >
           <i class="el-icon-delete"></i>
           <br /><br />
-          <span>Papelera de KPIs</span>
+          <span>{{ $t('deleted-kpis') }}</span>
         </el-card>
       </transition>
 
@@ -40,16 +40,12 @@
         <el-card key="fields" shadow="hover" @click="$router.push('/fields')">
           <i class="el-icon-setting"></i>
           <br /><br />
-          <span>Atributos dinámicos</span>
+          <span>{{ $t('dynamic-fields') }}</span>
         </el-card>
       </transition>
     </section>
   </el-card>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style scoped>
 h1 {

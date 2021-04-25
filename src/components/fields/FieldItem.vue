@@ -15,24 +15,29 @@
           ></el-button>
         </section>
 
-        <h2>Características del atributo</h2>
+        <h2>{{ $t('field-properties') }}</h2>
 
         <section class="properties">
-          <h3><el-tag>Nombre</el-tag> {{ selectedField.title }}</h3>
-          <h3><el-tag>Descripción</el-tag> {{ selectedField.description }}</h3>
+          <h3>
+            <el-tag>{{ $t('title') }}</el-tag> {{ selectedField.title }}
+          </h3>
+          <h3>
+            <el-tag>{{ $t('description') }}</el-tag>
+            {{ selectedField.description }}
+          </h3>
 
           <h4 v-if="selectedField.type">
-            <el-tag type="success">Tipo de atributo</el-tag>
+            <el-tag type="success">{{ $t('field-type') }}</el-tag>
             {{ selectedField.type }}
           </h4>
 
           <h4 v-if="selectedField.maxlength && selectedField.maxlength > 0">
-            <el-tag type="success">Longitud máxima</el-tag>
-            {{ selectedField.maxlength }} caracteres
+            <el-tag type="success">{{ $t('maxlength') }}</el-tag>
+            {{ selectedField.maxlength }} {{ $t('chars') }}
           </h4>
 
           <h4 v-if="selectedField.values">
-            <el-tag type="danger">Valores disponibles</el-tag>
+            <el-tag type="danger">{{ $t('available-values') }}</el-tag>
             <el-badge v-for="value in selectedField.values" :key="value"
               ><el-button size="small">{{ value }}</el-button></el-badge
             >
@@ -44,32 +49,30 @@
     <section>
       <el-card shadow="hover">
         <div class="actions">
-
           <el-tooltip
             v-if="selectedField.fillable"
             class="item"
             effect="dark"
-            content="Los atributos rellenables aparecerán en los formularios y listados de registros de valores"
+            :content="$t('fillable-tooltip')"
             placement="top-start"
           >
             <base-badge
               style="margin-right: auto"
-              title="Atributo rellenable"
+              :title="$t('fillable')"
               type="success"
             ></base-badge>
           </el-tooltip>
-
 
           <el-tooltip
             v-if="selectedField.required"
             class="item"
             effect="dark"
-            content="Los atributos obligatorios deberán aparecer en todos los KPI de nueva creación"
+            :content="$t('required-tooltip')"
             placement="top-start"
           >
             <base-badge
               style="margin-right: auto"
-              title="Atributo obligatorio"
+              :title="$t('required')"
               type="warning"
             ></base-badge>
           </el-tooltip>
@@ -78,12 +81,12 @@
             v-else
             class="item"
             effect="dark"
-            content="Los atributos opcionales pueden o no aparecer en los KPI de nueva creación para aportar más información sobre los mismos"
+            :content="$t('optional-tooltip')"
             placement="top-start"
           >
             <base-badge
               style="margin-right: auto"
-              title="Atributo opcional"
+              :title="$t('optional')"
               type="info"
             ></base-badge>
           </el-tooltip>
@@ -94,7 +97,7 @@
               icon="el-icon-edit"
               plain
               @click="$router.push($route.path + '/edit')"
-              >Modificar</el-button
+              >{{$t('modify')}}</el-button
             >
 
             <el-button
@@ -103,7 +106,7 @@
               plain
               disabled
               @click="$router.push($route.path)"
-              >Eliminar</el-button
+              >{{$t('delete')}}</el-button
             >
           </section>
         </div>
@@ -114,8 +117,8 @@
 
 <script>
 export default {
-  props: ["id"],
-  emits: ["prev", "next"],
+  props: ['id'],
+  emits: ['prev', 'next'],
   data() {
     return {
       selectedField: null,
@@ -124,14 +127,14 @@ export default {
 
   computed: {
     nextField() {
-      const allFields = this.$store.getters["fields/fields"];
+      const allFields = this.$store.getters['fields/fields'];
       let selectedFieldIndex = allFields.findIndex(
         (field) => field.id == this.selectedField.id
       );
       return allFields[++selectedFieldIndex];
     },
     prevField() {
-      const allFields = this.$store.getters["fields/fields"];
+      const allFields = this.$store.getters['fields/fields'];
       let selectedFieldIndex = allFields.findIndex(
         (field) => field.id == this.selectedField.id
       );
@@ -141,15 +144,15 @@ export default {
 
   methods: {
     goingPrev() {
-      this.$emit("prev");
-      this.$router.push("/fields/" + this.prevField.id);
+      this.$emit('prev');
+      this.$router.push('/fields/' + this.prevField.id);
     },
     goingNext() {
-      this.$emit("next");
-      this.$router.push("/fields/" + this.nextField.id);
+      this.$emit('next');
+      this.$router.push('/fields/' + this.nextField.id);
     },
     fetchField() {
-      this.selectedField = this.$store.getters["fields/fields"].find(
+      this.selectedField = this.$store.getters['fields/fields'].find(
         (field) => field.id == this.id
       );
     },

@@ -16,11 +16,11 @@
           ></el-button>
         </section>
 
-        <h2>Características del indicador</h2>
+        <h2>{{$t('kpi-properties')}}</h2>
 
         <section class="properties">
-          <h3><el-tag>Nombre</el-tag> {{ selectedKpi.title }}</h3>
-          <h3><el-tag>Descripción</el-tag> {{ selectedKpi.description }}</h3>
+          <h3><el-tag>{{$t('title')}}</el-tag> {{ selectedKpi.title }}</h3>
+          <h3><el-tag>{{$t('description')}}</el-tag> {{ selectedKpi.description }}</h3>
         </section>
 
         <section class="fields">
@@ -41,37 +41,37 @@
             max-height="280"
           >
             <el-table-column
-              label="Código"
+              :label="$t('id')"
               prop="id"
               sortable
             ></el-table-column>
 
             <el-table-column
-              label="Nombre"
+              :label="$t('title')"
               prop="title"
               sortable
             ></el-table-column>
 
             <el-table-column
-              label="Descripción"
+              :label="$t('description')"
               prop="description"
               min-width="200"
             ></el-table-column>
 
             <el-table-column
-              label="Valor"
+              :label="$t('value')"
               prop="value"
               sortable
             ></el-table-column>
 
             <el-table-column
-              label="Requerido"
+              :label="$t('required')"
               prop="requiredText"
               sortable
             ></el-table-column>
 
             <el-table-column
-              label="Rellenable"
+              :label="$t('filled')"
               prop="fillableText"
               sortable
             ></el-table-column>
@@ -81,7 +81,7 @@
                 <el-input
                   v-model="search"
                   size="mini"
-                  placeholder="Buscar por nombre"
+                  :placeholder="$t('search-by-name')"
                 />
               </template>
             </el-table-column>
@@ -89,7 +89,7 @@
 
           <el-empty
             v-else
-            description="No se ha encontrado ningún atributo para el indicador"
+            :description="$t('fields-not-found')"
           ></el-empty>
         </section>
       </el-card>
@@ -102,14 +102,14 @@
           <base-badge
             v-if="selectedKpi.enabled"
             style="margin-right: auto"
-            title="Activo"
+            :title="$t('active')"
             type="success"
           ></base-badge>
 
           <base-badge
             v-else
             style="margin-right: auto"
-            title="Eliminado"
+            :title="$t('deleted')"
             type="info"
           ></base-badge>
 
@@ -117,14 +117,14 @@
             type="success"
             plain
             @click="$router.push($route.path + '/registers')"
-            >Ver registros</el-button
+            >{{$t('registers')}}</el-button
           >
           <el-button
             type="primary"
             icon="el-icon-edit"
             plain
             @click="$router.push($route.path + '/edit')"
-            >Modificar</el-button
+            >{{$t('modify')}}</el-button
           >
 
           <el-button
@@ -132,7 +132,7 @@
             icon="el-icon-copy-document"
             plain
             @click="$router.push($route.path + '/clone')"
-            >Clonar</el-button
+            >{{$t('clone')}}</el-button
           >
 
           <!-- Isolate delete logic in separate component -->

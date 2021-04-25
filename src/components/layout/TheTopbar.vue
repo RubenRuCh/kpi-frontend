@@ -8,27 +8,27 @@
     >
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
-        <template #title>Home</template>
+        <template #title>{{$t('home')}}</template>
       </el-menu-item>
 
       <el-menu-item index="/kpis/create">
         <i class="el-icon-circle-plus"></i>
-        <template #title>Nuevo indicador</template>
+        <template #title>{{$t('new-kpi')}}</template>
       </el-menu-item>
 
       <el-menu-item index="/kpis">
         <i class="el-icon-s-data"></i>
-        <template #title>Indicadores activos</template>
+        <template #title>{{$t('active-kpis')}}</template>
       </el-menu-item>
 
       <el-menu-item index="/kpis/deleted">
         <i class="el-icon-delete"></i>
-        <template #title>Papelera de KPIs</template>
+        <template #title>{{$t('deleted-kpis')}}</template>
       </el-menu-item>
 
       <el-menu-item index="/fields">
         <i class="el-icon-setting"></i>
-        <template #title>Administrar atributos</template>
+        <template #title>{{$t('dynamic-fields')}}</template>
       </el-menu-item>
     </el-menu>
   </nav>

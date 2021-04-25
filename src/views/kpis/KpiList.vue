@@ -2,16 +2,16 @@
   <el-card shadow="always" class="main-card">
     <div class="controls">
       <el-button type="primary" v-if="!isLoading" @click="loadKpis(true)"
-        >Actualizar datos</el-button
+        >{{ $t('update-data') }}</el-button
       >
       <el-button type="primary" v-else :loading="isLoading"
-        >Cargando...</el-button
+        >{{ $t('loading') }}...</el-button
       >
       <el-button type="primary" @click="$router.push('/kpis/create')"
-        >Nuevo indicador</el-button
+        >{{ $t('new-kpi') }}</el-button
       >
     </div>
-    <h1>Indicadores activos</h1>
+    <h1>{{ $t('active-kpis') }}</h1>
 
     <el-table
       v-if="isLoading || hasKpis"
@@ -28,10 +28,10 @@
       style="width: 100%"
       max-height="600"
     >
-      <el-table-column label="Código" prop="id" sortable></el-table-column>
-      <el-table-column label="Nombre" prop="title" sortable></el-table-column>
+      <el-table-column :label="$t('id')" prop="id" sortable></el-table-column>
+      <el-table-column :label="$t('title')" prop="title" sortable></el-table-column>
       <el-table-column
-        label="Descripción"
+        :label="$t('description')"
         prop="description"
         min-width="200"
       ></el-table-column>
@@ -41,7 +41,7 @@
           <el-input
             v-model="search"
             size="mini"
-            placeholder="Buscar por nombre"
+            :placeholder="$t('search-by-name')"
           />
         </template>
         <template #default="scope">
@@ -49,13 +49,13 @@
             type="success"
             plain
             @click="$router.push('/kpis/' + scope.row.id + '/registers')"
-            >Ver registros</el-button
+            >{{$t('registers')}}</el-button
           >
           <el-button
             type="info"
             plain
             @click="$router.push('/kpis/' + scope.row.id)"
-            >Ver detalles</el-button
+            >{{$t('view-details')}}</el-button
           >
 
           <el-button
@@ -63,13 +63,13 @@
             icon="el-icon-edit"
             plain
             @click="$router.push('/kpis/' + scope.row.id + '/edit')"
-            >Modificar</el-button
+            >{{$t('modify')}}</el-button
           >
         </template>
       </el-table-column>
     </el-table>
 
-    <el-empty v-else description="No se ha encontrado ningún KPI"></el-empty>
+    <el-empty v-else :description="$t('kpis-not-found')"></el-empty>
   </el-card>
 </template>
 
@@ -107,16 +107,16 @@ export default {
         });
         if (refresh) {
           this.notify(
-            "KPIs actualizados",
-            "Se ha actualizado correctamente la lista de indicadores",
+            this.$t('kpis-updated-title'),
+            this.$t('kpis-updated-message'),
             "success"
           );
         }
       } catch (error) {
         this.error =
-          error.message || "Algo ha salido mal durante la carga de los datos";
+          error.message || this.$t('update-data-failed');
 
-        this.notify("Ups...", `Error: ${this.error}`, "error");
+        this.notify(this.$t('ups'), `${this.$t('error')}: ${this.error}`, "error");
       } finally {
         this.isLoading = false;
       }
