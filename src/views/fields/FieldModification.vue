@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-card shadow="always">
-      <h2>Modificar atributo</h2>
+      <h2>{{ $t('modify-field') }}</h2>
       <field-form :id="$route.params.id" @save-data="saveData"></field-form>
     </el-card>
   </section>

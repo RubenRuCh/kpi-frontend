@@ -1,17 +1,17 @@
 <template>
   <el-card shadow="always" class="main-card">
     <div class="controls">
-      <el-button type="primary" v-if="!isLoading" @click="loadFields(true)"
-        >Actualizar datos</el-button
-      >
-      <el-button type="primary" v-else :loading="isLoading"
-        >Cargando...</el-button
-      >
-      <el-button type="primary" @click="$router.push('/fields/create')"
-        >Nuevo atributo</el-button
-      >
+      <el-button type="primary" v-if="!isLoading" @click="loadFields(true)">{{
+        $t('update-data')
+      }}</el-button>
+      <el-button type="primary" v-else :loading="isLoading">{{
+        $t('loading')
+      }}</el-button>
+      <el-button type="primary" @click="$router.push('/fields/create')">{{
+        $t('new-field')
+      }}</el-button>
     </div>
-    <h1>Atributos disponibles</h1>
+    <h1>{{ $t('available-fields') }}</h1>
     <el-table
       v-if="isLoading || hasFields"
       v-loading="isLoading"
@@ -28,21 +28,29 @@
       max-height="600"
       :row-class-name="tableRowClassName"
     >
-      <el-table-column label="Código" prop="id" sortable></el-table-column>
-      <el-table-column label="Nombre" prop="title" sortable></el-table-column>
       <el-table-column
-        label="Descripción"
+        :label="$t('id')"
+        prop="id"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        :label="$t('title')"
+        prop="title"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        :label="$t('description')"
         prop="description"
         min-width="200"
       ></el-table-column>
       <el-table-column
-        label="Requerido"
+        :label="$t('required')"
         prop="requiredText"
         sortable
       ></el-table-column>
 
       <el-table-column
-        label="Rellenable"
+        :label="$t('fillable')"
         prop="fillableText"
         sortable
       ></el-table-column>
@@ -52,7 +60,7 @@
           <el-input
             v-model="search"
             size="mini"
-            placeholder="Buscar por nombre"
+            :placeholder="$t('search-by-name')"
           />
         </template>
         <template #default="scope">
@@ -60,23 +68,21 @@
             type="info"
             plain
             @click="$router.push('/fields/' + scope.row.id)"
-            >Ver detalles</el-button
+            >{{ $t('view-details') }}</el-button
           >
+
           <el-button
             type="primary"
             icon="el-icon-edit"
             plain
             @click="$router.push('/fields/' + scope.row.id + '/edit')"
-            >Modificar</el-button
+            >{{ $t('modify') }}</el-button
           >
         </template>
       </el-table-column>
     </el-table>
 
-    <el-empty
-      v-else
-      description="No se ha encontrado ningún atributo"
-    ></el-empty>
+    <el-empty v-else :description="$t('fields-not-found')"></el-empty>
   </el-card>
 </template>
 
@@ -114,16 +120,16 @@ export default {
         });
         if (refresh) {
           this.notify(
-            'Atributos actualizados',
-            'Se ha actualizado correctamente la lista de atributos',
+            this.$t('fields-updated-title'),
+            this.$t('fields-updated-message'),
             'success'
           );
         }
       } catch (error) {
         this.error =
-          error.message || 'Algo ha salido mal durante la carga de los datos';
+          error.message || this.$t('update-data-failed');
 
-        this.notify('Ups...', `Error: ${this.error}`, 'error');
+        this.notify(this.$t('ups'), `${this.$t('error')}: ${this.error}`, 'error');
       }
 
       this.isLoading = false;

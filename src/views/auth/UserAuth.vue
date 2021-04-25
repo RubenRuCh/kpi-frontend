@@ -1,16 +1,16 @@
 <template>
   <section>
-    <el-dialog v-model="existsError" title="Error" :before-close="handleError">
+    <el-dialog v-model="existsError" :title="$t('error')" :before-close="handleError">
       <p>{{ error }}</p>
     </el-dialog>
 
     <el-card
       shadow="always"
       v-loading="isLoading"
-      element-loading-text="Comprobando credenciales..."
+      :element-loading-text="$t('checking-credentials')"
       element-loading-spinner="el-icon-loading"
     >
-      <h1>Iniciar sesión</h1>
+      <h1>{{ $t('login') }}</h1>
 
       <el-form
         :model="authForm"
@@ -20,11 +20,11 @@
         label-width="120px"
         class="authForm"
       >
-        <el-form-item label="Usuario" prop="user">
+        <el-form-item :label="$t('user')" prop="user">
           <el-input v-model="authForm.user"></el-input>
         </el-form-item>
 
-        <el-form-item label="Contraseña" prop="pass">
+        <el-form-item :label="$t('password')" prop="pass">
           <el-input
             type="password"
             v-model="authForm.pass"
@@ -32,7 +32,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="Confirmar contraseña" prop="checkPass">
+        <el-form-item :label="$t('confirm-password')" prop="checkPass">
           <el-input
             type="password"
             v-model="authForm.checkPass"
@@ -42,10 +42,10 @@
 
         <el-form-item>
           <el-button type="primary" @click="submitForm('authForm')"
-            >Iniciar sesión</el-button
+            >{{ $t('login') }}</el-button
           >
           <el-button @click="resetForm('authForm')"
-            >Limpiar formulario</el-button
+            >{{ $t('clean-form') }}</el-button
           >
         </el-form-item>
       </el-form>
@@ -67,7 +67,7 @@ export default {
       if (value === '') {
         return callback(
           new Error(
-            'Por favor, introduce el usuario con el que desea iniciar sesión'
+            this.$t('user-needed')
           )
         );
       }
@@ -84,7 +84,7 @@ export default {
 
     var validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('Por favor, introduce la contraseña'));
+        callback(new Error(this.$t('password-needed')));
       } else {
         if (this.authForm.checkPass !== '') {
           this.$refs.authForm.validateField('checkPass');
@@ -95,9 +95,9 @@ export default {
 
     var validateConfirmPass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('Por favor, introduce la contraseña otra vez'));
+        callback(new Error(this.$t('confirm-password-needed')));
       } else if (value !== this.authForm.pass) {
-        callback(new Error('Las contraseñas introducidas no coinciden'));
+        callback(new Error(this.$t('password-need-match')));
       } else {
         callback();
       }
@@ -146,8 +146,8 @@ export default {
             await this.$store.dispatch('auth/login', actionPayload);
 
             this.notify(
-              'Inicio de sesión',
-              `Se ha iniciado sesión correctamente. Usuario: ${this.authForm.user}`,
+              this.$t('auth-completed-title'),
+              `${this.$t('auth-completed-message')} ${this.authForm.user}`,
               'success'
             );
 
@@ -158,12 +158,12 @@ export default {
 
             this.$router.replace(redirectUrl);
           } catch (error) {
-            this.error = error || 'Error durante la autentificación';
+            this.error = error || this.$t('auth-error');
           }
         } else {
           this.notify(
-            `Error`,
-            'El formulario no es válido. Revisa que todos los campos han sido correctamente completados',
+            this.$t('error'),
+            this.$t('form-not-valid'),
             'error'
           );
 
