@@ -1,17 +1,36 @@
 name: Node Continuous Integration
 
+# Controls when the action will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
-  jobs:
-    unit_test_pull_request:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions/setup-node@v1
-          with:
-            node-version: 15
-        - run: npm ci
-        - run: npm run test:unit
-        - run: npm run build
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  unit_test_pull_request:
+    runs-on: ubuntu-latest
+
+     # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      - name: Install all dependencies
+        run: npm ci
+
+      - name: Execute unit tests
+        run: npm run test:unit
+
+      - name: Build project to check if there's some error
+        run: npm run build

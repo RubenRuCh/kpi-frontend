@@ -12,7 +12,7 @@ describe('Home.vue', () => {
     });
 
     // Assert
-    expect(wrapper.text()).toMatch('KPIsss');
+    expect(wrapper.text()).toMatch('KPI');
   });
 
   it('Contains cards to travel through app views', () => {
