@@ -1,7 +1,8 @@
 <template>
   <el-container>
-    <el-header class="hidden-md-and-up" height="initial">
+    <el-header height="initial">
       <the-header></the-header>
+      <the-topbar class="hidden-md-and-up"></the-topbar>
     </el-header>
 
     <el-container>
@@ -22,12 +23,14 @@
 
 <script>
 import TheSidebar from "./components/layout/TheSidebar.vue";
+import TheTopbar from "./components/layout/TheTopbar.vue";
 import TheHeader from "./components/layout/TheHeader.vue";
 
 export default {
   components: {
     TheSidebar,
     TheHeader,
+    TheTopbar,
   },
 
   created() {
