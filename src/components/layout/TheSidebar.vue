@@ -12,25 +12,19 @@
         <template #title>Home</template>
       </el-menu-item>
 
-      <el-submenu index="/kpis">
-        <template #title>
-          <i class="el-icon-s-marketing"></i>
-          <span>Indicadores</span>
-        </template>
+     <el-menu-item index="/kpis/create">
+        <i class="el-icon-circle-plus"></i>
+        <template #title>Nuevo indicador</template>
+      </el-menu-item>
 
-        <el-menu-item-group title="Creación">
-          <el-menu-item index="/kpis/create">Nuevo KPI</el-menu-item>
-        </el-menu-item-group>
-
-        <el-menu-item-group title="Listados">
-          <el-menu-item index="/kpis">KPIs activos</el-menu-item>
-          <el-menu-item index="/kpis/deleted">KPIs eliminados</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-
-      <el-menu-item index="/register">
+      <el-menu-item index="/kpis">
         <i class="el-icon-s-data"></i>
-        <template #title>Registros (Raúl)</template>
+        <template #title>Indicadores activos</template>
+      </el-menu-item>
+
+      <el-menu-item index="/kpis/deleted">
+        <i class="el-icon-delete"></i>
+        <template #title>Papelera de KPIs</template>
       </el-menu-item>
 
       <el-menu-item index="/auth" disabled>
