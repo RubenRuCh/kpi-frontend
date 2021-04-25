@@ -4,9 +4,9 @@
       <el-button type="primary" v-if="!isLoading" @click="loadFields(true)">{{
         $t('update-data')
       }}</el-button>
-      <el-button type="primary" v-else :loading="isLoading">{{
-        $t('loading')
-      }}</el-button>
+      <el-button type="primary" v-else :loading="isLoading"
+        >{{ $t('loading') }}...</el-button
+      >
       <el-button type="primary" @click="$router.push('/fields/create')">{{
         $t('new-field')
       }}</el-button>
@@ -28,11 +28,7 @@
       max-height="600"
       :row-class-name="tableRowClassName"
     >
-      <el-table-column
-        :label="$t('id')"
-        prop="id"
-        sortable
-      ></el-table-column>
+      <el-table-column :label="$t('id')" prop="id" sortable></el-table-column>
       <el-table-column
         :label="$t('title')"
         prop="title"
@@ -126,10 +122,13 @@ export default {
           );
         }
       } catch (error) {
-        this.error =
-          error.message || this.$t('update-data-failed');
+        this.error = error.message || this.$t('update-data-failed');
 
-        this.notify(this.$t('ups'), `${this.$t('error')}: ${this.error}`, 'error');
+        this.notify(
+          this.$t('ups'),
+          `${this.$t('error')}: ${this.error}`,
+          'error'
+        );
       }
 
       this.isLoading = false;

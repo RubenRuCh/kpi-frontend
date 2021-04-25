@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-card shadow="always">
-      <h2>Crear un nuevo KPI</h2>
+      <h2>{{$t('new-kpi')}}</h2>
       <kpi-form @save-data="saveData"></kpi-form>
     </el-card>
   </section>

@@ -5,7 +5,7 @@
       <el-select
         v-model="choosenUnrequiredFields"
         multiple
-        placeholder="Añadir más atributos"
+        :placeholder="$t('add-more-fields')"
         style="margin-right: 1rem"
       >
         <el-option
@@ -38,19 +38,19 @@
       class="demo-dynamic"
     >
       <el-form-item
-        label="Nombre"
+        :label="$t('title')"
         prop="title"
         class="required"
         :rules="[
           {
             required: true,
-            message: 'Por favor, introduce un nombre para el indicador',
+            message: $t('kpi-title-needed'),
             trigger: 'blur',
           },
           {
             min: 4,
             max: 255,
-            message: 'Por favor, introduce un nombre entre 4 y 255 caracteres',
+            message: $t('kpi-title-length'),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -59,19 +59,19 @@
       </el-form-item>
 
       <el-form-item
-        label="Descripción"
+        :label="$t('description')"
         prop="description"
         class="required"
         :rules="[
           {
             required: true,
-            message: 'Por favor, introduce una descripción para el indicador',
+            message: $t('kpi-description-needed'),
             trigger: 'blur',
           },
           {
             min: 1,
             message:
-              'Por favor, introduce una descripción con algo de contenido',
+              $t('kpi-description-length'),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -132,7 +132,7 @@
         <el-button type="primary" @click="submitForm">
           {{ submitText }}
         </el-button>
-        <el-button @click="$router.replace('/kpis')">Cancelar</el-button>
+        <el-button @click="$router.replace('/kpis')">{{$t('cancel')}}</el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -163,18 +163,18 @@ export default {
   },
   computed: {
     submitText() {
-      if (this.isClone) return `Clonar indicador nº ${this.form.id}`;
-      return this.id ? "Actualizar indicador" : "Crear indicador";
+      if (this.isClone) return `${this.$t('clone-kpi')} ${this.form.id}`;
+      return this.id ? this.$t('update-kpi') : this.$t('create-kpi');
     },
     notifyMessage() {
       return this.id
-        ? "El indicador ha sido modificado correctamente"
-        : "Se ha creado el nuevo indicador correctamente";
+        ? this.$t('update-kpi-success')
+        : this.$t('create-kpi-success');
     },
     notifyTitle() {
       return this.id
-        ? `Indicador actualizado: ${this.form.title}`
-        : `Nuevo indicador: ${this.form.title}`;
+        ? `${this.$t('updated-kpi')}: ${this.form.title}`
+        : `${this.$t('new-kpi')}: ${this.form.title}`;
     },
     isClone() {
       return this.$route.query.clone != undefined;
@@ -189,8 +189,8 @@ export default {
           this.notify(this.notifyTitle, this.notifyMessage, "success");
         } else {
           this.notify(
-            `Error`,
-            "El formulario no es válido. Revisa que todos los campos han sido correctamente completados",
+            this.$t('error'),
+            this.$t('form-not-valid'),
             "error"
           );
 
@@ -205,7 +205,7 @@ export default {
       if (field.required) {
         rules.push({
           required: true,
-          message: `Actualmente el atributo ${field.title} es obligatorio a la hora de crear un KPI`,
+          message: this.$t('required-tooltip'),
           trigger: ["blur", "change"],
         });
       }
@@ -214,7 +214,7 @@ export default {
       if (field.maxlength) {
         rules.push({
           max: field.maxlength,
-          message: `La longitud máxima de este atributo es de ${field.maxlength}`,
+          message: `${this.$t('maxlength')}: ${field.maxlength}`,
           trigger: ["blur", "change"],
         });
       }
@@ -224,7 +224,7 @@ export default {
         rules.push({
           type: "number",
           max: 20,
-          message: `Deber ser un número`,
+          message: this.$t('must-be-number'),
           trigger: "change",
         });
       }
@@ -291,7 +291,7 @@ export default {
           )
         );
       } catch (e) {
-        this.notify("Error", "El indicador buscado no existe", "error");
+        this.notify(this.$t('error'), this.$t('kpi-not-found'), "error");
         this.$router.replace("/kpis");
       }
 

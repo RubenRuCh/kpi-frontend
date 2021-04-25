@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-card shadow="always">
-      <h2>Modificar KPI</h2>
+      <h2>{{$t('modify-kpi')}}</h2>
       <kpi-form :id="$route.params.id" @save-data="saveData"></kpi-form>
     </el-card>
   </section>
