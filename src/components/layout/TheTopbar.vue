@@ -2,9 +2,8 @@
   <nav>
     <el-menu
       :default-active="$route.path"
-      class="el-menu-vertical-demo"
-      :collapse="isCollapse"
-      @click.self.prevent="toggleMenu"
+      class="el-menu-demo"
+      mode="horizontal"
       router
     >
       <el-menu-item index="/">
@@ -12,7 +11,7 @@
         <template #title>Home</template>
       </el-menu-item>
 
-     <el-menu-item index="/kpis/create">
+      <el-menu-item index="/kpis/create">
         <i class="el-icon-circle-plus"></i>
         <template #title>Nuevo indicador</template>
       </el-menu-item>
@@ -35,35 +34,14 @@
   </nav>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isCollapse: false,
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.isCollapse = !this.isCollapse;
-    },
-  },
-};
-</script>
 
-<style scoped>
-.el-menu-vertical-demo {
-  height: calc(100vh - 70px - 20px - 1.5rem); /* 70px TheHeader' height, 20px TheSidebar' margin-top and 1.5rem TheHeader margin (1rem margin-top and 0.5rem margin-bottom) */
-  cursor: pointer;
-  margin-top: 20px;
+<style lang="scss" scoped>
+nav {
+  overflow: hidden;
+  overflow-x: auto;
 
-  border-top: solid 1px #e6e6e6;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: rgb(230, 230, 230);
-  border-top-right-radius: 0.2rem;
-}
-
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+  ul {
+    display: flex;
+  }
 }
 </style>
