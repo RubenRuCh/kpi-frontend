@@ -95,6 +95,7 @@
             <el-button
               type="primary"
               icon="el-icon-edit"
+              role="navigate-to-modify-field"
               plain
               @click="$router.push($route.path + '/edit')"
               >{{$t('modify')}}</el-button

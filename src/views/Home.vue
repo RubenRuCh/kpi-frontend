@@ -3,12 +3,12 @@
     <h1>{{ $t('h1') }}</h1>
 
     <section class="cards">
-      
-      <transition name="register" appear>
+      <transition name="create" appear>
         <el-card
-          key="register"
+          key="create"
           shadow="hover"
           @click="$router.push('/kpis/create')"
+          role="navigate-to-create"
         >
           <i class="el-icon-circle-plus"></i>
           <br /><br />
@@ -17,7 +17,12 @@
       </transition>
 
       <transition name="kpis" appear>
-        <el-card key="kpis" shadow="hover" @click="$router.push('/kpis')">
+        <el-card
+          key="kpis"
+          shadow="hover"
+          @click="$router.push('/kpis')"
+          role="navigate-to-actives"
+        >
           <i class="el-icon-s-data"></i>
           <br /><br />
           <span>{{ $t('active-kpis') }}</span>
@@ -29,6 +34,7 @@
           key="deletedKpis"
           shadow="hover"
           @click="$router.push('/kpis/deleted')"
+          role="navigate-to-deleted"
         >
           <i class="el-icon-delete"></i>
           <br /><br />
@@ -37,7 +43,12 @@
       </transition>
 
       <transition name="fields" appear>
-        <el-card key="fields" shadow="hover" @click="$router.push('/fields')">
+        <el-card
+          key="fields"
+          shadow="hover"
+          @click="$router.push('/fields')"
+          role="navigate-to-fields"
+        >
           <i class="el-icon-setting"></i>
           <br /><br />
           <span>{{ $t('dynamic-fields') }}</span>
@@ -81,7 +92,7 @@ span {
 }
 
 /* Animations */
-.register-enter-from,
+.create-enter-from,
 .kpis-enter-from,
 .deleted-enter-from,
 .fields-enter-from {
@@ -89,7 +100,7 @@ span {
   transform: translateX(300px);
 }
 
-.register-enter-active {
+.create-enter-active {
   transition: all 0.2s ease-out;
 }
 
@@ -105,7 +116,7 @@ span {
   transition: all 0.5s ease-out;
 }
 
-.register-enter-to,
+.create-enter-to,
 .kpis-enter-to,
 .deleted-enter-to,
 .fields-enter-to {

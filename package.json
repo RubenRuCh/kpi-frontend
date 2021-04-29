@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit --silent",
+    "watch:unit": "vue-cli-service test:unit --silent --watch",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
@@ -18,6 +19,8 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/vue": "^6.4.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -72,6 +75,9 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest",
+    "testMatch": [
+      "<rootDir>/src/**/*.(spec|test).(ts|js)"
+    ],
     "transform": {
       "^.+\\.vue$": "vue-jest"
     }
