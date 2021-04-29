@@ -71,7 +71,7 @@
             ></el-table-column>
 
             <el-table-column
-              :label="$t('filled')"
+              :label="$t('fillable')"
               prop="fillableText"
               sortable
             ></el-table-column>
