@@ -44,7 +44,7 @@ describe('FieldItem.vue', () => {
     expect(screen.getByText(text)).toBeInTheDocument();
   });
 
-  it('Contains button to travel to modify field view', async () => {
+  it('Contains button to travel to FieldModification view', async () => {
     // Arrange
     const mockRoute = {
       params: {
