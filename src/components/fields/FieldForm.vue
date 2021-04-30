@@ -22,7 +22,7 @@
         },
       ]"
     >
-      <el-input v-model="form.title"></el-input>
+      <el-input v-model="form.title" role="input-field-title"></el-input>
     </el-form-item>
 
     <el-form-item
@@ -116,7 +116,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm">{{ submitText }}</el-button>
+      <el-button role="submit-field-form" type="primary" @click="submitForm">{{ submitText }}</el-button>
       <el-button @click="$router.replace('/fields')">{{$t('cancel')}}</el-button>
     </el-form-item>
   </el-form>
