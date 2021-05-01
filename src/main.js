@@ -19,5 +19,3 @@ app.use(i18n);
 app.component('base-spinner', BaseSpinner);
 app.component('base-badge', BaseBadge);
 app.mount('#app');
-
-console.log(store);
