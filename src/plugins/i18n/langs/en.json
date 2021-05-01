@@ -95,5 +95,8 @@
     "kpi-properties": "Indicator characteristics",
     "active": "Active",
     "deleted": "Deleted",
-    "clone": "Clone"
+    "clone": "Clone",
+
+    "create-register": "Create register",
+    "update-register": "Update register"
 }
