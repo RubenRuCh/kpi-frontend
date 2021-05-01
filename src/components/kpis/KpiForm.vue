@@ -55,7 +55,7 @@
           },
         ]"
       >
-        <el-input v-model="form.title"></el-input>
+        <el-input v-model="form.title" role="input-kpi-title"></el-input>
       </el-form-item>
 
       <el-form-item
@@ -129,7 +129,7 @@
 
       <!-- Form submit / cancel -->
       <el-form-item>
-        <el-button type="primary" @click="submitForm">
+        <el-button type="primary" @click="submitForm" role="submit-kpi-form">
           {{ submitText }}
         </el-button>
         <el-button @click="$router.replace('/kpis')">{{$t('cancel')}}</el-button>
