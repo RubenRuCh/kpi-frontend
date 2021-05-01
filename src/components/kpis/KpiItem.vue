@@ -114,6 +114,7 @@
           ></base-badge>
 
           <el-button
+            role="show-kpi-registers"
             type="success"
             plain
             @click="$router.push($route.path + '/registers')"
