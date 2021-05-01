@@ -3,12 +3,12 @@ export default {
     const backendUrl = context.rootGetters.backendUrl;
 
     const registerData = {
+      kpiId: data.kpiId,
       value: data.value,
       columns: data.columns,
     };
 
-    console.log(data);
-
+    /* Create Registers */
     const response = await fetch(`${backendUrl}/registers`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,18 +27,19 @@ export default {
     context.commit("addRegister", {
       ...registerData,
       id: responseData.id,
-      kpiId: data.kpiId,
       createdAt: responseData.createdAt,
       updatedAt: responseData.updatedAt,
       // ... more data if needed
     });
   },
 
+  /* Update Registers */
   async updateRegister(context, data) {
     const backendUrl = context.rootGetters.backendUrl;
 
     const registerData = {
       id: data.id,
+      kpiId: data.kpiId,
       value: data.value,
       columns: data.columns,
     };
@@ -60,12 +61,41 @@ export default {
 
     context.commit("updateRegister", {
       ...registerData,
-      kpiId: data.kpiId,
       updatedAt: new Date(),
       // ... more data if needed
     });
   },
 
+  /* Delete Registers */
+  async deleteRegister(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const registerData = {
+      id: data.id,
+    };
+
+    const response = await fetch(`${backendUrl}/registers/${data.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registerData),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok || !responseData) {
+      const error = new Error(
+        response.message || `Failed to delete register nº ${data.id}`
+      );
+      throw error;
+    }
+
+    context.commit("deleteRegister", {
+      ...registerData,
+      // ... more data if needed
+    });
+  },
+
+  /* Get Registers */
   async loadRegisters(context, data) {
     if (!data.forceRefresh && !context.getters.shouldUpdate) return;
 
@@ -80,7 +110,7 @@ export default {
     }
 
     const registers = [];
-    var kpiId = null;
+    let kpiId = null;
 
     // Iterate over every register
     for (const key in responseData) {
@@ -88,11 +118,14 @@ export default {
 
       // First format data from columns and register_values tables
       for (const columnData of responseData[key].kpi_fields) {
-        if(!kpiId) kpiId = columnData.kpiId;
+        kpiId = columnData.kpiId;
+
+        const field = context.rootGetters['fields/fields'].find((field) => field.id == columnData.fieldId);
 
         const column = {
-          id: columnData.id,
-          label: columnData.value,
+          ...field,
+          id: columnData.fieldId,
+          value: columnData.value,
           value_label: columnData.register_value.value_label,
         };
 

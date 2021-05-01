@@ -13,8 +13,21 @@
           v-for="(column, index) in form.columns"
           :key="column.id"
           :label="column.value"
-          :prop="'columns.' + index + '.value'"
-          :rules="getFieldRules(column)"
+          :prop="'columns.' + index + '.value_label'"
+          :rules="[
+          {
+            required: true,
+            message: 'Por favor, introduce un valor para el registro',
+            trigger: 'blur',
+          },
+          {
+            min: 1,
+            max: 255,
+            message: $t('field-description-length'),
+            trigger: ['blur', 'change'],
+          },
+        ]"
+
         >
           <template #label>
             {{ column.value }}
@@ -39,9 +52,9 @@
             trigger: 'blur',
           },
           {
-            min: 4,
+            min: 1,
             max: 255,
-            message: 'Por favor, introduce un valor entre 4 y 255 caracteres',
+            message: $t('field-description-length'),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -54,7 +67,7 @@
         <el-button type="primary" @click="submitForm">
           {{ submitText }}
         </el-button>
-        <!-- <el-button @click="$router.replace('/registers')">Cancelar</el-button> -->
+        <el-button @click="$emit('close-modal')">Cancelar</el-button>
       </el-form-item>
 
     </el-form>
@@ -66,7 +79,7 @@ import useNotify from "@/hooks/notify.js";
 
 export default {
   props: ["id", "registerid", "columns"],
-  emits: ["save-data"],
+  emits: ["save-data", "close-modal"],
   setup() {
     const { notify } = useNotify();
 
@@ -82,27 +95,61 @@ export default {
   },
   computed: {
     submitText() {
-      return this.registerid ? "Actualizar registro" : "Crear registro";
+      return this.registerid ? this.$t('update-register') : this.$t('create-register');
     },
     notifyMessage() {
       return this.registerid
         ? "El registro ha sido modificado correctamente"
-        : "Se ha creado el nuevo registro correctamente";
+        : "Se ha creado el registro correctamente";
     },
     notifyTitle() {
       return this.registerid
-        ? `Indicador actualizado: ${this.form.title}`
-        : `Nuevo registro: ${this.form.title}`;
+        ? `Registro actualizado: ${this.registerid}`
+        : `Nuevo registro`;
     },
   },
   methods: {
+    async setupForm() {
+      var registerId = null;
+      if (this.registerid) registerId = this.registerid;
+        // First, make sure we have updated fields available and loaded in Vuex
+        await this.$store.dispatch("fields/loadFields", { forceRefresh: true });
+
+        this.form.columns = this.columns;
+
+        // If id exist, mean this is an update or clone form
+        if (registerId) {
+          // Make sure id passed by url actually exist
+          try {
+            // Clone Register instead of editing it directly
+            this.form = JSON.parse(
+              JSON.stringify(
+                this.$store.getters["registers/registers"].find((register) => register.id == registerId)
+              )
+            );
+          } catch (e) {
+            this.notify("Error", "El registro buscado no existe", "error");
+            this.$router.replace("/registers");
+          }
+
+        }
+    },
     submitForm() {
       this.$refs["registerForm"].validate((valid) => {
         if (valid) {
           this.form.kpiId = this.id;
           this.$emit("save-data", this.form);
+          this.$emit("close-modal");
 
           this.notify(this.notifyTitle, this.notifyMessage, "success");
+        
+          // Reset form
+          for (const column of this.form.columns) {
+            column.value_label = '';
+          }
+
+          this.form.value = '';
+
         } else {
           this.notify(
             `Error`,
@@ -114,72 +161,30 @@ export default {
         }
       });
     },
-    getFieldRules(column) {
+    /* Rules for input registers */
+    getFieldRules() {
       const rules = [];
 
-      // Required columns
-      if (column.required) {
-        rules.push({
-          required: true,
-          message: `Actualmente el atributo ${column.title} es obligatorio a la hora de crear un KPI`,
-          trigger: ["blur", "change"],
-        });
-      }
+      rules.push({
+        required: true,
+        message: 'Este campo es obligatorio a la hora de crear un registro',
+        trigger: ["blur", "change"],
+      });
+      
 
-      // Fields with lenght limit
-      if (column.maxlength) {
-        rules.push({
-          max: column.maxlength,
-          message: `La longitud máxima de este atributo es de ${column.maxlength}`,
-          trigger: ["blur", "change"],
-        });
-      }
-
-      // Fields type number
-      if (column.type == "number") {
-        rules.push({
-          type: "number",
-          max: 20,
-          message: `Deber ser un número`,
-          trigger: "change",
-        });
-      }
-
+      rules.push({
+        min: 1,
+        max: 255,
+        message: 'La longitud de este campo debe estar entre 1 y 255',
+        trigger: ["blur", "change"],
+      });
+      
       return rules;
     },
   },
 
-  async created() {
-    var registerId = null;
-   if (this.registerid) registerId = this.registerid;
-    // First, make sure we have updated fields available and loaded in Vuex
-    await this.$store.dispatch("fields/loadFields", { forceRefresh: true });
-
-    this.form.columns = this.columns;
-
-    // If id exist, mean this is an update or clone form
-    if (registerId) {
-      // Make sure id passed by url actually exist
-      try {
-        // Clone Register instead of editing it directly
-        this.form = JSON.parse(
-          JSON.stringify(
-            this.$store.getters["registers/registers"].find((register) => register.id == registerId)
-          )
-        );
-      } catch (e) {
-        this.notify("Error", "El registro buscado no existe", "error");
-        this.$router.replace("/registers");
-      }
-
-      // Finally, sort columns array by id
-      this.form.columns.sort(function (a, b) {
-        return (
-          a.id - b.id 
-        );
-      });
-      
-    }
+  created() {
+    this.setupForm();
   },
 };
 </script>
