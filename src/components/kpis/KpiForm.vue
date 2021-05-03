@@ -32,6 +32,7 @@
 
     <!-- KPI form -->
     <el-form
+      role="kpi-form"
       ref="kpiForm"
       :model="form"
       label-width="auto"
@@ -180,6 +181,16 @@ export default {
       return this.$route.query.clone != undefined;
     },
   },
+
+  watch: {
+    form(newValue, oldValue) {
+      console.log('Nuevo valor: ', newValue);
+      console.log('Antiguo valor: ', oldValue);
+    },
+  },
+
+
+
   methods: {
     submitForm() {
       this.$refs["kpiForm"].validate((valid) => {
