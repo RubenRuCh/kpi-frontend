@@ -1,5 +1,5 @@
 // Tools and plugins
-import { render, screen, fireEvent } from '@testing-library/vue';
+import { render, screen } from '@testing-library/vue';
 import '@testing-library/jest-dom';
 import i18n from '@/plugins/i18n/index.js';
 import store from '@/store/index.js';
@@ -98,6 +98,7 @@ describe('KpiForm.vue', () => {
 
     expect(inputKpiTitle).toBeInTheDocument();
     expect(inputKpiTitle).not.toHaveAttribute('modelvalue', text);
+    expect(inputKpiTitle).toHaveAttribute('modelvalue', '');
   });
 
   // it('Renders form with inputs with values when id is passed as prop (is an update or clone form)', async () => {
@@ -106,6 +107,7 @@ describe('KpiForm.vue', () => {
   //   const text = 'KPI test title';
 
   //   mockRoute.path += '1/edit';
+  //   mockRoute.params.id = 1;
 
   //   render(KpiForm, {
   //     props: { id: 1 },
@@ -120,7 +122,7 @@ describe('KpiForm.vue', () => {
   //   });
 
   //   // Assert
-  //   const inputKpiTitle = screen.queryByRole(inputRole);
+  //   const inputKpiTitle = screen.getByRole(inputRole);
 
   //   expect(inputKpiTitle).toBeInTheDocument();
   //   expect(inputKpiTitle).toHaveAttribute('modelvalue', text);
