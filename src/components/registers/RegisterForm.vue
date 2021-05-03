@@ -17,7 +17,7 @@
           :rules="[
           {
             required: true,
-            message: 'Por favor, introduce un valor para el registro',
+            message: $t('register-input-value'),
             trigger: 'blur',
           },
           {
@@ -48,7 +48,7 @@
         :rules="[
           {
             required: true,
-            message: 'Por favor, introduce un valor para el registro',
+            message: $t('register-correct-value'),
             trigger: 'blur',
           },
           {
@@ -99,13 +99,13 @@ export default {
     },
     notifyMessage() {
       return this.registerid
-        ? "El registro ha sido modificado correctamente"
-        : "Se ha creado el registro correctamente";
+        ? this.$t('update-register-success')
+        : this.$t('create-register-success');
     },
     notifyTitle() {
       return this.registerid
-        ? `Registro actualizado: ${this.registerid}`
-        : `Nuevo registro`;
+        ? `${this.$t('updated-register')}: ${this.registerid}`
+        : `${this.$t('new-register')}`;
     },
   },
   methods: {
@@ -128,7 +128,7 @@ export default {
               )
             );
           } catch (e) {
-            this.notify("Error", "El registro buscado no existe", "error");
+            this.notify( `${this.$t('error')}`, `${this.$t('register-not-found')}`, "error");
             this.$router.replace("/registers");
           }
 
@@ -152,9 +152,9 @@ export default {
 
         } else {
           this.notify(
-            `Error`,
-            "El formulario no es válido. Revisa que todos los campos han sido correctamente completados",
-            "error"
+            this.$t('error'),
+            this.$t('form-not-valid'),
+            'error'
           );
 
           return false;
