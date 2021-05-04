@@ -97,6 +97,23 @@
     "deleted": "Eliminat",
     "clone": "Clonar",
 
+    "registers-title":"Registress",
     "create-register": "Crear registre",
-    "update-register": "Actualitzar registre"
+    "update-register": "Actualitzar registre",
+    "delete-register":"Registre eliminat",
+    "delete-register-msg":"El registre ha estat eliminat amb nº",
+    "search-by-value": "Buscar per valor",
+    "update-registers": "Actualitzar registers",
+    "new-register": "Nou registre",
+    "register-not-found": "No hi ha cap registre",
+    "confirm-delete-register": "Estàs segur/a de voler esborrar aquest registre?",
+    "kpi-registers": "Registre del indicador num:",
+    "register-correct-value":"Si us plau, introdueix un valor per al registre",
+    "register-input-value":"'Si us plau, introdueix valors, no pot estar buit",
+    "kpi-data": "Dades del KPI",
+    "update-register-success": "El registre ha estat modificat correctament",
+    "create-register-success": "S'ha creat el nou registre correctament",
+    "updated-register": "Registre Actualitzat",
+    "required-register-input":"Aquest camp és obligatori a l'hora de crear un registre"
+
 }

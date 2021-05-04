@@ -1,17 +1,17 @@
 <template>
 
   <el-card shadow="always" class="main-card">
-    <h1>Registros del indicador {{ id }}</h1>
+    <h1>{{ $t('kpi-registers') }} {{ id }}</h1>
 
     <el-button type="primary" @click="kpiDialogVisible = true"
-      >Datos del KPI</el-button
+      >{{ $t('kpi-data') }}</el-button
     >
 
     <br />
     <br />
 
     <!-- KPI details -->
-    <el-dialog v-model="kpiDialogVisible" title="Datos del KPI" width="75%">
+    <el-dialog v-model="kpiDialogVisible" :title="$t('kpi-data')" width="75%">
       <kpi-item
         v-if="selectedKpi"
         :id="selectedKpi.id"
@@ -20,7 +20,7 @@
     </el-dialog>
 
     <!-- Create dialog -->
-    <el-dialog v-model="createDialogVisible" title="Crear registro" width="50%">
+    <el-dialog v-model="createDialogVisible" :title="$t('create-register')" width="50%">
       <register-form
         :id="id"
         :columns="fillableFields"
@@ -33,7 +33,7 @@
     <!-- Update dialog -->
     <el-dialog
       v-model="updateDialogVisible"
-      title="Editar registro"
+      :title="$t('update-register')"
       width="50%"
     >
       <register-form
@@ -50,16 +50,16 @@
 
     <!-- Buttons -->
     <el-card shadow="always">
-      <h2>Registros</h2>
+      <h2>{{ $t('registers-title') }}</h2>
       <div class="controls">
         <el-button type="primary" v-if="!isLoading" @click="loadRegisters(true)"
-          >Actualizar registros</el-button
+          >{{ $t('update-registers') }}</el-button
         >
         <el-button type="primary" v-else :loading="isLoading"
           >Cargando...</el-button
         >
         <el-button type="primary" @click="createDialogVisible = true"
-          >Nuevo registro</el-button
+          >{{ $t('new-register') }}</el-button
         >
       </div>
 
@@ -105,7 +105,7 @@
             <el-input
               v-model="search"
               size="mini"
-              placeholder="Buscar por Valor"
+              :placeholder="$t('search-by-value')"
             />
           </template>
           <template #default="scope">
@@ -114,17 +114,20 @@
               icon="el-icon-edit"
               plain
               @click="handleModify(scope.row.id)"
-              >Modificar</el-button
+              > {{$t("modify")}}</el-button
             >
 
             <el-popconfirm
               @confirm="deleteRegister(scope.row.id)"
-              :title="$t('confirm-delete-kpi')"
+              :title="$t('confirm-delete-register')"
+              icon="el-icon-info"
+              icon-color="red"
             >
               <template #reference>
-                <el-button type="danger" icon="el-icon-delete" plain>{{
-                  $t("delete")
-                }}</el-button>
+                <el-button type="danger" 
+                          icon="el-icon-delete" 
+                          plain>{{$t("delete")}}
+                          </el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -135,7 +138,7 @@
       <!-- End Datatable show the Registers -->
       <el-empty
         v-else
-        description="No se ha encontrado ningún registro"
+        :description="$t('register-not-found')"
       ></el-empty>
     </el-card>
   </el-card>
@@ -190,9 +193,9 @@ export default {
         this.filterRegisters();
       } catch (error) {
         this.error =
-          error.message || "Algo ha salido mal durante la carga de los datos";
+          error.message || this.$t('update-data-failed');
 
-        this.notify("Ups...", `Error: ${this.error}`, "error");
+        this.notify(this.$t('ups'), `${this.$t('error')}: ${this.error}`, "error");
       } finally {
         this.isLoading = false;
       }
@@ -248,12 +251,7 @@ export default {
     /* Delete Registers  */
     deleteRegister(id) {
       this.$store.dispatch("registers/deleteRegister", { id });
-
-      this.notify(
-        "Registro eliminado",
-        "Se ha eliminado correctamente el registro nº" + id,
-        "success"
-      );
+      this.notify(this.$t('delete-register'), `${this.$t('delete-register-msg')}: ${this.id}`, "success");
       this.refreshRegisters();
     },
 
