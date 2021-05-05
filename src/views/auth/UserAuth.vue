@@ -1,6 +1,10 @@
 <template>
   <section>
-    <el-dialog v-model="existsError" :title="$t('error')" :before-close="handleError">
+    <el-dialog
+      v-model="existsError"
+      :title="$t('error')"
+      :before-close="handleError"
+    >
       <p>{{ error }}</p>
     </el-dialog>
 
@@ -41,12 +45,12 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="submitForm('authForm')"
-            >{{ $t('login') }}</el-button
-          >
-          <el-button @click="resetForm('authForm')"
-            >{{ $t('clean-form') }}</el-button
-          >
+          <el-button type="primary" @click="submitForm('authForm')">{{
+            $t('login')
+          }}</el-button>
+          <el-button @click="resetForm('authForm')">{{
+            $t('clean-form')
+          }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -65,11 +69,7 @@ export default {
   data() {
     var checkUser = (rule, value, callback) => {
       if (value === '') {
-        return callback(
-          new Error(
-            this.$t('user-needed')
-          )
-        );
+        return callback(new Error(this.$t('user-needed')));
       }
       setTimeout(() => {
         if (!this.userExists) {
@@ -158,14 +158,10 @@ export default {
 
             this.$router.replace(redirectUrl);
           } catch (error) {
-            this.error = error || this.$t('auth-error');
+            this.error = this.$t('auth-error') || error;
           }
         } else {
-          this.notify(
-            this.$t('error'),
-            this.$t('form-not-valid'),
-            'error'
-          );
+          this.notify(this.$t('error'), this.$t('form-not-valid'), 'error');
 
           return false;
         }

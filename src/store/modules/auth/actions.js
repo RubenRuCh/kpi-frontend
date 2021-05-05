@@ -1,49 +1,36 @@
 export default {
-  async login(context, payload) {
-    return context.dispatch('auth', {
-      ...payload,
-      mode: 'login',
+  async login(context, data) {
+    const backendUrl = context.rootGetters.backendUrl;
+
+    const authData = {
+      user: data.user,
+      password: data.password,
+    };
+
+    const response = await fetch(`${backendUrl}/auth`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(authData),
     });
-  },
 
-  async auth(context /*, payload*/) {
-    // const mode = payload.mode;
-    // let action = 'signInWithPassword';
-    // if (mode === 'signup') action = 'signUp';
+    const responseData = await response.json();
 
-    // const response = await fetch(`${action}`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     email: payload.email,
-    //     password: payload.password,
-    //     returnSecureToken: true,
-    //   }),
-    // });
+    if (!response.ok || !responseData) {
+      const error = new Error(response.message || 'Failed to authenticate');
+      throw error;
+    }
 
-    // const responseData = await response.json();
-
-    // if (!response.ok || !responseData) {
-    //   const error = new Error(response.message || 'Failed to authenticate');
-    //   throw error;
-    // }
-
-    // const expiresIn = +responseData.expiresIn * 1000;
-
-    // localStorage.setItem('token', responseData.idToken);
-    // localStorage.setItem('userId', responseData.localId);
     localStorage.setItem('token', 'tokendeprueba');
-    localStorage.setItem('userId', 1);
+    localStorage.setItem('user', data.user);
 
     context.commit('setUser', {
-      // token: responseData.idToken,
-      // userId: responseData.localId,
       token: 'tokendeprueba',
-      userId: 1,
+      user: data.user,
     });
   },
   logout(context) {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
 
     context.commit('logout');
   },
