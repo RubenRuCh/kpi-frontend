@@ -69,6 +69,7 @@
         v-loading="isLoading"
         :default-sort="{ prop: 'id', order: 'ascending' }"
         stripe
+        align="center" 
         fit
         :data="
           registers.filter(
@@ -81,7 +82,7 @@
         max-height="600"
       >
         <!-- Colum ID -->
-        <el-table-column label="Código" prop="id" sortable></el-table-column>
+        <el-table-column align="center" label="Código" prop="id" sortable></el-table-column>
 
         <!-- Dinamic columns -->
         <el-table-column
@@ -89,6 +90,7 @@
           :key="field.id"
           :label="field.value"
           sortable
+          align="center" 
         >
           <template #default="scope">
             <span :key="scope.row.id">
@@ -97,7 +99,7 @@
           </template>
         </el-table-column>
         <!-- Colum Value -->
-        <el-table-column label="Valor" prop="value" sortable></el-table-column>
+        <el-table-column label="Valor" prop="value" sortable align="center" ></el-table-column>
 
         <!-- Colum Actions , search, update, delete -->
         <el-table-column align="right" min-width="150">
