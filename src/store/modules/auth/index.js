@@ -10,9 +10,8 @@ export default {
 
   state() {
     return {
-      userId: null,
+      user: null,
       token: null,
-      API_KEY: '',
     };
   },
 };

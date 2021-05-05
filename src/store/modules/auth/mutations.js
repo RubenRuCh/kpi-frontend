@@ -1,10 +1,10 @@
 export default {
   setUser(state, payload) {
     state.token = payload.token;
-    state.userId = payload.userId;
+    state.user = payload.user;
   },
   logout(state) {
     state.token = null;
-    state.userId = null;
+    state.user = null;
   },
 };

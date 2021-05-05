@@ -1,72 +1,72 @@
-import { createRouter, createWebHistory } from "vue-router";
-// import store from "@/store/index.js";
+import { createRouter, createWebHistory } from 'vue-router';
+import store from '@/store/index.js';
 
 // Normal imports (most used routes)
-import Home from "@/views/Home.vue";
-import KpiList from "@/views/kpis/KpiList.vue";
-import NotFound from "@/views/NotFound.vue";
+import Home from '@/views/Home.vue';
+import KpiList from '@/views/kpis/KpiList.vue';
+import NotFound from '@/views/NotFound.vue';
 
 /* Lazy / async imports */
 
 // KPI
-const KpiDeletedList = () => import("@/views/kpis/KpiDeletedList.vue");
-const KpiDetail = () => import("@/views/kpis/KpiDetail.vue");
-const KpiRegistration = () => import("@/views/kpis/KpiRegistration.vue");
-const KpiModification = () => import("@/views/kpis/KpiModification.vue");
+const KpiDeletedList = () => import('@/views/kpis/KpiDeletedList.vue');
+const KpiDetail = () => import('@/views/kpis/KpiDetail.vue');
+const KpiRegistration = () => import('@/views/kpis/KpiRegistration.vue');
+const KpiModification = () => import('@/views/kpis/KpiModification.vue');
 
 // Field
-const FieldList = () => import("@/views/fields/FieldList.vue");
-const FieldDetail = () => import("@/views/fields/FieldDetail.vue");
-const FieldRegistration = () => import("@/views/fields/FieldRegistration.vue");
-const FieldModification = () => import("@/views/fields/FieldModification.vue");
+const FieldList = () => import('@/views/fields/FieldList.vue');
+const FieldDetail = () => import('@/views/fields/FieldDetail.vue');
+const FieldRegistration = () => import('@/views/fields/FieldRegistration.vue');
+const FieldModification = () => import('@/views/fields/FieldModification.vue');
 
 
 // Register
 const RegisterList = () => import("@/views/registers/RegisterList.vue");
 
 // Auth
-const UserAuth = () => import("@/views/auth/UserAuth.vue");
+const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
     meta: { requiresAuth: true },
   },
   {
-    path: "/kpis",
-    name: "KPIs",
+    path: '/kpis',
+    name: 'KPIs',
     component: KpiList,
     meta: { requiresAuth: true },
   },
   {
-    path: "/kpis/deleted",
+    path: '/kpis/deleted',
     component: KpiDeletedList,
     meta: { requiresAuth: true },
   },
   {
-    name: "Create",
-    path: "/kpis/create",
+    name: 'Create',
+    path: '/kpis/create',
     component: KpiRegistration,
     meta: { requiresAuth: true },
   },
   {
-    path: "/kpis/:id",
+    path: '/kpis/:id',
     component: KpiDetail,
     props: true,
     meta: { requiresAuth: true },
   },
   {
-    path: "/kpis/:id/edit",
+    path: '/kpis/:id/edit',
     component: KpiModification,
     props: true,
     meta: { requiresAuth: true },
   },
   {
-    path: "/kpis/:id/clone",
+    path: '/kpis/:id/clone',
     redirect: (to) => ({
-      name: "Create",
+      name: 'Create',
       query: { clone: to.params.id },
     }),
     props: true,
@@ -84,24 +84,24 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/fields/create",
+    path: '/fields/create',
     component: FieldRegistration,
     meta: { requiresAuth: true },
   },
   {
-    path: "/fields/:id",
+    path: '/fields/:id',
     component: FieldDetail,
     props: true,
     meta: { requiresAuth: true },
   },
   {
-    path: "/fields/:id/edit",
+    path: '/fields/:id/edit',
     component: FieldModification,
     props: true,
     meta: { requiresAuth: true },
   },
-  { path: "/auth", component: UserAuth, meta: { requiresUnauth: true } },
-  { path: "/:notFound(.*)", component: NotFound, meta: { requiresAuth: true } },
+  { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
+  { path: '/:notFound(.*)', component: NotFound, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({
@@ -110,14 +110,18 @@ const router = createRouter({
 });
 
 // We can apply rules to each route. It will be interesting to apply a redirect when a user acces a view that only registered users have rights to see!
-// router.beforeEach(function (to, _from, next) {
-//   if (to.meta.requiresAuth && !store.getters["auth/isAuthenticated"]) {
-//     next("/auth");
-//   } else if (to.meta.requiresUnauth && store.getters["auth/isAuthenticated"]) {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(function (to, _from, next) {
+  if (
+    to.meta.requiresAuth &&
+    !store.getters['auth/isAuthenticated'] &&
+    process.env.NODE_ENV === 'production'
+  ) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth && store.getters['auth/isAuthenticated']) {
+    next('/');
+  } else {
+    next();
+  }
+});
 
 export default router;
