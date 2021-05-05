@@ -95,5 +95,25 @@
     "kpi-properties": "Indicator characteristics",
     "active": "Active",
     "deleted": "Deleted",
-    "clone": "Clone"
+    "clone": "Clone",
+
+    "registers-title":"Registers",
+    "create-register": "Create register",
+    "update-register": "Update register",
+    "delete-register":"Delete register",
+    "delete-register-msg":"The register has been deleted successfully with  nº",
+    "search-by-value": "Search by value",
+    "update-registers": "Update registers",
+    "new-register": "New register",
+    "register-not-found": "No register found",
+    "confirm-delete-register": "Are you sure you want to delete this register?",
+    "kpi-registers": "Kpi register number:",
+    "register-correct-value":"Please, insert a correct value ",
+    "register-input-value":"Please, insert values, can't be empty",
+    "kpi-data": "KPI data",
+    "update-register-success": "The register has been modified successfully",
+    "create-register-success": "The new register was created successfully",
+    "updated-register": "Updated register",
+    "required-register-input":"This input is required in order to create a register"
+    
 }

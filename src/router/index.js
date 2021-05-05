@@ -20,6 +20,10 @@ const FieldDetail = () => import('@/views/fields/FieldDetail.vue');
 const FieldRegistration = () => import('@/views/fields/FieldRegistration.vue');
 const FieldModification = () => import('@/views/fields/FieldModification.vue');
 
+
+// Register
+const RegisterList = () => import("@/views/registers/RegisterList.vue");
+
 // Auth
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
@@ -68,8 +72,14 @@ const routes = [
     props: true,
   },
   {
-    path: '/fields',
-    name: 'Fields',
+    path: "/kpis/:id/registers",
+    component: RegisterList,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/fields",
+    name: "Fields",
     component: FieldList,
     meta: { requiresAuth: true },
   },
