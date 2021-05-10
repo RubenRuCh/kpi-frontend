@@ -253,7 +253,7 @@ export default {
     /* Delete Registers  */
     deleteRegister(id) {
       this.$store.dispatch("registers/deleteRegister", { id });
-      this.notify(this.$t('delete-register'), `${this.$t('delete-register-msg')}: ${this.id}`, "success");
+      this.notify(this.$t('delete-register'), `${this.$t('delete-register-msg')}: ${id}`, "success");
       this.refreshRegisters();
     },
 
