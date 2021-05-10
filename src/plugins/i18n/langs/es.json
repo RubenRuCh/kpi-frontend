@@ -97,6 +97,8 @@
     "deleted": "Eliminado",
     "clone": "Clonar",
 
+    "dependencie": "Entidad de la que depende",
+    "config": "Configuración de la aplicación",
     "registers-title":"Registros",
     "create-register": "Crear registro",
     "update-register": "Actualizar registro",
@@ -115,5 +117,4 @@
     "create-register-success": "Se ha creado el nuevo registro correctamente",
     "updated-register": "Registro actualizado",
     "required-register-input":"Este campo es obligatorio a la hora de crear un registro"
-    
 }

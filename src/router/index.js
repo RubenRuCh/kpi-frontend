@@ -20,9 +20,11 @@ const FieldDetail = () => import('@/views/fields/FieldDetail.vue');
 const FieldRegistration = () => import('@/views/fields/FieldRegistration.vue');
 const FieldModification = () => import('@/views/fields/FieldModification.vue');
 
+// Conf
+const ConfList = () => import('@/views/conf/ConfList.vue');
 
 // Register
-const RegisterList = () => import("@/views/registers/RegisterList.vue");
+const RegisterList = () => import('@/views/registers/RegisterList.vue');
 
 // Auth
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
@@ -32,6 +34,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/conf',
+    component: ConfList,
     meta: { requiresAuth: true },
   },
   {
@@ -72,14 +79,14 @@ const routes = [
     props: true,
   },
   {
-    path: "/kpis/:id/registers",
+    path: '/kpis/:id/registers',
     component: RegisterList,
     props: true,
     meta: { requiresAuth: true },
   },
   {
-    path: "/fields",
-    name: "Fields",
+    path: '/fields',
+    name: 'Fields',
     component: FieldList,
     meta: { requiresAuth: true },
   },
