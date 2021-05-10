@@ -20,6 +20,9 @@ const FieldDetail = () => import('@/views/fields/FieldDetail.vue');
 const FieldRegistration = () => import('@/views/fields/FieldRegistration.vue');
 const FieldModification = () => import('@/views/fields/FieldModification.vue');
 
+// Conf
+const ConfList = () => import('@/views/conf/ConfList.vue');
+
 // Auth
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
@@ -28,6 +31,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/conf',
+    component: ConfList,
     meta: { requiresAuth: true },
   },
   {

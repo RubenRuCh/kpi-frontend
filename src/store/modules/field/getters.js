@@ -2,6 +2,9 @@ export default {
   fields(state) {
     return state.fields;
   },
+  getFieldById(state) {
+    return (id) => state.fields.find((field) => field.id === id);
+  },
   requiredFields(state) {
     return state.fields.filter((field) => field.required);
   },

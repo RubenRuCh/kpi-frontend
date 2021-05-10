@@ -4,13 +4,20 @@
       <el-button type="primary" v-if="!isLoading" @click="loadFields(true)">{{
         $t('update-data')
       }}</el-button>
+
       <el-button type="primary" v-else :loading="isLoading"
         >{{ $t('loading') }}...</el-button
       >
+
+      <el-button type="primary" @click="$router.push('/conf')">{{
+        $t('config')
+      }}</el-button>
+
       <el-button type="primary" @click="$router.push('/fields/create')">{{
         $t('new-field')
       }}</el-button>
     </div>
+
     <h1>{{ $t('available-fields') }}</h1>
     <el-table
       v-if="isLoading || hasFields"

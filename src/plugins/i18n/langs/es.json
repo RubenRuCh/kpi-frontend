@@ -95,5 +95,8 @@
     "kpi-properties": "Características del indicador",
     "active": "Activo",
     "deleted": "Eliminado",
-    "clone": "Clonar"
+    "clone": "Clonar",
+
+    "dependencie": "Entidad de la que depende",
+    "config": "Configuración de la aplicación"
 }
