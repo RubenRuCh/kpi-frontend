@@ -4,7 +4,7 @@ export default function useNotify() {
       title,
       message,
       type,
-      position: 'bottom-right',
+      position: 'top-right',
     });
   }
 

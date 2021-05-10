@@ -23,6 +23,9 @@ const FieldModification = () => import('@/views/fields/FieldModification.vue');
 // Conf
 const ConfList = () => import('@/views/conf/ConfList.vue');
 
+// Register
+const RegisterList = () => import('@/views/registers/RegisterList.vue');
+
 // Auth
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
@@ -74,6 +77,12 @@ const routes = [
       query: { clone: to.params.id },
     }),
     props: true,
+  },
+  {
+    path: '/kpis/:id/registers',
+    component: RegisterList,
+    props: true,
+    meta: { requiresAuth: true },
   },
   {
     path: '/fields',

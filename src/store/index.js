@@ -7,12 +7,14 @@ import rootActions from './actions.js';
 import kpiModule from './modules/kpi/index.js';
 import fieldModule from './modules/field/index.js';
 import authModule from './modules/auth/index.js';
+import registerModule from './modules/register/index.js';
 
 const store = createStore({
   modules: {
     kpis: kpiModule,
     fields: fieldModule,
     auth: authModule,
+    registers: registerModule,
   },
   getters: rootGetters,
   mutations: rootMutations,

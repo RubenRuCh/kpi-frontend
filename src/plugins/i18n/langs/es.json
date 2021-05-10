@@ -98,5 +98,23 @@
     "clone": "Clonar",
 
     "dependencie": "Entidad de la que depende",
-    "config": "Configuración de la aplicación"
+    "config": "Configuración de la aplicación",
+    "registers-title":"Registros",
+    "create-register": "Crear registro",
+    "update-register": "Actualizar registro",
+    "delete-register":"Registro borrado",
+    "delete-register-msg":"El registro se ha borrado correctamente con  nº",
+    "search-by-value": "Buscar por valor",
+    "update-registers": "Actualizar registros",
+    "new-register": "Nuevo registro",
+    "register-not-found": "No se ha encontrado ningún Registro",
+    "confirm-delete-register": "¿Estás seguro/a que deseas borrar el registro?",
+    "kpi-registers": "Registros el indicador nº",
+    "register-correct-value":"Por favor, introduce un valor para el registro",
+    "register-input-value":"'Por favor, introduce un dato, no puede estar vacío",
+    "kpi-data": "Datos del KPI",
+    "update-register-success": "El registro ha sido modificado correctamente",
+    "create-register-success": "Se ha creado el nuevo registro correctamente",
+    "updated-register": "Registro actualizado",
+    "required-register-input":"Este campo es obligatorio a la hora de crear un registro"
 }
