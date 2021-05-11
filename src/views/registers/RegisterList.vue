@@ -203,6 +203,7 @@ export default {
       }
     },
 
+    /* Filter registers that belongs to KPI */
     filterRegisters() {
       if (!this.selectedKpi) return;
 
@@ -230,6 +231,7 @@ export default {
       this.updateDialogVisible = true;
     },
 
+     /* Refesh datatable registrers */
     refreshRegisters() {
       return setTimeout(() => {
         this.loadRegisters(true);
@@ -257,6 +259,7 @@ export default {
       this.refreshRegisters();
     },
 
+    /* Get [value-label] data */
     getColumnValue(register, field) {
       var columnValue = null;
 
@@ -282,6 +285,7 @@ export default {
     this.loadRegisters();
   },
   watch: {
+    /* Show only the fillable fields in the datatable */
     selectedKpi: function (newValue) {
       if (newValue) {
         this.fillableFields = newValue.fields.filter((field) => field.fillable);
