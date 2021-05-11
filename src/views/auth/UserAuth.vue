@@ -67,21 +67,6 @@ export default {
     return { notify };
   },
   data() {
-    var checkUser = (rule, value, callback) => {
-      if (value === '') {
-        return callback(new Error(this.$t('user-needed')));
-      }
-      setTimeout(() => {
-        if (!this.userExists) {
-          callback(
-            new Error('El usuario debe estar dado de alta en el Ayuntamiento')
-          );
-        } else {
-          callback();
-        }
-      }, 1000);
-    };
-
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('password-needed')));
@@ -114,7 +99,7 @@ export default {
         checkPass: '',
       },
       rules: {
-        user: [{ validator: checkUser, trigger: ['blur', 'change'] }],
+        user: [{ trigger: ['blur', 'change'] }],
         pass: [{ validator: validatePass, trigger: ['blur', 'change'] }],
         checkPass: [
           { validator: validateConfirmPass, trigger: ['blur', 'change'] },
@@ -138,8 +123,6 @@ export default {
       };
 
       this.$refs[formName].validate(async (valid) => {
-        this.isLoading = false;
-
         if (valid) {
           try {
             // Login
@@ -162,9 +145,9 @@ export default {
           }
         } else {
           this.notify(this.$t('error'), this.$t('form-not-valid'), 'error');
-
-          return false;
         }
+        
+        this.isLoading = false;
       });
     },
     resetForm(formName) {
