@@ -59,7 +59,7 @@
           },
         ]"
       >
-        <el-input v-model="form.value"></el-input>
+        <el-input v-model="form.value" role="input-field-value"></el-input>
       </el-form-item>
 
       <!-- Form submit / cancel -->
