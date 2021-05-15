@@ -17,10 +17,12 @@ export default {
       const confParameter = getters.getConfByTitle(title);
       var dependencieItem = null;
 
-      switch (confParameter?.dependencie) {
+      if (!confParameter.dependencie) return dependencieItem;
+
+      switch (confParameter.dependencie) {
         case 'fields':
           dependencieItem = getters['fields/getFieldById'](confParameter.value);
-
+          break;
         // More dependencies types if needed
       }
 

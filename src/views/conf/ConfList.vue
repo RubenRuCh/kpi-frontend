@@ -104,33 +104,6 @@ export default {
     hasConf() {
       return !this.isLoading && this.conf;
     },
-
-    // TODO Delete
-    ejemploCarlos() {
-      /* this.$store.getters['getDependencieItemByConfTitle']('TITULO') devolvera el item que este relacionado al parametro de configuracion cuyo titulo introduzcas donde pone TITULO
-      (por ahora solo soporta atributos/fields, pero añadiendo mas casos en los los switch/case valdria para otros tipos de entidades).
-      
-      Puedes añadir mas parametros de configuracion. Por ejemplo, si quieres añadir un Field tipo Area de Gobierno para crear una regla de que unicamente podran ver los KPIS 
-      con un value de Area de Gobierno determinado, bastaria con crear un nuevo parametro (AREA_CONTROLLER) en la tabla conf, y en esta vista enganchar dicho parametro con el field que quieras que
-      controle. Luego simplemente llamas a this.$store.getters['getDependencieItemByConfTitle']('AREA_CONTROLLER') y ya tienes el objeto Field correspondiente. Teniendo el Field, solo te queda filtrar los kpis
-      para que solo aparezcan aquellos que contengan un field del mismo id con el valor que busques (por ejemplo, mostrar unicamente los kpis que contengan un atributo Area de Gobierno cuyo valor 
-      sea igual a 'Residuos'). Ya lo tienes practicamente hecho. Si quieres hacer una vista para poder dar de alta mas parametros de configuracion es cosa tuya. Yo lo dejaria asi dado que 
-      tienes que tocar codigo para aplicar los filtrados, pero dale una vuelta a la vista por si se puede mejorar algo
-      */
-      const fieldBuscado = this.$store.getters['getDependencieItemByConfTitle'](
-        'SERVICES_CONTROLLER'
-      );
-
-      return fieldBuscado;
-    },
-  },
-  // TODO Delete
-  watch: {
-    // EJEMPLO DE USO PARA CARLOS
-    ejemploCarlos(newValue) {
-      console.log('Atributo que controla los servicios:', newValue);
-      console.log('Servicios disponibles', newValue?.values);
-    },
   },
   methods: {
     async loadConf(refresh = false) {
