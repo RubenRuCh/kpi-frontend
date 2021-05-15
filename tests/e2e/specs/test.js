@@ -1,8 +1,19 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-describe('Integration test', () => {
-  it('Visits the app root url', () => {
+describe('Test main page', () => {
+  beforeEach(() => {
     cy.visit('/');
-    cy.get('div[class="logo"]').find('img').should('be.visible');
+  });
+
+  it('logo are visible', () => {
+    cy.get('.logo').find('img').should('be.visible');
+  });
+
+  it('menu are visible', () => {
+    cy.get('ul[role="menubar"]').should('be.visible');
+  });
+
+  it('cards exists to navigate through app', () => {
+    cy.get('div[role*="navigate-to"]').should('be.visible');
   });
 });

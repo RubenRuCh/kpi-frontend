@@ -139,7 +139,18 @@ export default {
               ? this.$route.redirectedFrom.path
               : '/';
 
+            // Refresh Vuex data 
+            this.$store.dispatch("kpis/loadKpis", {
+              forceRefresh: true,
+            });
+
+            this.$store.dispatch("fields/loadFields", {
+              forceRefresh: true,
+            });
+
             this.$router.replace(redirectUrl);
+
+
           } catch (error) {
             this.error = this.$t('auth-error') || error;
           }

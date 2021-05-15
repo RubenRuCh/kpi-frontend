@@ -32,17 +32,6 @@ export default {
     TheHeader,
     TheTopbar,
   },
-
-  created() {
-    // Load some data on created
-    this.$store.dispatch("kpis/loadKpis", {
-      forceRefresh: true,
-    });
-
-    this.$store.dispatch("fields/loadFields", {
-      forceRefresh: true,
-    });
-  },
 };
 </script>
 

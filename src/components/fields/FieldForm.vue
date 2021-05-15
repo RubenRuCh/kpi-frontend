@@ -68,7 +68,10 @@
         :placeholder="$t('field-type-placeholder')"
       >
         <el-option :label="$t('field-type-limit')" value="text"></el-option>
-        <el-option :label="$t('field-type-nolimit')" value="textarea"></el-option>
+        <el-option
+          :label="$t('field-type-nolimit')"
+          value="textarea"
+        ></el-option>
         <el-option :label="$t('field-type-number')" value="number"></el-option>
         <el-option :label="$t('field-type-radio')" value="radio"></el-option>
       </el-select>
@@ -111,23 +114,27 @@
       >
       </el-input>
       <el-button v-else class="button-new-tag" size="small" @click="showInput"
-        >+ {{$t('new-value')}}</el-button
+        >+ {{ $t("new-value") }}</el-button
       >
     </el-form-item>
 
     <el-form-item>
-      <el-button role="submit-field-form" type="primary" @click="submitForm">{{ submitText }}</el-button>
-      <el-button @click="$router.replace('/fields')">{{$t('cancel')}}</el-button>
+      <el-button role="submit-field-form" type="primary" @click="submitForm">{{
+        submitText
+      }}</el-button>
+      <el-button @click="$router.replace('/fields')">{{
+        $t("cancel")
+      }}</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import useNotify from '@/hooks/notify.js';
+import useNotify from "@/hooks/notify.js";
 
 export default {
-  props: ['id'],
-  emits: ['save-data'],
+  props: ["id"],
+  emits: ["save-data"],
   setup() {
     const { notify } = useNotify();
 
@@ -138,13 +145,13 @@ export default {
       min: 4,
       max: 255,
       inputVisible: false,
-      inputValue: '',
+      inputValue: "",
       form: {
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         required: false,
         fillable: false,
-        type: '',
+        type: "",
         values: [],
         maxlength: 4,
       },
@@ -152,17 +159,17 @@ export default {
   },
   computed: {
     submitText() {
-      return this.id ? this.$t('update-field') : this.$t('create-field');
+      return this.id ? this.$t("update-field") : this.$t("create-field");
     },
     notifyMessage() {
       return this.id
-        ? this.$t('update-field-success')
-        : this.$t('create-field-success');
+        ? this.$t("update-field-success")
+        : this.$t("create-field-success");
     },
     notifyTitle() {
       return this.id
-        ? `${this.$t('updated-field')}: ${this.form.title}`
-        : `${this.$t('new-field')}: ${this.form.title}`;
+        ? `${this.$t("updated-field")}: ${this.form.title}`
+        : `${this.$t("new-field")}: ${this.form.title}`;
     },
   },
   methods: {
@@ -182,23 +189,19 @@ export default {
         this.form.values.push(inputValue);
       }
       this.inputVisible = false;
-      this.inputValue = '';
+      this.inputValue = "";
     },
     submitForm() {
-      this.$refs['fieldForm'].validate((valid) => {
+      this.$refs["fieldForm"].validate((valid) => {
         if (valid) {
-          if (this.form.type != 'radio') this.form.values = null; // Clear values created when type is different that radio
-          if (this.form.type != 'text') this.form.maxlength = null; // Clear maxlength when type is different that text
+          if (this.form.type != "radio") this.form.values = null; // Clear values created when type is different that radio
+          if (this.form.type != "text") this.form.maxlength = null; // Clear maxlength when type is different that text
 
-          this.$emit('save-data', this.form);
+          this.$emit("save-data", this.form);
 
-          this.notify(this.notifyTitle, this.notifyMessage, 'success');
+          this.notify(this.notifyTitle, this.notifyMessage, "success");
         } else {
-          this.notify(
-            this.$t('error'),
-            this.$t('form-not-valid'),
-            'error'
-          );
+          this.notify(this.$t("error"), this.$t("form-not-valid"), "error");
 
           return false;
         }
@@ -211,7 +214,7 @@ export default {
     if (this.id) {
       this.form = JSON.parse(
         JSON.stringify(
-          this.$store.getters['fields/fields'].find(
+          this.$store.getters["fields/fields"].find(
             (field) => field.id == this.id
           )
         )
