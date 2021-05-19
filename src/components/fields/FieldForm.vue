@@ -186,6 +186,7 @@ export default {
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
+        if(!this.form.values) this.form.values = [];
         this.form.values.push(inputValue);
       }
       this.inputVisible = false;

@@ -155,6 +155,8 @@ export default {
         this.form.subrol = "--";
         return true;
       } else {
+        this.form.subrol = this.subroles[Math.floor(Math.random() * this.subroles.length)];
+        
         return false;
       }
     },
