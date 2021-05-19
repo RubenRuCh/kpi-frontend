@@ -1,4 +1,4 @@
-import {localStorageService} from '@/store/modules/UserStorage/actions';
+import { localStorageService } from '@/store/modules/UserStorage/actions';
 
 import { createRouter, createWebHistory } from 'vue-router';
 //import store from '@/store/index.js';
@@ -32,11 +32,10 @@ const RegisterList = () => import('@/views/registers/RegisterList.vue');
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
 // User
-const controlPanel = () => import("@/views/users/usersControl.vue");
-const userList = () => import("@/views/users/userList.vue");
-const userCreate = () => import("@/views/users/userCreate.vue");
-const profile = () => import("@/views/users/profile.vue");
-
+const controlPanel = () => import('@/views/users/usersControl.vue');
+const userList = () => import('@/views/users/userList.vue');
+const userCreate = () => import('@/views/users/userCreate.vue');
+const profile = () => import('@/views/users/profile.vue');
 
 const routes = [
   {
@@ -118,27 +117,27 @@ const routes = [
     meta: { authorize: ['Admin'] },
   },
   {
-    path: "/adminpanel",
+    path: '/adminpanel',
     component: controlPanel,
-    meta: { authorize:['Admin']}
+    meta: { authorize: ['Admin'] },
   },
   {
-    path: "/adminpanel/user/list",
+    path: '/adminpanel/user/list',
     component: userList,
-    meta: { authorize:['Admin']}
+    meta: { authorize: ['Admin'] },
   },
   {
-    path: "/adminpanel/user/create",
+    path: '/adminpanel/user/create',
     component: userCreate,
-    meta: { authorize:['Admin']}
+    meta: { authorize: ['Admin'] },
   },
   {
-    path: "/profile",
+    path: '/profile',
     component: profile,
-    name: "Profile"
+    name: 'Profile',
   },
-  { path: '/auth', component: UserAuth },
-  { path: '/:notFound(.*)', component: NotFound, meta: { authorize:[]}},
+  { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
+  { path: '/:notFound(.*)', component: NotFound, meta: { authorize: [] } },
 ];
 
 const router = createRouter({
@@ -148,25 +147,18 @@ const router = createRouter({
 
 // We can apply rules to each route. It will be interesting to apply a redirect when a user acces a view that only registered users have rights to see!
 router.beforeEach(function (to, _from, next) {
-
-  const {authorize} = to.meta;
+  const { authorize } = to.meta;
   const currentUser = localStorageService.currentUserValue;
 
-    if(authorize) {
-
-      if(!currentUser && process.env.NODE_ENV === 'development') {
-        next('/auth');
-      }
-      
-    if(authorize.length && !authorize.includes(currentUser.role)) {
-      next('/');
-      
-    }
-
-  }
-
+  if (!currentUser && !to.meta.requiresUnauth) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth && currentUser) {
+    next('/');
+  } else if (authorize?.length && !authorize.includes(currentUser.role)) {
+    next('/');
+  } else {
     next();
-
+  }
 });
 
 export default router;
