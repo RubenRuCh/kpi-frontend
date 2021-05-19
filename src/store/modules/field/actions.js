@@ -1,3 +1,6 @@
+import { requestOptions } from '../../../helpers';
+import {localStorageService} from '@/store/modules/UserStorage/actions';
+
 export default {
   async registerField(context, data) {
     const backendUrl = context.rootGetters.backendUrl;
@@ -14,7 +17,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/fields`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(fieldData),
     });
 
@@ -55,7 +58,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/fields/${data.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(fieldData),
     });
 
@@ -82,7 +85,7 @@ export default {
 
     const backendUrl = context.rootGetters.backendUrl;
 
-    const response = await fetch(`${backendUrl}/fields`);
+    const response = await fetch(`${backendUrl}/fields`, requestOptions.get());
     const responseData = await response.json();
 
     if (!response.ok || !responseData) {

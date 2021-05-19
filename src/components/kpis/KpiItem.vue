@@ -121,6 +121,7 @@
             >{{$t('registers')}}</el-button
           >
           <el-button
+          :disabled="!isAdmin()"
             type="primary"
             icon="el-icon-edit"
             plain
@@ -129,6 +130,7 @@
           >
 
           <el-button
+          :disabled="!isAdmin()"
             type="warning"
             icon="el-icon-copy-document"
             plain
@@ -137,7 +139,7 @@
           >
 
           <!-- Isolate delete logic in separate component -->
-          <kpi-delete-button :id="selectedKpi.id"></kpi-delete-button>
+          <kpi-delete-button :id="selectedKpi.id" v-if="isAdmin()"></kpi-delete-button>
         </div>
       </el-card>
     </section>
@@ -146,6 +148,8 @@
 
 <script>
 import KpiDeleteButton from '@/components/kpis/KpiDeleteButton.vue';
+import { localStorageService } from "@/store/modules/UserStorage/actions";
+
 export default {
   props: ['id'],
   emits: ['prev', 'next'],
@@ -155,6 +159,7 @@ export default {
 
   data() {
     return {
+      currentUser: null,
       selectedKpi: null,
       search: '',
     };
@@ -181,6 +186,9 @@ export default {
   },
 
   methods: {
+    isAdmin() {
+      return this.currentUser && this.currentUser.role === "Admin";
+    },
     goingPrev() {
       this.$emit('prev');
       this.$router.push('/kpis/' + this.prevKpi.id);
@@ -204,6 +212,7 @@ export default {
 
   },
   created() {
+    localStorageService.currentUser.subscribe((x) => (this.currentUser = x));
     // Take id from props
     this.fetchKpi();
   },

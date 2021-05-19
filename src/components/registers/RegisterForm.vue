@@ -59,7 +59,7 @@
           },
         ]"
       >
-        <el-input v-model="form.value" role="input-field-value"></el-input>
+      <el-input v-model="form.value" role="input-field-value"></el-input>
       </el-form-item>
 
       <!-- Form submit / cancel -->
@@ -67,7 +67,7 @@
         <el-button type="primary" @click="submitForm">
           {{ submitText }}
         </el-button>
-        <el-button @click="cancelForm">{{$t('cancel')}}</el-button>
+        <el-button @click="$emit('close-modal')">{{$t('cancel')}}</el-button>       
       </el-form-item>
 
     </el-form>

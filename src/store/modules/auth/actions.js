@@ -15,17 +15,14 @@ export default {
 
     const responseData = await response.json();
 
-    if (!response.ok || !responseData) {
+    const plainUser = JSON.stringify(responseData);    if (!response.ok || !responseData) {
       const error = new Error(response.message || 'Failed to authenticate');
       throw error;
     }
-
-    localStorage.setItem('token', 'tokendeprueba');
-    localStorage.setItem('user', data.user);
+    localStorage.setItem('currentUser', plainUser);
 
     context.commit('setUser', {
-      token: 'tokendeprueba',
-      user: data.user,
+      user: 'currentUser',
     });
   },
   logout(context) {

@@ -1,3 +1,6 @@
+import { requestOptions } from '../../../helpers';
+import {localStorageService} from '@/store/modules/UserStorage/actions';
+
 export default {
   async registerKpi(context, data) {
     const backendUrl = context.rootGetters.backendUrl;
@@ -11,7 +14,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/kpis`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(kpiData),
     });
 
@@ -46,7 +49,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(kpiData),
     });
 
@@ -75,7 +78,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}/enable`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(kpiData),
     });
 
@@ -103,7 +106,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/kpis/${data.id}/disable`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(kpiData),
     });
 
@@ -127,7 +130,7 @@ export default {
 
     const backendUrl = context.rootGetters.backendUrl;
 
-    const response = await fetch(`${backendUrl}/kpis`);
+    const response = await fetch(`${backendUrl}/kpis`, requestOptions.get());
     const responseData = await response.json();
 
     if (!response.ok || !responseData) {
