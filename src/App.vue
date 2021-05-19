@@ -22,9 +22,11 @@
 </template>
 
 <script>
-import TheSidebar from "./components/layout/TheSidebar.vue";
-import TheTopbar from "./components/layout/TheTopbar.vue";
-import TheHeader from "./components/layout/TheHeader.vue";
+import TheSidebar from './components/layout/TheSidebar.vue';
+import TheTopbar from './components/layout/TheTopbar.vue';
+import TheHeader from './components/layout/TheHeader.vue';
+
+import { localStorageService } from '@/store/modules/UserStorage/actions';
 
 export default {
   components: {
@@ -32,18 +34,31 @@ export default {
     TheHeader,
     TheTopbar,
   },
+
+  async created() {
+    if (localStorageService.currentUserValue) {
+      await this.$store.dispatch('fields/loadFields', {
+        forceRefresh: true,
+      });
+
+      await this.$store.dispatch('kpis/loadKpis', {
+        forceRefresh: true,
+      });
+
+    }
+  },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
