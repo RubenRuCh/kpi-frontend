@@ -5,7 +5,9 @@
       :title="$t('error')"
       :before-close="handleError"
     >
-      <p>{{ error }}</p>
+      <i class="fas fa-exclamation-triangle fa-3x" style="color: #e84e38"></i
+      ><br /><br />
+      <p class="error">{{ error }}</p>
     </el-dialog>
 
     <el-card
@@ -14,51 +16,60 @@
       :element-loading-text="$t('checking-credentials')"
       element-loading-spinner="el-icon-loading"
     >
-      <h1>{{ $t('login') }}</h1>
+      <h1>{{ $t("login") }}</h1>
 
       <el-form
         :model="authForm"
         status-icon
         :rules="rules"
         ref="authForm"
-        label-width="120px"
         class="authForm"
       >
-        <el-form-item :label="$t('user')" prop="user">
-          <el-input v-model="authForm.user"></el-input>
-        </el-form-item>
+        <section class="form-input">
+          <el-form-item prop="user">
+            <el-input
+              prefix-icon="fas fa-user"
+              v-model="authForm.user"
+              :placeholder="$t('user')"
+            ></el-input>
+          </el-form-item>
 
-        <el-form-item :label="$t('password')" prop="pass">
-          <el-input
-            type="password"
-            v-model="authForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
+          <el-form-item prop="pass">
+            <el-input
+              prefix-icon="fas fa-lock"
+              :placeholder="$t('password')"
+              type="password"
+              v-model="authForm.pass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
 
-        <el-form-item :label="$t('confirm-password')" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="authForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
+          <el-form-item prop="checkPass">
+            <el-input
+              prefix-icon="fas fa-lock"
+              :placeholder="$t('confirm-password')"
+              type="password"
+              v-model="authForm.checkPass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+        </section>
 
-        <el-form-item>
+        <section class="buttons">
           <el-button type="primary" @click="submitForm('authForm')">{{
-            $t('login')
+            $t("login")
           }}</el-button>
-          <el-button @click="resetForm('authForm')">{{
-            $t('clean-form')
+          <el-button type="danger" @click="resetForm('authForm')">{{
+            $t("clean-form")
           }}</el-button>
-        </el-form-item>
+        </section>
       </el-form>
     </el-card>
   </section>
 </template>
 
 <script>
-import useNotify from '@/hooks/notify.js';
+import useNotify from "@/hooks/notify.js";
 
 export default {
   setup() {
@@ -68,21 +79,21 @@ export default {
   },
   data() {
     var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error(this.$t('password-needed')));
+      if (value === "") {
+        callback(new Error(this.$t("password-needed")));
       } else {
-        if (this.authForm.checkPass !== '') {
-          this.$refs.authForm.validateField('checkPass');
+        if (this.authForm.checkPass !== "") {
+          this.$refs.authForm.validateField("checkPass");
         }
         callback();
       }
     };
 
     var validateConfirmPass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error(this.$t('confirm-password-needed')));
+      if (value === "") {
+        callback(new Error(this.$t("confirm-password-needed")));
       } else if (value !== this.authForm.pass) {
-        callback(new Error(this.$t('password-need-match')));
+        callback(new Error(this.$t("password-need-match")));
       } else {
         callback();
       }
@@ -94,15 +105,15 @@ export default {
       isLoading: false,
       userExists: true,
       authForm: {
-        user: '',
-        pass: '',
-        checkPass: '',
+        user: "",
+        pass: "",
+        checkPass: "",
       },
       rules: {
-        user: [{ trigger: ['blur', 'change'] }],
-        pass: [{ validator: validatePass, trigger: ['blur', 'change'] }],
+        user: [{ trigger: ["blur", "change"] }],
+        pass: [{ validator: validatePass, trigger: ["blur", "change"] }],
         checkPass: [
-          { validator: validateConfirmPass, trigger: ['blur', 'change'] },
+          { validator: validateConfirmPass, trigger: ["blur", "change"] },
         ],
       },
     };
@@ -126,20 +137,18 @@ export default {
         if (valid) {
           try {
             // Login
-            await this.$store.dispatch('auth/login', actionPayload);
+            await this.$store.dispatch("auth/login", actionPayload);
 
             this.notify(
-              this.$t('auth-completed-title'),
-              `${this.$t('auth-completed-message')} ${this.authForm.user}`,
-              'success'
+              this.$t("auth-completed-title"),
+              `${this.$t("auth-completed-message")} ${this.authForm.user}`,
+              "success"
             );
 
             // Go to prev path if redirect, or Home by default
-            const redirectUrl = this.$route.redirectedFrom
-              ? this.$route.redirectedFrom.path
-              : '/';
+            window.location.href = "/";
 
-            // Refresh Vuex data 
+            // Refresh Vuex data
             this.$store.dispatch("kpis/loadKpis", {
               forceRefresh: true,
             });
@@ -147,17 +156,13 @@ export default {
             this.$store.dispatch("fields/loadFields", {
               forceRefresh: true,
             });
-
-            this.$router.replace(redirectUrl);
-
-
           } catch (error) {
-            this.error = this.$t('auth-error') || error;
+            this.error = this.$t("auth-error") || error;
           }
         } else {
-          this.notify(this.$t('error'), this.$t('form-not-valid'), 'error');
+          this.notify(this.$t("error"), this.$t("form-not-valid"), "error");
         }
-        
+
         this.isLoading = false;
       });
     },
@@ -171,9 +176,46 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+div.el-dialog {
+  width: 450px !important;
+}
+div.el-dialog div.el-dialog__header {
+  background-color: #e84e38 !important;
+}
+
+div.el-dialog div.el-dialog__header span,
+div.el-dialog div.el-dialog__header i {
+  color: white;
+}
+
+div.el-dialog div.el-dialog__body p.error {
+  font-size: 1rem;
+}
+.el-card {
+  width: 400px;
+  margin: 5% auto;
+}
 form {
-  margin: 1rem;
+  width: 100%;
+  margin: 1rem auto;
   padding: 1rem;
+}
+
+form .form-input {
+  margin: 1rem auto;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+form .buttons {
+  padding-top: 1rem;
+}
+
+form .buttons .el-button {
+  padding: 1rem auto;
+  margin: 0 0.2rem;
 }
 </style>

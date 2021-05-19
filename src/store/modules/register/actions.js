@@ -1,3 +1,6 @@
+import { requestOptions } from '../../../helpers';
+import { localStorageService } from '@/store/modules/UserStorage/actions';
+
 export default {
   async registerRegister(context, data) {
     const backendUrl = context.rootGetters.backendUrl;
@@ -11,7 +14,7 @@ export default {
     /* Create Registers */
     const response = await fetch(`${backendUrl}/registers`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(registerData),
     });
 
@@ -46,7 +49,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/registers/${data.id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(registerData),
     });
 
@@ -76,7 +79,7 @@ export default {
 
     const response = await fetch(`${backendUrl}/registers/${data.id}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorageService.currentUserValue.token},
       body: JSON.stringify(registerData),
     });
 
@@ -101,7 +104,8 @@ export default {
 
     const backendUrl = context.rootGetters.backendUrl;
 
-    const response = await fetch(`${backendUrl}/registers`);
+    const response = await fetch(`${backendUrl}/registers`, requestOptions.get());
+    
     const responseData = await response.json();
 
     if (!response.ok || !responseData) {

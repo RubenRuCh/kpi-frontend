@@ -7,7 +7,7 @@
       <el-button type="primary" v-else :loading="isLoading"
         >{{ $t('loading') }}...</el-button
       >
-      <el-button type="primary" @click="$router.push('/kpis/create')"
+      <el-button type="primary" @click="$router.push('/kpis/create')" :disabled="!isAdmin()"
         >{{ $t('new-kpi') }}</el-button
       >
     </div>
@@ -59,6 +59,7 @@
           >
 
           <el-button
+            :disabled="!isAdmin()"
             type="primary"
             icon="el-icon-edit"
             plain
@@ -75,6 +76,7 @@
 
 <script>
 import useNotify from "@/hooks/notify.js";
+import { localStorageService } from "@/store/modules/UserStorage/actions";
 
 export default {
   setup() {
@@ -84,6 +86,7 @@ export default {
   },
   data() {
     return {
+      currentUser: null,
       isLoading: false,
       error: null,
       search: "",
@@ -98,6 +101,9 @@ export default {
     },
   },
   methods: {
+    isAdmin() {
+      return this.currentUser && this.currentUser.role === "Admin";
+    },
     async loadKpis(refresh = false) {
       this.isLoading = true;
 
@@ -128,16 +134,23 @@ export default {
   },
 
   created() {
+    localStorageService.currentUser.subscribe((x) => (this.currentUser = x));
     this.loadKpis();
   },
 };
 </script>
 
 <style scoped>
+
+h1 {
+  font-size: 2rem;
+}
+
 .controls {
   display: flex;
   justify-content: space-between;
 }
+
 ul {
   list-style: none;
   margin: 0;

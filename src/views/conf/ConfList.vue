@@ -105,6 +105,7 @@ export default {
       return !this.isLoading && this.conf;
     },
   },
+  
   methods: {
     async loadConf(refresh = false) {
       this.isLoading = true;

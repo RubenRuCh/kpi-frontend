@@ -1,5 +1,7 @@
+import {localStorageService} from '@/store/modules/UserStorage/actions';
+
 import { createRouter, createWebHistory } from 'vue-router';
-import store from '@/store/index.js';
+//import store from '@/store/index.js';
 
 // Normal imports (most used routes)
 import Home from '@/views/Home.vue';
@@ -29,46 +31,53 @@ const RegisterList = () => import('@/views/registers/RegisterList.vue');
 // Auth
 const UserAuth = () => import('@/views/auth/UserAuth.vue');
 
+// User
+const controlPanel = () => import("@/views/users/usersControl.vue");
+const userList = () => import("@/views/users/userList.vue");
+const userCreate = () => import("@/views/users/userCreate.vue");
+const profile = () => import("@/views/users/profile.vue");
+
+
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { requiresAuth: true },
+    meta: { authorize: [] },
   },
   {
     path: '/conf',
     component: ConfList,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/kpis',
     name: 'KPIs',
     component: KpiList,
-    meta: { requiresAuth: true },
+    meta: { authorize: [] },
   },
   {
     path: '/kpis/deleted',
     component: KpiDeletedList,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     name: 'Create',
     path: '/kpis/create',
     component: KpiRegistration,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/kpis/:id',
     component: KpiDetail,
     props: true,
-    meta: { requiresAuth: true },
+    meta: { authorize: [] },
   },
   {
     path: '/kpis/:id/edit',
     component: KpiModification,
     props: true,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/kpis/:id/clone',
@@ -76,39 +85,60 @@ const routes = [
       name: 'Create',
       query: { clone: to.params.id },
     }),
+    meta: { authorize: ['Admin'] },
     props: true,
   },
   {
     path: '/kpis/:id/registers',
     component: RegisterList,
     props: true,
-    meta: { requiresAuth: true },
+    meta: { authorize: [] },
   },
   {
     path: '/fields',
     name: 'Fields',
     component: FieldList,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/fields/create',
     component: FieldRegistration,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/fields/:id',
     component: FieldDetail,
     props: true,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
   {
     path: '/fields/:id/edit',
     component: FieldModification,
     props: true,
-    meta: { requiresAuth: true },
+    meta: { authorize: ['Admin'] },
   },
-  { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
-  { path: '/:notFound(.*)', component: NotFound, meta: { requiresAuth: true } },
+  {
+    path: "/adminpanel",
+    component: controlPanel,
+    meta: { authorize:['Admin']}
+  },
+  {
+    path: "/adminpanel/user/list",
+    component: userList,
+    meta: { authorize:['Admin']}
+  },
+  {
+    path: "/adminpanel/user/create",
+    component: userCreate,
+    meta: { authorize:['Admin']}
+  },
+  {
+    path: "/profile",
+    component: profile,
+    name: "Profile"
+  },
+  { path: '/auth', component: UserAuth },
+  { path: '/:notFound(.*)', component: NotFound, meta: { authorize:[]}},
 ];
 
 const router = createRouter({
@@ -118,17 +148,25 @@ const router = createRouter({
 
 // We can apply rules to each route. It will be interesting to apply a redirect when a user acces a view that only registered users have rights to see!
 router.beforeEach(function (to, _from, next) {
-  if (
-    to.meta.requiresAuth &&
-    !store.getters['auth/isAuthenticated'] &&
-    process.env.NODE_ENV === 'production'
-  ) {
-    next('/auth');
-  } else if (to.meta.requiresUnauth && store.getters['auth/isAuthenticated']) {
-    next('/');
-  } else {
-    next();
+
+  const {authorize} = to.meta;
+  const currentUser = localStorageService.currentUserValue;
+
+    if(authorize) {
+
+      if(!currentUser && process.env.NODE_ENV === 'development') {
+        next('/auth');
+      }
+      
+    if(authorize.length && !authorize.includes(currentUser.role)) {
+      next('/');
+      
+    }
+
   }
+
+    next();
+
 });
 
 export default router;
