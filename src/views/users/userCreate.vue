@@ -155,8 +155,6 @@ export default {
         this.form.subrol = "--";
         return true;
       } else {
-        this.form.subrol = this.subroles[Math.floor(Math.random() * this.subroles.length)];
-        
         return false;
       }
     },
@@ -178,7 +176,7 @@ export default {
         firstname: this.form.firstname,
         lastname: this.form.lastname,
         role:  this.form.rol,
-        subrol: this.form.subrol,
+        service: this.form.subrol,
       };
 
       let valid = await this.$refs.form.validate();

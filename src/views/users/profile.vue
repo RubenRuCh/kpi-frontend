@@ -123,7 +123,7 @@ export default {
         firstname: this.form.firstname,
         lastname: this.form.lastname,
         role: this.selected,
-        subrole: this.subselected,
+        subrol: this.subselected,
       };
 
       let response = await userService.updateUser(id, params);
