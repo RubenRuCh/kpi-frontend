@@ -178,7 +178,7 @@ export default {
         firstname: this.form.firstname,
         lastname: this.form.lastname,
         role:  this.form.rol,
-        subrol: this.form.subrol,
+        service: this.form.subrol,
       };
 
       let valid = await this.$refs.form.validate();
