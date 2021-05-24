@@ -36,8 +36,8 @@ h1 {
   cursor: pointer;
   margin: 10px auto;
   width: 100%;
-  background-color: #393a3e;
-  border: 1px solid #393a3e;
+  background-color: #e7f6f6;
+  border: 1px solid #99cccc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,12 +46,10 @@ h1 {
 
 i {
   font-size: 5rem;
-  color: #52b5ff;
 }
 
 span {
   width: 100%;
-  color: #fffaff;
 }
 
 .cards {
