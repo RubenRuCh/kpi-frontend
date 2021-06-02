@@ -33,7 +33,7 @@
         sortable
       ></el-table-column>
       <el-table-column :label="$t('label-rol')" prop="role" sortable></el-table-column>
-      <el-table-column :label="$t('label-subrol')" prop="subrole" sortable></el-table-column>
+      <el-table-column :label="$t('label-subrol')" prop="service" sortable></el-table-column>
       <el-table-column
         align="right"
         min-width="200"

@@ -1,15 +1,11 @@
+#!/bin/bash
 FROM node:14 as build
-
-# instalar un simple servidor http para servir nuestro contenido estático
-#RUN npm install -g http-server
 
 # hacer la carpeta 'app' el directorio de trabajo actual
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-# copiar 'package.json' y 'package-lock.json' (si están disponibles)
-#COPY package*.json ./
 COPY package.json /app/package.json
 
 # instalar dependencias del proyecto
@@ -27,6 +23,6 @@ COPY --from=build /app/dist/ /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 
