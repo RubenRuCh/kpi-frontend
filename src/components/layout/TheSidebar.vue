@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 .el-menu-vertical-demo {
-  height: calc(100vh - 70px - 20px - 1.5rem); /* 70px TheHeader' height, 20px TheSidebar' margin-top and 1.5rem TheHeader margin (1rem margin-top and 0.5rem margin-bottom) */
+  height: calc(100vh - 70px - 20px - 1.5rem - 20px); /* 70px TheHeader' height, 20px TheSidebar' margin-top and 1.5rem TheHeader margin (1rem margin-top and 0.5rem margin-bottom). Also 20px from user icon */
   cursor: pointer;
   margin-top: 20px;
 

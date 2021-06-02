@@ -101,14 +101,14 @@
         <div class="actions">
           <base-badge
             v-if="selectedKpi.enabled"
-            style="margin-right: auto"
+            style="margin-right: auto; align-self:center;"
             :title="$t('active')"
             type="success"
           ></base-badge>
 
           <base-badge
             v-else
-            style="margin-right: auto"
+            style="margin-right: auto; align-self:center;"
             :title="$t('deleted')"
             type="info"
           ></base-badge>

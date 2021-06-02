@@ -57,7 +57,7 @@
             placement="top-start"
           >
             <base-badge
-              style="margin-right: auto"
+              style="margin-right: auto; align-self:center;"
               :title="$t('fillable')"
               type="success"
             ></base-badge>
@@ -71,7 +71,7 @@
             placement="top-start"
           >
             <base-badge
-              style="margin-right: auto"
+              style="margin-right: auto; align-self:center;"
               :title="$t('required')"
               type="warning"
             ></base-badge>
@@ -85,7 +85,7 @@
             placement="top-start"
           >
             <base-badge
-              style="margin-right: auto"
+              style="margin-right: auto; align-self:center;"
               :title="$t('optional')"
               type="info"
             ></base-badge>

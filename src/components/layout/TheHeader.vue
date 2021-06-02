@@ -5,7 +5,7 @@
         <img
           class="stnd skip-lazy dark-version"
           alt="València Ciudad Inteligente"
-          src="http://smartcity.valencia.es/wp-content/uploads/SmartCityValencia.png"
+          src="https://rruger.dev/resources/img/SmartCityValencia.png"
         />
       </a>
     </div>
@@ -17,7 +17,7 @@
       :default-active="$route.path"
       router>
 
-    <el-submenu>
+    <el-submenu index="user-profile">
         <template #title>
           <i class="el-icon-user-solid"></i>
           <span>{{ currentUser.firstname }}</span>

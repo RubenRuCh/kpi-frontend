@@ -44,7 +44,7 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item prop="checkPass">
+          <!-- <el-form-item prop="checkPass">
             <el-input
               prefix-icon="fas fa-lock"
               :placeholder="$t('confirm-password')"
@@ -52,7 +52,8 @@
               v-model="authForm.checkPass"
               autocomplete="off"
             ></el-input>
-          </el-form-item>
+          </el-form-item> -->
+
         </section>
 
         <section class="buttons">
@@ -89,15 +90,15 @@ export default {
       }
     };
 
-    var validateConfirmPass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error(this.$t("confirm-password-needed")));
-      } else if (value !== this.authForm.pass) {
-        callback(new Error(this.$t("password-need-match")));
-      } else {
-        callback();
-      }
-    };
+    // var validateConfirmPass = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error(this.$t("confirm-password-needed")));
+    //   } else if (value !== this.authForm.pass) {
+    //     callback(new Error(this.$t("password-need-match")));
+    //   } else {
+    //     callback();
+    //   }
+    // };
 
     return {
       error: null,
@@ -112,9 +113,9 @@ export default {
       rules: {
         user: [{ trigger: ["blur", "change"] }],
         pass: [{ validator: validatePass, trigger: ["blur", "change"] }],
-        checkPass: [
-          { validator: validateConfirmPass, trigger: ["blur", "change"] },
-        ],
+        // checkPass: [
+        //   { validator: validateConfirmPass, trigger: ["blur", "change"] },
+        // ],
       },
     };
   },
