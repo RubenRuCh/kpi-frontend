@@ -67,7 +67,7 @@
         <el-button type="primary" @click="submitForm">
           {{ submitText }}
         </el-button>
-        <el-button @click="$emit('close-modal')">{{$t('cancel')}}</el-button>       
+        <el-button @click="cancelForm">{{$t('cancel')}}</el-button>       
       </el-form-item>
 
     </el-form>
