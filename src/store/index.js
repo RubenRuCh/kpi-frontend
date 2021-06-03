@@ -22,7 +22,7 @@ const store = createStore({
 
   state() {
     return {
-      backendUrl: 'http://localhost:8081/api',
+      backendUrl: 'http://37.187.55.227:8081/api',
       conf: [],
       lastFetch: null,
     };
