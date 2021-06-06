@@ -1,5 +1,10 @@
 # Gestion de Indicadores (KPIs)
 
+## Config
+```
+URL to API can be edited in "src/store/index.js"
+```
+
 ## Project setup
 ```
 npm install
