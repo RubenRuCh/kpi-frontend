@@ -1,11 +1,10 @@
 <template>
-
   <el-card shadow="always" class="main-card">
     <h1>{{ $t('kpi-registers') }} {{ id }}</h1>
 
-    <el-button type="primary" @click="kpiDialogVisible = true"
-      >{{ $t('kpi-data') }}</el-button
-    >
+    <el-button type="primary" @click="kpiDialogVisible = true">{{
+      $t('kpi-data')
+    }}</el-button>
 
     <br />
     <br />
@@ -20,7 +19,11 @@
     </el-dialog>
 
     <!-- Create dialog -->
-    <el-dialog v-model="createDialogVisible" :title="$t('create-register')" width="50%">
+    <el-dialog
+      v-model="createDialogVisible"
+      :title="$t('create-register')"
+      width="50%"
+    >
       <register-form
         :id="id"
         :columns="fillableFields"
@@ -52,24 +55,31 @@
     <el-card shadow="always">
       <h2>{{ $t('registers-title') }}</h2>
       <div class="controls">
-        <el-button type="primary" v-if="!isLoading" @click="loadRegisters(true)"
+        <el-button
+          type="primary"
+          v-if="!isLoading"
+          @click="loadRegisters(true)"
           >{{ $t('update-registers') }}</el-button
         >
         <el-button type="primary" v-else :loading="isLoading"
           >Cargando...</el-button
         >
-        <el-button type="primary" @click="createDialogVisible = true"
-          >{{ $t('new-register') }}</el-button
-        >
+
+        <el-button type="primary" @click="downloadPDF">PDF</el-button>
+
+        <el-button type="primary" @click="createDialogVisible = true">{{
+          $t('new-register')
+        }}</el-button>
       </div>
 
       <!-- Datatable show the Registers -->
       <el-table
+        ref="registerContent"
         v-if="isLoading || hasRegisters"
         v-loading="isLoading"
         :default-sort="{ prop: 'id', order: 'ascending' }"
         stripe
-        align="center" 
+        align="center"
         fit
         :data="
           registers.filter(
@@ -79,18 +89,22 @@
           )
         "
         style="width: 100%"
-        max-height="600"
+        max-height="400"
       >
         <!-- Colum ID -->
-        <el-table-column align="center" label="Código" prop="id" sortable></el-table-column>
+        <el-table-column
+          align="center"
+          label="Código"
+          prop="id"
+          sortable
+        ></el-table-column>
 
         <!-- Dinamic columns -->
         <el-table-column
           v-for="field in fillableFields"
           :key="field.id"
           :label="field.value"
-          sortable
-          align="center" 
+          align="center"
         >
           <template #default="scope">
             <span :key="scope.row.id">
@@ -99,7 +113,12 @@
           </template>
         </el-table-column>
         <!-- Colum Value -->
-        <el-table-column label="Valor" prop="value" sortable align="center" ></el-table-column>
+        <el-table-column
+          label="Valor"
+          prop="value"
+          sortable
+          align="center"
+        ></el-table-column>
 
         <!-- Colum Actions , search, update, delete -->
         <el-table-column align="right" min-width="150">
@@ -116,7 +135,8 @@
               icon="el-icon-edit"
               plain
               @click="handleModify(scope.row.id)"
-              > {{$t("modify")}}</el-button
+            >
+              {{ $t('modify') }}</el-button
             >
 
             <el-popconfirm
@@ -126,35 +146,32 @@
               icon-color="red"
             >
               <template #reference>
-                <el-button type="danger" 
-                          icon="el-icon-delete" 
-                          plain>{{$t("delete")}}
-                          </el-button>
+                <el-button type="danger" icon="el-icon-delete" plain
+                  >{{ $t('delete') }}
+                </el-button>
               </template>
             </el-popconfirm>
           </template>
         </el-table-column>
         <!-- END Colum Actions , search, update, delete -->
-
       </el-table>
       <!-- End Datatable show the Registers -->
-      <el-empty
-        v-else
-        :description="$t('register-not-found')"
-      ></el-empty>
+      <el-empty v-else :description="$t('register-not-found')"></el-empty>
     </el-card>
   </el-card>
 </template>
 
 <script>
-import useNotify from "@/hooks/notify.js";
+import useNotify from '@/hooks/notify.js';
+import { jsPDF } from 'jspdf';
+import { html2canvas } from 'html2canvas';
 
 // Components
-import RegisterForm from "@/components/registers/RegisterForm.vue";
-import KpiItem from "@/components/kpis/KpiItem.vue";
+import RegisterForm from '@/components/registers/RegisterForm.vue';
+import KpiItem from '@/components/kpis/KpiItem.vue';
 
 export default {
-  props: ["id"],
+  props: ['id'],
   components: {
     RegisterForm,
     KpiItem,
@@ -171,7 +188,7 @@ export default {
       createDialogVisible: false,
       isLoading: false,
       error: null,
-      search: "",
+      search: '',
       selectedKpi: null,
       fillableFields: [],
       selectedRegisterId: null,
@@ -188,16 +205,19 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.$store.dispatch("registers/loadRegisters", {
+        await this.$store.dispatch('registers/loadRegisters', {
           forceRefresh: refresh,
         });
 
         this.filterRegisters();
       } catch (error) {
-        this.error =
-          error.message || this.$t('update-data-failed');
+        this.error = error.message || this.$t('update-data-failed');
 
-        this.notify(this.$t('ups'), `${this.$t('error')}: ${this.error}`, "error");
+        this.notify(
+          this.$t('ups'),
+          `${this.$t('error')}: ${this.error}`,
+          'error'
+        );
       } finally {
         this.isLoading = false;
       }
@@ -211,7 +231,7 @@ export default {
         return register.kpiId == this.selectedKpi.id;
       };
 
-      this.registers = this.$store.getters["registers/registers"].filter(
+      this.registers = this.$store.getters['registers/registers'].filter(
         belongsToKpi
       );
     },
@@ -231,7 +251,7 @@ export default {
       this.updateDialogVisible = true;
     },
 
-     /* Refesh datatable registrers */
+    /* Refesh datatable registrers */
     refreshRegisters() {
       return setTimeout(() => {
         this.loadRegisters(true);
@@ -240,22 +260,26 @@ export default {
 
     /* Save Registers */
     saveRegister(data) {
-      this.$store.dispatch("registers/registerRegister", data);
+      this.$store.dispatch('registers/registerRegister', data);
 
       this.refreshRegisters();
     },
 
     /* Update Registers */
     updateRegister(data) {
-      this.$store.dispatch("registers/updateRegister", data);
+      this.$store.dispatch('registers/updateRegister', data);
 
       this.refreshRegisters();
     },
 
     /* Delete Registers  */
     deleteRegister(id) {
-      this.$store.dispatch("registers/deleteRegister", { id });
-      this.notify(this.$t('delete-register'), `${this.$t('delete-register-msg')}: ${id}`, "success");
+      this.$store.dispatch('registers/deleteRegister', { id });
+      this.notify(
+        this.$t('delete-register'),
+        `${this.$t('delete-register-msg')}: ${id}`,
+        'success'
+      );
       this.refreshRegisters();
     },
 
@@ -272,13 +296,55 @@ export default {
 
       return columnValue;
     },
+
+    // TODO Permitir al usuario configurar el formato
+    downloadPDF() {
+      const doc = new jsPDF({
+        format: [2000, 3000],
+        orientation: 'l',
+      });
+      const registerContent = this.$refs.registerContent.$el;
+
+      // Create a copy to add in the DOM, to prevent interact with original table
+      const copyRegisterContent = registerContent.cloneNode(true);
+      document.body.appendChild(copyRegisterContent);
+
+
+      // Remove form filter and button actions (we dont want that in pdf)
+      const lastTableHeader = copyRegisterContent.querySelector(
+        'th:last-child'
+      );
+      lastTableHeader.parentNode.removeChild(lastTableHeader);
+
+      const lastTableColumns = copyRegisterContent.querySelectorAll(
+        'td:last-child'
+      );
+
+      for (const lastTableColumn of lastTableColumns) {
+        lastTableColumn.parentNode.removeChild(lastTableColumn);
+      }
+      
+
+      doc.html(copyRegisterContent, {
+        html2canvas: {
+          scale: 1, // default is window.devicePixelRatio
+        },
+        callback: (doc) => {
+          // Create pdf and remove copy of table from DOM
+          doc.save(`Registers_KPI_${this.id}.pdf`);
+          document.body.removeChild(copyRegisterContent);
+        },
+        x: 0,
+        y: 0,
+      });
+    },
   }, // END MEthods
 
   async created() {
     // Make sure we have all kpis loaded when we enter here
-    await this.$store.dispatch("kpis/loadKpis", { forceRefresh: true });
+    await this.$store.dispatch('kpis/loadKpis', { forceRefresh: true });
 
-    this.selectedKpi = this.$store.getters["kpis/kpis"].find(
+    this.selectedKpi = this.$store.getters['kpis/kpis'].find(
       (kpi) => kpi.id == this.id
     );
 

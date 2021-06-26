@@ -113,7 +113,7 @@
     "confirm-delete-register": "¿Estás seguro/a que deseas borrar el registro?",
     "kpi-registers": "Registros el indicador nº",
     "register-correct-value":"Por favor, introduce un valor para el registro",
-    "register-input-value":"'Por favor, introduce un dato, no puede estar vacío",
+    "register-input-value":"Por favor, introduce un dato, no puede estar vacío",
     "kpi-data": "Datos del KPI",
     "update-register-success": "El registro ha sido modificado correctamente",
     "create-register-success": "Se ha creado el nuevo registro correctamente",

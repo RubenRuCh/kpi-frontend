@@ -127,6 +127,14 @@ export default {
                 this.$store.getters["registers/registers"].find((register) => register.id == registerId)
               )
             );
+
+            for (const fillableField of this.columns) {
+              // If we have more fillable columns that are not present in form.columns, add them
+              if(!(this.form.columns.find((field) => field.id == fillableField.id))){
+                this.form.columns.push(fillableField);
+              }
+            }
+
           } catch (e) {
             this.notify( `${this.$t('error')}`, `${this.$t('register-not-found')}`, "error");
             this.$router.replace("/registers");

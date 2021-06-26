@@ -19,19 +19,19 @@
         <h2>{{$t('kpi-properties')}}</h2>
 
         <section class="properties">
-          <h3><el-tag>{{$t('title')}}</el-tag> {{ selectedKpi.title }}</h3>
-          <h3><el-tag>{{$t('description')}}</el-tag> {{ selectedKpi.description }}</h3>
+          <h3><el-tag>{{$t('title')}}</el-tag> {{ selectedKpi?.title }}</h3>
+          <h3><el-tag>{{$t('description')}}</el-tag> {{ selectedKpi?.description }}</h3>
         </section>
 
         <section class="fields">
           <el-table
-            v-if="selectedKpi.fields"
+            v-if="selectedKpi?.fields"
             :default-sort="{ prop: 'id', order: 'ascending' }"
             stripe
             fit
             :row-class-name="tableRowClassName"
             :data="
-              selectedKpi.fields.filter(
+              selectedKpi?.fields.filter(
                 (field) =>
                   !search ||
                   field.title.toLowerCase().includes(search.toLowerCase())
@@ -100,7 +100,7 @@
       <el-card shadow="hover">
         <div class="actions">
           <base-badge
-            v-if="selectedKpi.enabled"
+            v-if="selectedKpi?.enabled"
             style="margin-right: auto; align-self:center;"
             :title="$t('active')"
             type="success"
@@ -139,7 +139,7 @@
           >
 
           <!-- Isolate delete logic in separate component -->
-          <kpi-delete-button :id="selectedKpi.id" v-if="isAdmin()"></kpi-delete-button>
+          <kpi-delete-button :id="selectedKpi?.id" v-if="isAdmin()"></kpi-delete-button>
         </div>
       </el-card>
     </section>
@@ -167,21 +167,33 @@ export default {
 
   computed: {
     nextKpi() {
+      if(!this.selectedKpi) return;
+
       const allKpis = this.$store.getters['kpis/kpis'];
       let selectedKpiIndex = allKpis.findIndex(
-        (kpi) => kpi.id == this.selectedKpi.id
+        (kpi) => kpi.id == this.selectedKpi?.id
       );
       return allKpis[++selectedKpiIndex];
     },
     prevKpi() {
+      if(!this.selectedKpi) return;
+
       const allKpis = this.$store.getters['kpis/kpis'];
       let selectedKpiIndex = allKpis.findIndex(
-        (kpi) => kpi.id == this.selectedKpi.id
+        (kpi) => kpi.id == this.selectedKpi?.id
       );
       return allKpis[--selectedKpiIndex];
     },
     showingRegisters(){
       return this.$route.path.includes('registers')
+    },
+  },
+
+  watch: {
+    id(newId, oldId) {
+      console.log(newId, oldId);
+      if (newId != null) this.fetchKpi();
+      console.log(this.selectedKpi);
     },
   },
 
